@@ -4,19 +4,20 @@ import axios from "axios";
 // Function to send a POST request
 // const localData=getLocalData("admintoken")
 
+////test
 
 export const sendPostRequest = async (url, data) => {
   try {
     const response = await axios.post(url, data, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     access_token:
-    //      localData?.acces_token||"",
-    //     verify_token:
-    //       localData?.verify_token||""
-    //   },
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     access_token:
+      //      localData?.acces_token||"",
+      //     verify_token:
+      //       localData?.verify_token||""
+      //   },
     });
-    console.log(response)
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error sending POST request:", error);
@@ -28,12 +29,12 @@ export const sendPostRequest = async (url, data) => {
 export const fetchGetRequest = async (url) => {
   try {
     const response = await axios.get(url, {
-    //   headers: {
-    //     access_token:
-    //     localData?.acces_token||"",
-    //    verify_token:
-    //      localData?.verify_token||""
-    //   },
+      //   headers: {
+      //     access_token:
+      //     localData?.acces_token||"",
+      //    verify_token:
+      //      localData?.verify_token||""
+      //   },
     });
 
     return response.data;
@@ -47,14 +48,14 @@ export const fetchGetRequest = async (url) => {
 export const sendPatchRequest = async (url, data) => {
   try {
     const response = await axios.patch(url, data, {
-    //   headers: {
-    //     access_token:
-    //     localData?.acces_token||"",
-    //    verify_token:
-    //      localData?.verify_token||""
-    //   },
+      //   headers: {
+      //     access_token:
+      //     localData?.acces_token||"",
+      //    verify_token:
+      //      localData?.verify_token||""
+      //   },
     });
-    console.log("uihuowshfuh",response)
+    console.log("uihuowshfuh", response);
     return response.data;
   } catch (error) {
     console.error("Error sending PATCH request:", error);
@@ -66,13 +67,13 @@ export const sendPatchRequest = async (url, data) => {
 export const sendDeleteRequest = async (url) => {
   try {
     const response = await axios.delete(url, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     access_token:
-    //     localData?.acces_token||"",
-    //    verify_token:
-    //      localData?.verify_token||""
-    //   },
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     access_token:
+      //     localData?.acces_token||"",
+      //    verify_token:
+      //      localData?.verify_token||""
+      //   },
     });
     return response.data;
   } catch (error) {
