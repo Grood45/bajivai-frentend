@@ -40,7 +40,6 @@ export function getTimeAgo(timestamp) {
   // Example usage:
 //   const timestamp = "2023-09-13 07:48 PM";
 //   const timeAgo = getTimeAgo(timestamp);
-//   console.log(timeAgo);  // Output: "2 weeks ago" (assuming the current date is October 1, 2023)
   
 
 

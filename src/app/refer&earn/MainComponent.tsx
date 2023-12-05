@@ -69,7 +69,6 @@ const MainComponent = () => {
     try {
       let response = await sendPostRequest(url, payload);
       const data = response.data;
-      console.log(data);
       toast({
         description: response.message,
         status: "success",

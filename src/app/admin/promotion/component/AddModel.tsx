@@ -110,7 +110,6 @@ const handleTypeChange=(e:any)=>{
 setType(e.target.value)
 }
 
-  console.log(add, "add dataa");
 
   const handleAdd = async () => {
     try {
@@ -145,7 +144,6 @@ setType(e.target.value)
       setRules('');
       setTc('')
       }
-      console.log(response,'response added data')
       
   
       onClose();

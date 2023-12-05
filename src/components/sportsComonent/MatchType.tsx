@@ -80,16 +80,13 @@ function MatchType() {
 
   const UpdateStatus = async (name: any, match_id: any) => {
     let payload = { name };
-    console.log(payload, match_id, "id");
     try {
       const response = await sendPatchRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/get-all-match/update-match-status/${match_id}`,
         payload
       );
 
-      console.log(response, "jeet");
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -117,7 +114,6 @@ function MatchType() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -153,7 +149,6 @@ function MatchType() {
   //       isClosable: true,
   //     });
   //     setLoading(false);
-  //     console.log(error);
   //   }
   // };
 
@@ -172,14 +167,12 @@ function MatchType() {
     }
   };
 
-  console.log(matches);
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  console.log(matches[0]?.bookmarker == "active");
   return (
     <ChakraProvider theme={theme}>
       <Box>

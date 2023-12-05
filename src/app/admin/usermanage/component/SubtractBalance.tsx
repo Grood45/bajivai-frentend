@@ -24,7 +24,6 @@ function SubtractBalance() {
   const [amount, setAmount] = useState<any>(0);
   const [totalBalance, setTotalBalance] = useState(); 
 const params=useParams()
-console.log(params,'params add wallet')
 const toast=useToast()
   const subtractBalance = async () => {
     try {
@@ -43,11 +42,9 @@ const toast=useToast()
         isClosable: true,
       });
     }
-        console.log(response,'response')
       setAmount(0);
       onClose();
     } catch (error) {
-      console.error("Error adding balance:", error);
     }
   };
   useEffect(()=>{

@@ -33,18 +33,14 @@ const WithDrawl = () => {
     let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-withdraw/${params.id}?page=${currentPage}&limit=20&transaction_type=${transactionType}`;
     try {
       let response = await fetchGetRequest(url);
-      console.log(response,'response')
       setAllAmount(response?.transactionAmount)
       const data = response.data;
       const receivedData: WithdrawalTransaction[] = response.data;
-      console.log(data, "withdrawl slip");
       if (receivedData) {
         aetallWithdraw(receivedData);
       }
       aetTransactionCount(response.usersCount);
-      console.log(response.usersCount, "d");
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -53,7 +49,6 @@ const WithDrawl = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -64,7 +59,6 @@ const WithDrawl = () => {
   const handleFilter = (name: string) => {
     setTransactionType(name);
   };
-console.log(allWithdraw)
 
   return (
     <div className="flex flex-col mt-5 gap-6">

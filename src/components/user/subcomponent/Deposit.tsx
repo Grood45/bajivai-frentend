@@ -67,10 +67,8 @@ const Deposit = ({
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/get-payment-method?type=deposit`
       );
-      console.log(response, "response-data");
       setPaymentData(response.data);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -127,7 +125,6 @@ const Deposit = ({
         payload
       );
       if (response.success) {
-        console.log(response.success, "resposse success checking");
         setViewReceipt(response.data);
         setActiveCard(cardIndex);
         toast({
@@ -139,7 +136,6 @@ const Deposit = ({
         });
       }
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.data.message,
         status: "error",
@@ -154,13 +150,11 @@ const Deposit = ({
     e.preventDefault();
     if (cardIndex === 2) {
       if (radio) {
-        console.log(value, depositDetails.min_limit, depositDetails.max_limit);
         if (
           value >= depositDetails.min_limit &&
           value <= depositDetails.max_limit
         ) {
           setActiveCard(cardIndex);
-          console.log(depositDetails);
         } else {
           toast({
             title: `balance should be between ${depositDetails.min_limit}-${depositDetails.max_limit}`,
@@ -235,7 +229,6 @@ const Deposit = ({
         setSelectedImage(response.url);
       }
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: "Error uploading image",
         status: "error",

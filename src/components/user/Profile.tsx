@@ -81,7 +81,6 @@ const Profile = () => {
       );
       let percentOfWithdraw = Math.round(response.amount / max_limit * 100);
       setTodayWithdraw(percentOfWithdraw);
-      console.log(percentOfWithdraw, response.amount, 'profile')
      
     } catch (error: any) {
       toast({

@@ -27,11 +27,8 @@ const toast =useToast()
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/logofav/get-logo-fav/6532c132ed5efb8183a66703`
       );
-console.log(response.data.tc,'response')
 setTermsData(response.data.tc)
-console.log(response,'response')
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",

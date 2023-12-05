@@ -44,7 +44,6 @@ export const loginAsync = createAsyncThunk(
         `${API_BASE_URL}/api/user/admin-login`,
         credentials
       );
-      console.log(response, "ress");
       return response.data;
     } catch (error: any) {
       // Handle authentication errors here, if any

@@ -25,12 +25,10 @@ import { PromotionData } from "../../../../../utils/typescript.module";
 
 function DepositUpdateModel({ data, id }: { data: any; id: any }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-console.log(data,'data in update')
   const [promotions, setPromotions] = useState<PromotionData[]>([]);
   const toast = useToast();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-  console.log(data, "details");
 const[imageLoading,setImageLoading]=useState(false)
   const [gateway,setGetway]=useState<any>(data?.gateway||'')
   const [bonus,setBonus]=useState<any>(data?.bonus||'')
@@ -76,10 +74,8 @@ const[imageLoading,setImageLoading]=useState(false)
 
   const handleImageUrlChange = async (event: any) => {
     const file = event.target.files[0];
-console.log(file)
     if (file) {
       const imageurl = await handleImageUpload(file);
-      console.log(imageurl,'imaheurl')
       setImageUrl(imageurl);
     }
   };
@@ -158,7 +154,6 @@ console.log(file)
         duration: 2000,
         isClosable: true,
       });
-      console.log(response, "response updated data");
       onClose();
     } catch (error: any) {
       toast({

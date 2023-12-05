@@ -34,14 +34,11 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: BetHistory[] = response.data;
-      console.log(data, "gg");
       if (receivedData) {
         setAllBet(receivedData);
       }
       setBetsCount(response.betsCount);
-      console.log(response.betsCount, "d");
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -50,7 +47,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

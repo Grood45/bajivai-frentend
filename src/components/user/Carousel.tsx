@@ -28,17 +28,14 @@ import { RootState } from '@/app/redux-arch/store';
         const response = await fetchGetRequest(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/gameslider/get-slider/6551e31439cda85a6c606fef`
         );
-        console.log(response,"response in carousel")
         setSliderData(response.data);
       } catch (error: any) {
-        console.error("Error uploading image:", error.message);
         toast({
           title: error.data.message,
           status: "error",
           duration: 2000,
           isClosable: true,
         });
-        console.log(error, "errr");
       }
     };
 

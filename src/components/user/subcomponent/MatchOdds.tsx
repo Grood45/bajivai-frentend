@@ -66,7 +66,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
   } = userAuth?.combineR?.userAuth?.data?.user || {};
   const toast = useToast();
   const param = useParams();
-  console.log(param, "param");
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   // fetch data of odds, bbokmaker, fancy, toss
   const { token = "", otpless_token = "" } =
@@ -218,7 +217,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
         isClosable: true,
       });
       setBetLoading(false);
-      console.log(error, "1");
     }
   };
   useEffect(() => {
@@ -226,7 +224,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     if (Array.isArray(team)) {
       const result = calculatePL(bet, team[0], team[1]);
       let [pl1, pl2] = result;
-      console.log(pl1, pl2, "pl of");
       // alert("hihninik")
       setFirstTeamPl(pl1);
       setSecondTeamPl(pl2);
@@ -242,7 +239,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       );
       const data = response.data;
       setBet(data);
-      console.log(data, "bet data");
     } catch (error: any) {
       toast({
         description: error.data.message || "Something went wrong",
@@ -251,7 +247,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
         duration: 4000,
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

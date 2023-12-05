@@ -253,7 +253,7 @@ export interface AllTransaction {
   after_deposit: number;
   bonus: number;
   deposit_amount: number;
-
+  user_details:[];
   withdraw_amount: number;
   deposit_slip: string;
   initiated_at: string;

@@ -124,7 +124,6 @@ const SidebarNavbar = ({
   const { showSideBar1, theme } = useAppSelector(
     (store) => store.combineR.NavStateReducer
   );
-  console.log(theme, "themes");
   const handleNavigate = (id: number, route: any) => {
     setActive(id);
     setIncreas(true);

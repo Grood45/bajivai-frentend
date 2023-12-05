@@ -16,10 +16,8 @@ function timeInSecond(openingDate) {
 
       if (timeRemaining <= 0) {
           clearInterval(timer);
-          console.log("Countdown expired!");
       } else {
           const formattedTime = formatTime(timeRemaining);
-          console.log(`Time remaining: ${formattedTime}`);
       }
   }, 1000); // Update every second
 }

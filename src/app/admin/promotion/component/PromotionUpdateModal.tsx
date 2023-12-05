@@ -31,7 +31,6 @@ function PromotionUpdateModal({ invidualReadMore,id }: { invidualReadMore: any,i
 const toast=useToast()
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-  console.log(invidualReadMore, "details");
 
   const [title, setTitle] = useState<string>(invidualReadMore?.title || "");
   const [description, setDescription] = useState<string>(
@@ -162,7 +161,6 @@ const handleFuleName=(e:any)=>{
         duration: 2000,
         isClosable: true,
       });
-      console.log(response,'response updated data')
       onClose();
     } catch (error: any) {
       toast({

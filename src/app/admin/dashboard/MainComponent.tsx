@@ -77,12 +77,10 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: BetHistory[] = response.data;
-      console.log(response, "get All Bet details");
       if (receivedData) {
         setAllBet(receivedData);
       }
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -91,7 +89,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -102,12 +99,10 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: Notification[] = response.data;
-      console.log(data, "gg");
       if (receivedData) {
         setNotification(receivedData);
       }
       setLoading1(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -116,7 +111,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -127,13 +121,11 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: any = response.data;
-      console.log(response, "gg deposit data conut");
       if (receivedData) {
         setDepositDataCount(response);
         setDepositAmount(response.total_deposit_amount);
       }
       setLoading1(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -142,7 +134,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
   const getAllWithDrawal = async () => {
@@ -152,13 +143,11 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: any = response.data;
-      console.log(response, "gg withdraw data conut");
       if (receivedData) {
         setWithDrawDataCount(response);
         setWithDrawAmount(response.total_withdraw_amount);
       }
       setLoading1(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -167,7 +156,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -179,10 +167,8 @@ const MainComponent = () => {
       const data = response.data;
       const receivedData: UserInterface[] = response.data;
       setUsersCount(response.usersCount);
-      console.log(response, "get All dashobard");
 
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -191,7 +177,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -203,7 +188,6 @@ const MainComponent = () => {
       );
 
       // setAdminLoading(false);
-      console.log(response, "get All Admin details");
 
       setAdmin(response.data);
     } catch (error: any) {
@@ -252,7 +236,6 @@ const MainComponent = () => {
           getAdminSportsCount(),
         ]);
       } catch (error) {
-        console.error("Error fetching data:", error);
         // Handle errors here
       }
     };

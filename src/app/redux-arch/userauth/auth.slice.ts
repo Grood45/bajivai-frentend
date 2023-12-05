@@ -54,11 +54,9 @@ export const loginAsync = createAsyncThunk(
         credentials
       );
 
-      console.log(response.data, "dataa for login");
       return response.data;
     } catch (error: any) {
       // Handle authentication errors here, if any
-      console.log(error, error);
       return error.response.data;
     }
   }
@@ -74,7 +72,6 @@ export const updateUserDataAsync = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }
@@ -90,7 +87,6 @@ export const fetchUserDataAsync = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }

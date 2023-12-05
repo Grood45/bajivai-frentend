@@ -69,7 +69,6 @@ function SportsTable() {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/sport/get-all-sport`
       );
       setSports(response.data);
-      console.log(response.data)
       setLoading(false);
     } catch (error:any) {
       toast({
@@ -81,7 +80,6 @@ function SportsTable() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -95,7 +93,6 @@ function SportsTable() {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/sport/update-sport-status/${id}`
       );
       setSports(response.data);
-      console.log(response.data,"sports pages")
       setLoading(false);
 
       const updatedData = sports.map((ele:any) => {
@@ -106,7 +103,6 @@ function SportsTable() {
           return ele;
         }
       });
-console.log(updatedData,"updated data")
       setSports(updatedData);
     } catch (error:any) {
       toast({
@@ -118,7 +114,6 @@ console.log(updatedData,"updated data")
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 

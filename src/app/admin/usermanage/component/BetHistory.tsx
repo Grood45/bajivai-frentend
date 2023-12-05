@@ -46,7 +46,6 @@ const [query,setQuery]=useState('sport')
     let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${params.id}?status=all&event_type=${query}`;
     try {
       let response = await fetchGetRequest(url);
-      console.log(response,'response')
       setTotalAmount(response.betAmount)
       const data = response.data;
       const receivedData:Allbets[]= response.data;
@@ -54,7 +53,6 @@ const [query,setQuery]=useState('sport')
         setStateMentData(receivedData);
       }
       setLoading1(false);
-      console.log(data, "getAllbets data");
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -63,7 +61,6 @@ const [query,setQuery]=useState('sport')
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

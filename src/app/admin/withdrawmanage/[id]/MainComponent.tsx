@@ -11,7 +11,6 @@ const MainComponent = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { id } = useParams();
   const toast = useToast();
-  console.log(id, "id");
 
   const getWithdrawDetails = async () => {
     setLoading(true);
@@ -20,12 +19,10 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData = response.data;
-      console.log(data, "withdraw single in compnonet");
       if (receivedData) {
         setWithdrawData(receivedData);
       }
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.message}`,
@@ -34,7 +31,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -51,7 +47,6 @@ const MainComponent = () => {
       let response = await sendPatchRequest(url, updatedata);
       const data = response.data;
       const receivedData: DepositTransaction = response.data;
-      console.log(data, "update single in compnonet");
       if (receivedData) {
         setWithdrawData(receivedData);
         toast({
@@ -63,7 +58,6 @@ const MainComponent = () => {
         });
       }
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.message}`,
@@ -72,7 +66,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
   const rejectWithdraw = async () => {
@@ -84,7 +77,6 @@ const MainComponent = () => {
       let response = await sendPatchRequest(url, updatedata);
       const data = response.data;
       const receivedData: DepositTransaction = response.data;
-      console.log(data, "update single in compnonet");
       if (receivedData) {
         setWithdrawData(receivedData);
         toast({
@@ -96,7 +88,6 @@ const MainComponent = () => {
         });
       }
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -105,7 +96,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

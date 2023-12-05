@@ -23,7 +23,6 @@ function BankDetails({gateways, setGateways}:{gateways:any, setGateways:any}) {
     setGateways(updatedGateways);
   };
 
-  console.log(gateways, "getway admin");
 
   return (
     <div

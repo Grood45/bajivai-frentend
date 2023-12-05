@@ -29,7 +29,6 @@ function UserDetails({ formFields, setFormFields }: UserDetailsProps) {
     setFormFields(updatedFields);
   };
 
-  console.log(formFields, "userdetailss");
 
   return (
     <div

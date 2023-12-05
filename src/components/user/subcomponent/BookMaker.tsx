@@ -160,8 +160,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     if (newExposure < 0) {
       originalExposure += Math.abs(newExposure);
     }
-    // console.log(newExposure);
-    console.log(originalExposure, "og");
     if (originalExposure > amount) {
       toast({
         description: "Insufficient Balance.",
@@ -196,24 +194,20 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
         isClosable: true,
       });
       setBetLoading(false);
-      console.log(error, "1");
     }
   };
   // fetch data of odds, bbokmaker, fancy, toss
   useEffect(() => {
     const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      //console.log("Connected to the server");
       setLoading(true);
     });
     socket.on("bookmakerData", (data) => {
-      // console.log("Received bookmaker data:", data);
       if (data.t2) {
         setData(data?.t2[0]?.bm1 || []);
       }
     });
     socket.on("disconnect", () => {
-      //console.log("Disconnected from the server");
       setLoading(false);
     });
 
@@ -223,7 +217,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
-      //console.log("socket disconnected");
       setLoading(false);
     };
   }, [param.id]);
@@ -238,7 +231,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
       );
       const data = response.data;
       setBet(data);
-      // console.log(data, "bet data");
     } catch (error: any) {
       toast({
         description: error.message || "d",
@@ -247,14 +239,12 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
         duration: 4000,
         isClosable: true,
       });
-      //console.error(error);
     }
   };
 
   useEffect(() => {
     fetchBetData();
   }, []);
-  // console.log(singleMatch, "dataatat");
 
   useEffect(() => {
     let team = singleMatch?.match_name.split(" v " || "vs");

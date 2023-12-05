@@ -49,11 +49,9 @@ const params=useParams()
         position: "top",
         isClosable: true,
       });
-      console.log(response,'respose send email')
       onClose();  
     } 
     catch (error) {
-      console.error("Error sending message:", error);
     }
   };
 

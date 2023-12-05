@@ -36,14 +36,12 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: Match[] = response.data;
-      console.log(data, "gg");
       if (receivedData) {
         setAllMatch(receivedData);
       }
       // setMatchsCount(response.matchsCount);
 
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -52,7 +50,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -61,7 +58,6 @@ const MainComponent = () => {
     match_id: string,
     index: number
   ) => {
-    console.log(match_id);
     setIndex(index);
     setLoading(true);
     setStatusLoading(true);
@@ -93,7 +89,6 @@ const MainComponent = () => {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
 
       setStatusLoading(false);
     }

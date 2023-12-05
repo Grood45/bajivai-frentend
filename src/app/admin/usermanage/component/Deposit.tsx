@@ -32,20 +32,16 @@ const Deposit = () => {
     let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-deposit/${params.id}?page=${currentPage}&limit=20&transaction_type=${transactionType}`;
     try {
       let response = await fetchGetRequest(url);
-      console.log(response,'response')
        setAllAmount(response?.transactionAmount)
       const data = response.data;
       const receivedData: DepositTransaction[] = response.data;
-      console.log(data, "gg");
       if (receivedData) {
         aetAllDeposit(receivedData);
        
 
       }
       aetTransactionCount(response.usersCount);
-      console.log(response.usersCount, "d");
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -54,7 +50,6 @@ const Deposit = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

@@ -52,7 +52,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
       setLoading(false);
     }
   };

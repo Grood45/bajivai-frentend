@@ -15,7 +15,6 @@ const MainComponent = () => {
   const [loading1, setLoading1] = useState<boolean>();
   const { id } = useParams();
   const toast = useToast();
-  console.log(id);
 
   const getDepositDetails = async () => {
     setLoading(true);
@@ -24,12 +23,10 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: DepositTransaction = response.data;
-      console.log(data, "deposite single in compnonet");
       if (receivedData) {
         setDepositData(receivedData);
       }
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -38,7 +35,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -55,7 +51,6 @@ const MainComponent = () => {
       let response = await sendPatchRequest(url, updatedata);
       const data = response.data;
       const receivedData: DepositTransaction = response.data;
-      console.log(data, "update single in compnonet");
       if (receivedData) {
         setDepositData(receivedData);
         toast({
@@ -67,7 +62,6 @@ const MainComponent = () => {
         });
       }
       setDepositLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.message}`,
@@ -76,7 +70,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
       setDepositLoading(false);
     }
   };
@@ -89,7 +82,6 @@ const MainComponent = () => {
       let response = await sendPatchRequest(url, updatedata);
       const data = response.data;
       const receivedData: DepositTransaction = response.data;
-      console.log(data, "update single in compnonet");
       if (receivedData) {
         setDepositData(receivedData);
         toast({
@@ -101,7 +93,6 @@ const MainComponent = () => {
         });
       }
       setLoading1(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -111,7 +102,6 @@ const MainComponent = () => {
         isClosable: true,
       });
       setLoading1(false);
-      console.log(error);
     }
   };
 

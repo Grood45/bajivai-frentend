@@ -68,7 +68,6 @@ function WalletModel() {
         setTransactionData(receivedData);
       }
       setLoading1(false);
-      console.log(data, "get AllTransaction data");
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -77,7 +76,6 @@ function WalletModel() {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -682,24 +680,24 @@ function WalletModel() {
                                           <p
                                             className={`text-sm  ${
                                               item.status === "pending"
-                                                ? "text-[#FF0202]"
+                                                ? "text-orange-600":item.status==="reject"?"text-red-600"
                                                 : "text-[#0FBF00]"
                                             }  font-medium`}
                                           >
-                                            {item.status === "pending"
+                                            {item.type === "withdraw"
                                               ? "-"
                                               : "+"}{" "}
                                             {item.deposit_amount ||
                                               item.withdraw_amount}{" "}
                                             <span className="text-[10px] font-light">
-                                              ˀ INR
+                                               INR
                                             </span>
                                           </p>
                                           <p
                                             className={`text-xs ${
                                               item.status === "pending"
-                                                ? "text-[#FF0202]"
-                                                : "text-[#0FBF00]"
+                                              ? "text-orange-600":item.status==="reject"?"text-red-600"
+                                              : "text-[#0FBF00]"
                                             } `}
                                           >
                                             {item.type} :{" "}
@@ -790,7 +788,7 @@ function WalletModel() {
                               <p
                                 className={`mt-6  ${
                                   transactionDetails?.status === "pending"
-                                    ? "text-red-600"
+                                    ? "text-orange-600":transactionDetails?.status==="reject"?"text-red-600"
                                     : "text-green-600"
                                 } text-center font-semibold text-xs`}
                               >
@@ -799,8 +797,8 @@ function WalletModel() {
                               <p
                                 className={`text-sm mt-1 text-center ${
                                   transactionDetails?.status === "pending"
-                                    ? "text-red-500"
-                                    : "text-[#18FB05]"
+                                  ? "text-orange-600":transactionDetails?.status==="reject"?"text-red-600"
+                                  : "text-green-600"
                                 }  `}
                               >
                                 {transactionDetails?.deposit_amount ||
@@ -828,7 +826,7 @@ function WalletModel() {
                                         color={
                                           transactionDetails?.status ===
                                           "pending"
-                                            ? "red"
+                                            ? "orange":transactionDetails?.status==="reject"?"red"
                                             : "green"
                                         }
                                         fontSize="20px"

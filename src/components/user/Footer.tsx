@@ -32,7 +32,6 @@ const Footer = () => {
       );
       setLogoAndFav(response.data);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.data.message,
         status: "error",

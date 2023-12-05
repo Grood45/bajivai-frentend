@@ -11,19 +11,15 @@ const TennisScore = () => {
   //   const socket = socketIOClient("https://power-db-database.onrender.com");
 
   //   socket.on("connect", () => {
-  //     //console.log("Connected to the server");
   //     setLoading1(true);
   //   });
 
   //   socket.on("scoreData", (data) => {
-  //     // //console.log("Received odds data:", data);
   //     setMatchScore(data);
-  //     // console.log(data, "data1");
   //     setLoading1(false);
   //   });
 
   //   socket.on("disconnect", () => {
-  //     //console.log("Disconnected from the server");
   //     setLoading1(false);
   //   });
 
@@ -33,7 +29,6 @@ const TennisScore = () => {
   //   // Clean up the socket connection when the component unmounts
   //   return () => {
   //     socket.disconnect();
-  //     //console.log("socket disconnected");
   //   };
   // }, [params.id]);
 

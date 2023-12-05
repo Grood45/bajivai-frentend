@@ -42,8 +42,11 @@ const Withdrawal = ({
     min_limit = 0,
     user_id = "",
     full_name = "",
+    exposure_limit = 0,
     amount = 0,
   } = userAuth?.combineR?.userAuth?.data?.user || {};
+
+  
   const [userfilldetails, setUserFillDetails] = useState<any>([]);
   const [copiedItem, setCopiedItem] = useState(null);
   const [minutes, setMinutes] = useState(Number(10));
@@ -60,7 +63,6 @@ const Withdrawal = ({
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/get-payment-method?type=withdraw`
       );
-      console.log(response, "response-data");
       setWithdrawData(response.data);
     } catch (error: any) {
       console.error("Error uploading image:", error.message);
@@ -97,7 +99,6 @@ const Withdrawal = ({
       utr_no: "",
       type: withdrawDetails.type,
     };
-    console.log(payload, "payload");
     setWithdrawLoading(true);
     try {
       const response = await sendPostRequest(
@@ -109,9 +110,7 @@ const Withdrawal = ({
         setActiveCard(cardIndex);
       }
       setWithdrawLoading(false);
-      console.log(response.data, "withdraw transaction response data");
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       // alert(error.data.message)
       toast({
         title: error.data.message,
@@ -140,18 +139,24 @@ const Withdrawal = ({
     e.preventDefault();
     if (cardIndex === 2) {
       if (radio) {
-        console.log(
-          value,
-          withdrawDetails.min_limit,
-          withdrawDetails.max_limit
-        );
+       
         if (
           value >= withdrawDetails.min_limit &&
-          value <= withdrawDetails.max_limit
+          value <= withdrawDetails.max_limit && value<=amount-exposure_limit
         ) {
           setActiveCard(cardIndex);
-          console.log(withdrawDetails);
-        } else {
+        } 
+        else if(value>amount-exposure_limit){
+          toast({
+            title: `insufficent balance is ${amount-exposure_limit}`,
+            status: "error",
+            duration: 2000,
+            position: "top",
+            isClosable: true,
+          });
+
+        }
+        else {
           toast({
             title: `balance should be between ${withdrawDetails.min_limit}-${withdrawDetails.max_limit}`,
             status: "error",
@@ -703,7 +708,7 @@ const Withdrawal = ({
                 </div>
                 <div className="flex justify-between w-[100%]">
                   <p className=" text-sm font-medium">Time</p>
-                  <p className="text-sm flex items-center gap-4">
+                  <p className="text-xs flex items-center gap-4">
                     {viewReceipt.initiated_at}
                   </p>
                 </div>
@@ -718,7 +723,7 @@ const Withdrawal = ({
                             className="flex justify-between w-[100%]"
                           >
                             <p className=" text-sm font-medium">{key}</p>
-                            <p className=" text-sm flex items-center gap-4">
+                            <p className=" text-xs flex items-center gap-4">
                               {data[key]}
                               <span>
                                 <BiSolidCopy

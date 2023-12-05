@@ -66,7 +66,6 @@ function SignUpModal() {
   
   const applyPromoCode = () => {
     // Add logic to apply the promo code here
-    // console.log("Promo code applied:", promoCode);
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (

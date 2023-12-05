@@ -79,7 +79,6 @@ const Maincomponent = () => {
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/logofav/get-logo-fav/6532c132ed5efb8183a66703`
       );
-      console.log(response, "response");
 
       setMarque(response.data.marque);
       setSelectedFaviconImage(response.data.fav_icon);
@@ -87,7 +86,6 @@ const Maincomponent = () => {
       setFaq(response.data.fnq);
       setTc(response.data.tc);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -119,7 +117,6 @@ const Maincomponent = () => {
         isClosable: true,
       });
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -134,7 +131,6 @@ const Maincomponent = () => {
     getLogoAndFav();
   }, []);
 
-  console.log();
 
   const handleRulesChange = (value: string) => {
     setTc(value);
@@ -145,17 +141,14 @@ const Maincomponent = () => {
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/gameslider/get-slider/6551e31439cda85a6c606fef`
       );
-      console.log(response, "response in carousel");
       setSliderData(response.data);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.data.message,
         status: "error",
         duration: 2000,
         isClosable: true,
       });
-      console.log(error, "errr");
     }
   };
 
@@ -173,7 +166,6 @@ const Maincomponent = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
-    console.log(imageurl,"iamge urkl check")
     try {
       
       const payload={
@@ -194,7 +186,6 @@ const Maincomponent = () => {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -254,7 +245,6 @@ const Maincomponent = () => {
         isClosable: true,
       });
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",

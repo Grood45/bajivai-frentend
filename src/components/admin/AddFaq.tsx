@@ -22,7 +22,6 @@ function AddFaq({ faq, setFaq }: { faq: any; setFaq: any }) {
     setFaq(updatedfaq);
   };
 
-  console.log(faq, "getway admin");
 
   return (
     <div className="w-[100%] flex shadow-xl flex-col gap-6 m-auto mt-5 rounded-[20px] p-4">

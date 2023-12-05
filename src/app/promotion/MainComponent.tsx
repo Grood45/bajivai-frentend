@@ -30,10 +30,8 @@ const MainComponent = () => {
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/get-all-promotion?type=${query}`
         );
         setPromotions(data.data);
-        console.log(data.data, "fetching data");
-        console.log(promotions, "in Promotion component");
+       
       } catch (error) {
-        console.error("Error fetching promotions:", error);
       }
     };
 
@@ -52,8 +50,7 @@ const MainComponent = () => {
     if (data) {
       setInvidualReadMore(data);
     }
-    console.log(data, "data readm");
-    console.log(invidualReadMore, "invidualreadmore");
+  
     setShowReadMore(true);
   };
 

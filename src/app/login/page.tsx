@@ -182,17 +182,14 @@ const MainComponent = () => {
       );
       setLogoAndFav(response.data);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.data.message,
         status: "error",
         duration: 2000,
         isClosable: true,
       });
-      console.log(error, "errr");
     }
   };
-  console.log(logoAndFav, "logofav");
   useEffect(() => {
     handleGetLogoAndFav();
   }, []);

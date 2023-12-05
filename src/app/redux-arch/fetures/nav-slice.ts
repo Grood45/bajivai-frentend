@@ -45,7 +45,6 @@ export default navState.reducer;
 //     initialState,
 //     reducers:{
 //         changeTheme_Fn:(state=initialState)=>{
-//             console.log(state);
 
 //             return {
 

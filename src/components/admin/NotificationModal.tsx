@@ -45,10 +45,8 @@ function NotificationModal() {
     socket.on("userNotification", (data, user_id) => {
       if(user_id=="U123456")
       {
-        console.log("Received user event with data:", data, user_id);
       }
       else if(!user_id){
-        console.log("Received for all :", data);
 
 
       }
@@ -70,7 +68,6 @@ function NotificationModal() {
         setNotification(receivedData);
       }
       setLoading1(false);
-      console.log(data, "notification data");
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -79,7 +76,6 @@ function NotificationModal() {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

@@ -56,19 +56,15 @@ function ResultMaker() {
   const [resultMatchId, setResultMatchId] = useState<any>("");
   const [requestResultType, setRequestResultType] = useState<any>("");
   const totalPages = pagination.totalPages; // Replace with your total number of pages
-  console.log(selectedTeam, "ll");
   const UpdateStatus: any = async (name: any, match_id: any) => {
     let payload = { name };
-    console.log(payload);
     try {
       const response = await sendPatchRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/sport/toggle-match/${match_id}`,
         payload
       );
 
-      console.log(response);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -96,7 +92,6 @@ function ResultMaker() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -132,7 +127,6 @@ function ResultMaker() {
   //       isClosable: true,
   //     });
   //     setLoading(false);
-  //     console.log(error);
   //   }
   // };
 
@@ -186,7 +180,6 @@ function ResultMaker() {
   };
 
   const handleWinner = (team: any, type: any, match_id: any) => {
-    console.log(type, match_id);
     setResultTeam(team);
     setResultMatchId(match_id);
     setRequestResultType(type);
@@ -194,7 +187,6 @@ function ResultMaker() {
     // alert(type);
   };
 
-  console.log(selectedTeam);
 
   const handleWinnerDeclaire = async () => {
     if (!selectedTeam) {
@@ -216,7 +208,6 @@ function ResultMaker() {
       runner2,
       type: requestResultType,
     };
-    console.log(payload, resultMatchId);
     try {
       const response = await sendPatchRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/result/update-result/${resultMatchId}`,
@@ -224,7 +215,6 @@ function ResultMaker() {
       );
       // setMatches(response.data);
       setLoading(false);
-      console.log(response, "response");
       toast({
         title: "Update results.",
         description: `${response.message}`,
@@ -246,7 +236,6 @@ function ResultMaker() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -258,7 +247,6 @@ function ResultMaker() {
   //   try {
   //     const response = await fetchGetRequest(url);
   //     setMatchesIds(response.data);
-  //     console.log(response, "llll");
   //   } catch (error: any) {
   //     toast({
   //       title: "Fetch Data.",
@@ -269,7 +257,6 @@ function ResultMaker() {
   //       isClosable: true,
   //     });
 
-  //     console.log(error);
   //   }
   // };
 
@@ -277,7 +264,6 @@ function ResultMaker() {
   //   GetAllMatchesIds();
   // }, []);
 
-  // console.log(matchesIds, "uii");
   return (
     <ChakraProvider theme={theme}>
       <Box>

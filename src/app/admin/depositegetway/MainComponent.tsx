@@ -68,7 +68,6 @@ const MainComponent = () => {
   };
 
   const handleFormChange = (e: any) => {
-    console.log(e);
     const { value, name } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -98,7 +97,6 @@ const MainComponent = () => {
       });
       setStatusLoading(false);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -124,7 +122,6 @@ const MainComponent = () => {
         isClosable: true,
       });
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -140,9 +137,7 @@ const MainComponent = () => {
       const response = await fetchGetRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/get-payment-method?type=deposit`
       );
       setPaymentData(response.data);
-      console.log(response.data,'deposit data')
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -173,7 +168,6 @@ const MainComponent = () => {
         setSelectedImage(response.url);
       }
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: "Error uploading image",
         status: "error",
@@ -216,7 +210,6 @@ const MainComponent = () => {
         isClosable: true,
       });
       setAddLoading(false);
-      console.log(error, "error ");
     }
   };
 
@@ -224,7 +217,6 @@ const MainComponent = () => {
     getPaymentGateway();
   }, []);
 
-  console.log(paymentData, "datata");
   return (
     <div className=" mt-8">
       {!show ? (

@@ -29,10 +29,8 @@ const MainComponent = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/promotion/get-all-promotion?type=${query}`
       );
       setPromotions(data.data);
-      console.log(data.data, "fetching data");
-      console.log(promotions, "in Promotion component");
+     
     } catch (error) {
-      console.error("Error fetching promotions:", error);
     }
   };
   useEffect(() => {
@@ -42,7 +40,6 @@ const MainComponent = () => {
   const handleReadMore = (data: any) => {
     if (data) {
       setInvidualReadMore(data);
-      console.log(invidualReadMore, "invidualreadmore");
     }
   };
 
@@ -53,7 +50,6 @@ const MainComponent = () => {
   const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
 
   const handleSendNotification = (data: any, user_id: string) => {
-    console.log("send");
     let payload = JSON.stringify({ name: "suvam" });
     socket.emit("adminEvent", payload);
   };

@@ -51,9 +51,7 @@ const MainComponent = () => {
       const receivedData: UserInterface[] = response.data;
       setAllData(receivedData);
       setUsersCount(response.usersCount);
-      console.log(response.usersCount, "d");
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -62,7 +60,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -74,9 +71,7 @@ const MainComponent = () => {
 
     return () => clearTimeout(id);
   }, [currentPage, search, userCategory]);
-  console.log(allData);
 
-  console.log(usersCount, "ddd");
   const data1 = [
     {
       id: 1,

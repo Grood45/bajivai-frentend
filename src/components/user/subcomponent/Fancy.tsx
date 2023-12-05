@@ -72,11 +72,9 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
   useEffect(() => {
     const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      //console.log("Connected to the server");
       setLoading(true);
     });
     socket.on("fancyData", (data) => {
-      console.log("Received fancy data:", data);
       if (data) {
         let sortedData = (data?.t4 || data?.t3 || []).sort(
           (a: any, b: any) => a.sid - b.sid
@@ -86,7 +84,6 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       setLoading(false);
     });
     socket.on("disconnect", () => {
-      //console.log("Disconnected from the server");
       setLoading(false);
     });
 
@@ -96,7 +93,6 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
-      //console.log("socket disconnected");
       setLoading(false);
     };
   }, [param.id]);
@@ -107,7 +103,6 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     betType: BetType
     // matchName: string
   ) => {
-    console.log(odd);
     if (odd < 1) {
       return;
     }
@@ -233,7 +228,6 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
         duration: 4000,
         isClosable: true,
       });
-      //console.error(error);
     }
   };
 

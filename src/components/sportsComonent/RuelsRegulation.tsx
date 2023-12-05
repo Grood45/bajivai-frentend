@@ -46,7 +46,6 @@ const RulesRegulation = () => {
         duration: 4000,
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

@@ -34,7 +34,6 @@ function MainComponent() {
         duration: 2000,
         isClosable: true,
       });
-      console.log(error, "errr");
     }
   };
   useEffect(() => {
@@ -73,7 +72,6 @@ function MainComponent() {
         isClosable: true,
       });
       setLoading1(false);
-      console.log(error);
     }
   };
 

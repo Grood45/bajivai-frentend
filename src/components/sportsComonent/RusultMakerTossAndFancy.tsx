@@ -90,7 +90,6 @@ const RusultMakerTossAndFancy = () => {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -124,7 +123,6 @@ const RusultMakerTossAndFancy = () => {
   };
 
   const handleConfirmResult = async () => {
-    console.log(selectedMatches);
     let payload = { user_ids: selectedMatches, answer: result };
     try {
       let response = await sendPatchRequest(
@@ -150,7 +148,6 @@ const RusultMakerTossAndFancy = () => {
         isClosable: true,
       });
     }
-    console.log(payload);
   };
 
   return (

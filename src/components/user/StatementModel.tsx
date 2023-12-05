@@ -53,7 +53,6 @@ function StatementModel() {
         setStateMentData(receivedData);
       }
       setLoading1(false);
-      console.log(data, "getAllbets data");
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -62,7 +61,6 @@ function StatementModel() {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

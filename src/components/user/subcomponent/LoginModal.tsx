@@ -47,7 +47,6 @@ const ModalComponent: React.FC = () => {
   const [loading, setLoading] = useState<Boolean>(false);
 
   const handleUser = async (userData: any) => {
-    console.log(userData, "called");
     let payload = {
       email: userData.email.email,
       first_name: userData?.email?.name?.split(" ")[0],
@@ -57,7 +56,6 @@ const ModalComponent: React.FC = () => {
       otpless_token: userData?.token,
     };
     let response = await dispatch(loginAsync(payload));
-    console.log(response.payload, "unde");
     if (response.payload.data && response.payload.success) {
       toast({
         description: response.payload.message || "Successful",
@@ -66,7 +64,6 @@ const ModalComponent: React.FC = () => {
         duration: 4000,
         isClosable: true,
       });
-      console.log(response.payload, "unde");
       router.push(response.payload.redirect);
     }
     return;

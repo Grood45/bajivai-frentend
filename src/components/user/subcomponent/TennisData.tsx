@@ -101,17 +101,14 @@ const TennisData = ({
   useEffect(() => {
     const socket = io(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      console.log("Connected to the server");
     });
 
     socket.on("Data", (data) => {
-      // console.log("Received odds data:", data);
       if (data) {
         setMatchData(data?.data?.t1 || []);
       }
     });
     socket.on("disconnect", () => {
-      console.log("Disconnected from the server");
     });
     socket.emit("startDataFetching", "tennis");
     return () => {
@@ -132,13 +129,11 @@ const TennisData = ({
         };
       });
     }
-    console.log(matchData,"in tennis")
   }, [matchData]);
 
   useEffect(() => {
     FetchData();
   }, [currentPage]);
-  console.log(data, "tennis");
   const handleNextClick = () => {
     setCurrentPage((pre) => pre + 1);
   };

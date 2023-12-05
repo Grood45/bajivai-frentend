@@ -25,8 +25,6 @@ const CricketScore = ({
     scoreData?.last24ballsNew && scoreData.last24ballsNew.length > 0
       ? scoreData.last24ballsNew[scoreData.last24ballsNew.length - 1]
       : null;
-  console.log(singleMatch, "singleMAtch");
-  console.log(singleMatch?.open_date, "singleMAtch open date");
   const countdown = singleMatch?.open_date || "Match Start";
   useEffect(() => {
     // alert(countdown)
@@ -52,12 +50,10 @@ const CricketScore = ({
         clearInterval(timer);
       };
     } catch (error: any) {
-      console.error("Error:", error.message);
       setTimeRemaining(error.message);
     }
   }, [singleMatch]);
 
-  console.log(remainingTime, "remaninng time");
   return (
     <div className="bg-gradient-to-r from-indigo-700 to bg-purple-900 ... p-[1px] h-[230px] md:h-[260px] rounded-2xl  ">
       <div className="flex justify-between items-center p-3">

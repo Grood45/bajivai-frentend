@@ -62,7 +62,6 @@ const CricketData = ({
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/get-cricket-match?page=${currentPage}&limit=1000`
       );
       const data = response.data;
-      console.log(data,"cricket")
       setData(data);
       setPagination(response.pagination);
     } catch (error: any) {
@@ -76,22 +75,18 @@ const CricketData = ({
     }
   };
 
-  // console.log(matchData, "cricket", data);
 
   useEffect(() => {
     const socket = io(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      console.log("Connected to the server");
     });
 
     socket.on("Data", (data: any) => {
-      // console.log("Received odds data:", data);
       if (data) {
         setMatchData(data?.data?.t1 || []);
       }
     });
     socket.on("disconnect", () => {
-      console.log("Disconnected from the server");
     });
     socket.emit("startDataFetching", "cricket");
     return () => {
@@ -100,11 +95,9 @@ const CricketData = ({
   }, []);
   useEffect(() => {
     FetchData();
-    console.log(matchData,"gfcghg")
 
   }, [currentPage]);
 
-  console.log(process.env.NEXT_PUBLIC_BASE_URL, "env dd");
 
   const handleNextClick = () => {
     setCurrentPage((pre) => pre + 1);
@@ -134,7 +127,6 @@ const finalData:any=[]
       }
       return count;
     }, 0);
-console.log(countMatches,"count")
  
       let upcommingCount = finalData?.length-countMatches;
     
@@ -147,8 +139,7 @@ console.log(countMatches,"count")
         };
       });
     
-    console.log(matchData,"matchData checking")
-    console.log(data,"data in cricketdata")
+   
 
   }, [matchData]);
 

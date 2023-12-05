@@ -61,7 +61,6 @@ function CompetitionTable() {
       const response = await fetchGetRequest(url);
       setMatches(response.data);
       setPagination(response.pagination);
-      console.log(response.data, "compeition matches hhh");
       setLoading(false);
     } catch (error: any) {
       toast({
@@ -73,20 +72,17 @@ function CompetitionTable() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
   const handleStatus = async (match: any, match_id: any, index: any) => {
     setIndex(index);
     let status = match.status == true ? false : true;
-    console.log(match_id);
     setLoading(true);
     try {
       const response = await sendPatchRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/update-match-status/${match_id}`
       );
-      console.log("Response", response);
       setLoading(false);
       const updatedData = matches.map((ele: any) => {
         if (match_id === ele.match_id) {
@@ -95,7 +91,6 @@ function CompetitionTable() {
         } else {
           return ele;
         }
-        console.log(updatedData, "updated data");
       });
       setLoading(false);
       setMatches(updatedData);
@@ -136,7 +131,6 @@ function CompetitionTable() {
 
   const handleImage = async (imageurl: any, league: any,value:string) => {
     const id = league.match_id;
-    console.log(id,"id")
     try {
       const payload = {
         first_team_logo:imageurl,
@@ -148,7 +142,6 @@ function CompetitionTable() {
       const response = await sendPatchRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/update-team-logo/${id}`,final
       );
-      console.log(response, "responeA");
       const updatedData = matches.map((ele: any) => {
         if (league.match_id === ele.match_id) {
           ele = response.data;
@@ -157,7 +150,6 @@ function CompetitionTable() {
           return ele;
         }
       });
-      console.log(updatedData, "updated data");
       setMatches(updatedData);
       setLoading(false);
     } catch (error: any) {
@@ -170,7 +162,6 @@ function CompetitionTable() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 

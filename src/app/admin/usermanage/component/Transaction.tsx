@@ -26,7 +26,6 @@ const Transaction = () => {
             setTransactionData(receivedData);
           }
           setLoading1(false);
-          console.log(data, "get AllTransaction data");
         } catch (error: any) {
           toast({
             description: `${error.data.message}`,
@@ -35,7 +34,6 @@ const Transaction = () => {
             position: "top",
             isClosable: true,
           });
-          console.log(error);
         }
       };
       

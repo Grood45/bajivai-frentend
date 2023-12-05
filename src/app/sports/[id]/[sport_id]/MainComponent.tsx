@@ -91,7 +91,6 @@ const MainComponent = () => {
       );
       let data = response.data;
       setSingleMatch(data);
-      console.log(data, "matchData");
     } catch (error: any) {
       toast({
         description: error.data.message,
@@ -113,7 +112,6 @@ const MainComponent = () => {
       setLoading(true);
     });
     socket.on("scoreData", (data) => {
-      console.log(data, "score");
       if (data) {
         setScoreData(data);
       }

@@ -108,7 +108,6 @@ const MainComponent = () => {
         duration: 2000,
         isClosable: true,
       });
-      console.log(error, "errr");
     }
   };
 
@@ -119,14 +118,12 @@ const MainComponent = () => {
       );
       setLogoAndFav(response.data);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
         duration: 2000,
         isClosable: true,
       });
-      console.log(error, "errr");
     }
   };
   const handleGetGame = async () => {
@@ -142,7 +139,6 @@ const MainComponent = () => {
         payload
       );
 
-      console.log(response.data, "hujhjnjn");
       setData(response.data);
     } catch (error: any) {
       toast({
@@ -151,7 +147,6 @@ const MainComponent = () => {
         duration: 2000,
         isClosable: true,
       });
-      console.log(error, "errr");
     }
   };
 
@@ -195,7 +190,6 @@ const MainComponent = () => {
         duration: 2000,
         isClosable: true,
       });
-      console.log(error, "errr");
     }
   };
 
@@ -344,7 +338,6 @@ export const SeamlessGame: any = ({
         payload
       );
 
-      console.log(response.data, "hujhjnjn");
       setData(response.data);
       setPagination(response.pagination);
     } catch (error: any) {
@@ -354,7 +347,6 @@ export const SeamlessGame: any = ({
         duration: 2000,
         isClosable: true,
       });
-      console.log(error, "errr");
     }
   };
 

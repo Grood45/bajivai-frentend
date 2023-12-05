@@ -68,7 +68,6 @@ function LeagueTable() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -102,7 +101,6 @@ function LeagueTable() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -158,7 +156,6 @@ function LeagueTable() {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 

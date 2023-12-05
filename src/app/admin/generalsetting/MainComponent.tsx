@@ -17,11 +17,9 @@ const MainComponent = () => {
         const data = await fetchGetRequest(`${process.env.NEXT_PUBLIC_BASE_URL}/api/rules/get-rules/652a38fb2a2e359a326f3cd3`);
         
         setRules(data.data); 
-        console.log(data.data,'fetching data')
-        console.log(rules,'in general component')
+       
       } catch (error) {
         
-        console.error("Error fetching general:", error);
       }
     };
 

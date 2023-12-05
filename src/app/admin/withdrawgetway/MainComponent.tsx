@@ -105,7 +105,6 @@ const MainComponent = () => {
   };
 
   const handleFormChange = (e: any) => {
-    console.log(e);
     const { value, name } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -135,7 +134,6 @@ const MainComponent = () => {
       });
       setStatusLoading(false);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -161,7 +159,6 @@ const MainComponent = () => {
         isClosable: true,
       });
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -179,7 +176,6 @@ const MainComponent = () => {
       );
       setPaymentData(response.data);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -210,7 +206,6 @@ const MainComponent = () => {
         setSelectedImage(response.url);
       }
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: "Error uploading image",
         status: "error",
@@ -260,7 +255,6 @@ const MainComponent = () => {
     getPaymentGateway();
   }, []);
 
-  console.log(paymentData, "datata");
   return (
     <div className=" mt-8">
       {!show ? (

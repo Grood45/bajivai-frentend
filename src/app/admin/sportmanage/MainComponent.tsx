@@ -32,14 +32,11 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: Event[] = response.data;
-      console.log(data, "gg");
       if (receivedData) {
         setAllSport(receivedData);
       }
 
-      console.log(response.betsCount, "d");
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -48,7 +45,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -82,7 +78,6 @@ const MainComponent = () => {
     sport_id: string,
     index: number
   ) => {
-    console.log("dddd");
     setIndex(index);
     setStatusLoading(true);
     try {
@@ -112,7 +107,6 @@ const MainComponent = () => {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
 
       setStatusLoading(false);
     }

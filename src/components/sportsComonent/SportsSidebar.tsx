@@ -112,7 +112,6 @@ export const SportsSideBar = () => {
   const dispatch = useDispatch();
   // const {sidebarOpenLeft} = useSelector((store:any) => store.commonReducer);
 
-  //  console.log(sidebarOpenLeft,"ssidebarOenLefttore")
 
   // const AdminLogout = () => {
   //   dispatch({ type: ADMIN_LOGOUT });
@@ -120,9 +119,7 @@ export const SportsSideBar = () => {
   //   navigate("/adminlogin");
   // };
 
-  // console.log(sidebarOpen,"sidebaropen ")
   const handelNavigate = (elm: any) => {
-    console.log(elm.path);
     router.push(elm.path);
   };
 

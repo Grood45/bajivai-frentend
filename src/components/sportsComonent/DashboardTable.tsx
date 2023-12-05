@@ -73,11 +73,9 @@ function DashboardTable() {
     try {
       let response = await fetchGetRequest(url);
       const data = response;
-      console.log(data, "data from api");
       setAllData(data);
       setPagination(data.pagination);
       setLoading(false);
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -86,7 +84,6 @@ function DashboardTable() {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -99,7 +96,6 @@ function DashboardTable() {
     return () => clearTimeout(id);
   }, [currentPage, search, betCategory]);
 
-  console.log(allData);
 
   const data = [
     {
@@ -181,7 +177,6 @@ function DashboardTable() {
   };
 
   const handleConfirmResult = async () => {
-    console.log(selectedMatches);
     let payload = { user_ids: selectedMatches, answer: result };
     try {
       let response = await sendPatchRequest(
@@ -207,7 +202,6 @@ function DashboardTable() {
         isClosable: true,
       });
     }
-    console.log(payload);
   };
   return (
     <Box>

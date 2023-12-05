@@ -17,10 +17,8 @@ export const sendPostRequest = async (url, data) => {
       //       localData?.verify_token||""
       //   },
     });
-    console.log(response);
     return response.data;
   } catch (error) {
-    console.error("Error sending POST request:", error);
     throw error.response;
   }
 };
@@ -39,7 +37,6 @@ export const fetchGetRequest = async (url) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching GET request:", error);
     throw error;
   }
 };
@@ -55,10 +52,8 @@ export const sendPatchRequest = async (url, data) => {
       //      localData?.verify_token||""
       //   },
     });
-    console.log("uihuowshfuh", response);
     return response.data;
   } catch (error) {
-    console.error("Error sending PATCH request:", error);
     throw error;
   }
 };
@@ -77,7 +72,6 @@ export const sendDeleteRequest = async (url) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error sending DELETE request:", error);
     throw error;
   }
 };

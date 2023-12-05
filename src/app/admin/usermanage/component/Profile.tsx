@@ -86,7 +86,6 @@ const Profile: React.FC<Props> = ({ userData }) => {
     kyc_verified: true,
   });
   const param = useParams();
-  console.log(param);
   const toast = useToast();
 
   const handleUpdate = async () => {
@@ -113,7 +112,6 @@ const Profile: React.FC<Props> = ({ userData }) => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
       setLoading(false);
     }
   };
@@ -123,7 +121,6 @@ const Profile: React.FC<Props> = ({ userData }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  console.log(formData);
   useEffect(() => {
     setFormData(userData);
   }, [param.id]);
@@ -426,7 +423,6 @@ export default Profile;
 
 // const sendNotification = () => {
 //   socket.emit('sendNotification', { message: notificationMessage });
-//   console.log("kkk")
 //   setNotificationMessage(''); // Clear the input field after sending the notification
 // };
 

@@ -86,7 +86,6 @@ const SoccerData = ({
       );
       const data = response.data;
       setData(data);
-      // console.log(data, "ldugudg")
       setPagination(response.pagination);
     } catch (error: any) {
       toast({
@@ -102,18 +101,15 @@ const SoccerData = ({
   useEffect(() => {
     const socket = io(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      console.log("Connected to the server");
     });
 
     socket.on("Data", (data) => {
-      // console.log("Received odds data:", data);
       if (data) {
         setMatchData(data?.data?.t1 || []);
       }
     });
 
     socket.on("disconnect", () => {
-      console.log("Disconnected from the server");
     });
     socket.emit("startDataFetching", "socker");
 
@@ -148,7 +144,6 @@ const SoccerData = ({
     }
   }, [matchData]);
 
-  // console.log(matchData, "Soccer", data);
 
   let newData =
     matchFilter === "Inplay"

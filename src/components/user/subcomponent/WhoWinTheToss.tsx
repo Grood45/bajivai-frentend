@@ -51,7 +51,6 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
     betType: BetType
     // matchName: string
   ) => {
-    console.log(odd);
     if (odd < 1) {
       return;
     }
@@ -161,24 +160,18 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
   useEffect(() => {
     const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      //console.log("Connected to the server");
       setLoading(true);
     });
     socket.on("tossData", (data) => {
-      // //console.log("Received odds data:", data);
     });
     socket.on("disconnect", () => {
-      //console.log("Disconnected from the server");
       setLoading(false);
     });
 
-    // Emit the "startFetching" event with the eventID
     socket.emit("startFetchingToss", param.id);
 
-    // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
-      //console.log("socket disconnected");
       setLoading(false);
     };
   }, [param.id]);
@@ -203,7 +196,6 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
         duration: 4000,
         isClosable: true,
       });
-      //console.error(error);
     }
   };
 

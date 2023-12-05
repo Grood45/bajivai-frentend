@@ -44,7 +44,6 @@ const MainComponent = () => {
   const [statusLoading, setStatusLoading] = useState<Boolean>(false);
   const toast = useToast();
   const param = useParams();
-  // console.log(id);
   const data = [
     {
       id: 1,
@@ -96,7 +95,6 @@ const MainComponent = () => {
       if (receivedData) {
         setUserData(receivedData);
       }
-      console.log(data);
     } catch (error: any) {
       toast({
         description: `${error.data.error}`,
@@ -105,7 +103,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -142,7 +139,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
       setStatusLoading(false);
     }
   };

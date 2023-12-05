@@ -54,7 +54,6 @@ const MyProfile = ({
         setTransactionData(receivedData);
       }
       setLoading1(false);
-      console.log(data, "get AllTransaction data");
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -63,7 +62,6 @@ const MyProfile = ({
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -538,19 +536,17 @@ const MyProfile = ({
                       <p
                         className={`text-sm  ${
                           item.status === "pending"
-                            ? "text-[#FF0202]"
-                            : "text-[#0FBF00]"
+                            ? "text-orange-500":item.status==="reject"?"text-red-600": "text-[#0FBF00]"
                         }  font-medium`}
                       >
-                        {item.status === "pending" ? "-" : "+"}{" "}
+                        {item.type === "withdraw" ? "-" : "+"}{" "}
                         {item.deposit_amount || item.withdraw_amount}{" "}
                         <span className="text-[10px] font-light">INR</span>
                       </p>
                       <p
                         className={`text-xs ${
                           item.status === "pending"
-                            ? "text-[#FF0202]"
-                            : "text-[#0FBF00]"
+                            ? "text-orange-500":item.status==="reject"?"text-red-600": "text-[#0FBF00]"
                         } `}
                       >
                         {item.type} : <span>{item.status}</span>
@@ -604,19 +600,21 @@ const MyProfile = ({
             </p>
             <div>
               <p
-                className={`mt-6  ${
+                className={`mt-6  
+                ${
                   transactionDetails?.status === "pending"
-                    ? "text-red-600"
-                    : "text-green-600"
-                } text-center font-semibold text-xs`}
+                ? "text-orange-500":transactionDetails?.status==="reject"?"text-red-600": "text-[#0FBF00]"
+            }
+                
+                
+                text-center font-semibold text-xs`}
               >
                 {transactionDetails?.type}
               </p>
               <p
                 className={`text-sm mt-1 text-center ${
                   transactionDetails?.status === "pending"
-                    ? "text-red-500"
-                    : "text-[#18FB05]"
+                  ? "text-orange-500":transactionDetails?.status==="reject"?"text-red-600": "text-[#0FBF00]"
                 }  `}
               >
                 {transactionDetails?.deposit_amount ||
@@ -643,7 +641,7 @@ const MyProfile = ({
                       <GoDotFill
                         color={
                           transactionDetails?.status === "pending"
-                            ? "red"
+                            ? "orange": transactionDetails?.status==="reject"?"red"
                             : "green"
                         }
                         fontSize="20px"
@@ -692,7 +690,10 @@ const MyProfile = ({
                     </span>
                   </p>
                 </div>
-               {transactionDetails?.admin_details?.map((item:any, index:any)=>{
+             
+
+{transactionDetails?.type==="deposit"?<>
+                {transactionDetails?.admin_details?.map((item:any, index:any)=>{
                 return  <div key={index} className="flex justify-between w-[100%]">
                 <p className="text-sm font-medium">
                  {item.fieldName}
@@ -704,7 +705,36 @@ const MyProfile = ({
                   </span>
                 </p>
               </div>
-               })}
+               })} 
+                </>:
+                <>
+                {transactionDetails?.user_details?.map((data: any, index: any) => {
+                  return (
+                    <div key={index}>
+                      {Object.keys(data).map((key) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex justify-between w-[100%]"
+                          >
+                            <p className=" text-sm font-medium">{key}</p>
+                            <p className=" text-xs flex items-center gap-4">
+                              {data[key]}
+                              <span>
+                                <BiSolidCopy
+                                  onClick={() => copyToClipboard(data[key])}
+                                  cursor="pointer"
+                                  fontSize="20px"
+                                />
+                              </span>
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+                </>}
                
                 
               </div>

@@ -153,7 +153,6 @@ const MainComponent = () => {
       });
       setAdminUpdateLoading(false);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -213,7 +212,6 @@ const MainComponent = () => {
 
     setAdminPasswordLoading(true);
 
-    console.log(payload, "payyyy");
     try {
       const response = await sendPatchRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/reset-password/${1}`,
@@ -236,7 +234,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error, "erroro");
     }
     setAdminPasswordLoading(false);
   };

@@ -48,9 +48,7 @@ function Notification() {
     // User listens for the event emitted by the backend
     socket.on("userNotification", (data, id) => {
       if (id == user_id) {
-        console.log("Received user event with data:", data, id);
       } else if (!user_id) {
-        console.log("Received for all :", data);
       }
     });
 
@@ -74,7 +72,6 @@ function Notification() {
         setNotification(receivedData);
       }
       setLoading1(false);
-      console.log(data, "notification data");
     } catch (error: any) {
       toast({
         description: `${error.data.message}`,
@@ -83,7 +80,6 @@ function Notification() {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
