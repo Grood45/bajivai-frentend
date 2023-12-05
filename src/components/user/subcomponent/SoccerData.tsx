@@ -108,7 +108,7 @@ const SoccerData = ({
     socket.on("Data", (data) => {
       // console.log("Received odds data:", data);
       if (data) {
-        setMatchData(data?.data?.t1);
+        setMatchData(data?.data?.t1 || []);
       }
     });
 
@@ -134,7 +134,7 @@ const SoccerData = ({
   };
 
   useEffect(() => {
-    if (matchData) {
+    if (matchData.length>0) {
       let liveMatch = matchData.filter((item: any) => item.iplay === true);
       let upcommingCount = matchData.length - liveMatch.length;
       setgameCounts((prev: any) => {
@@ -152,9 +152,9 @@ const SoccerData = ({
 
   let newData =
     matchFilter === "Inplay"
-      ? matchData?.filter((item: any) => item.iplay === true)
+      ?matchData.length>0&& matchData?.filter((item: any) => item.iplay === true)
       : matchFilter === "Upcoming"
-      ? matchData?.filter((item: any) => item.iplay === false)
+      ?matchData.length>0&& matchData?.filter((item: any) => item.iplay === false)
       : matchData;
 
   const [isRunning, setIsRunning] = useState(false);
@@ -206,7 +206,7 @@ const SoccerData = ({
                  grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3
             sm:w-[100wh] mt-[16px]  `}
             >
-              {matchData &&
+              {matchData.length>0 &&
                 matchData.slice(0, limit ? 9 : 100).map((item: any) => {
                   let matchItem = data.find(
                     (ele: any) => ele.match_id == item.gmid

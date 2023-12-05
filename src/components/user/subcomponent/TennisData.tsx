@@ -107,7 +107,7 @@ const TennisData = ({
     socket.on("Data", (data) => {
       // console.log("Received odds data:", data);
       if (data) {
-        setMatchData(data?.data?.t1);
+        setMatchData(data?.data?.t1 || []);
       }
     });
     socket.on("disconnect", () => {
@@ -120,7 +120,7 @@ const TennisData = ({
     };
   }, []);
   useEffect(() => {
-    if (matchData) {
+    if (matchData.length>0) {
       let liveMatch = matchData.filter((item) => item.iplay == true);
       let upcommingCount = matchData.length - liveMatch.length;
       setgameCounts((prev: any) => {
@@ -132,6 +132,7 @@ const TennisData = ({
         };
       });
     }
+    console.log(matchData,"in tennis")
   }, [matchData]);
 
   useEffect(() => {
@@ -146,10 +147,12 @@ const TennisData = ({
   };
   let newData =
     matchFilter === "Inplay"
-      ? matchData?.filter((item) => item.iplay === true)
+      ? matchData.length>0&&matchData?.filter((item) => item.iplay === true)
       : matchFilter === "Upcoming"
-      ? matchData?.filter((item) => item.iplay === false)
+      ?matchData.length>0&& matchData?.filter((item) => item.iplay === false)
       : matchData;
+
+      
   const handleMouseOver = (team: String, match_id: String) => {
     setIsRunning(true);
     setIsRunningMatchId(match_id);

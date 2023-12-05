@@ -19,22 +19,23 @@ interface CricketDataProps {
 }
 
 interface CricketData {
-  gameId: string;
-  marketId: string;
-  eid: string;
-  eventName: string;
-  inPlay: string;
+  gid: string;
+  mid: string;
+  etid: string;
+  ename: string;
+  iplay: boolean;
   tv: string;
-  back1: number;
-  lay1: number;
-  back11: number;
-  lay11: number;
-  back12: number;
-  lay12: number;
+  b1: number;
+  l1: number;
+  b2: number;
+  l2: number;
+  b3: number;
+  l3: number;
   m1: string;
   f: string;
   vir: number;
 }
+
 const CricketData = ({
   setgameCounts,
   matchFilter,
@@ -52,6 +53,8 @@ const CricketData = ({
   const [limit, setLimit] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const toast = useToast();
+
+
   const FetchData = async () => {
     try {
       // user id then match_id we have to pass here
@@ -84,20 +87,21 @@ const CricketData = ({
     socket.on("Data", (data: any) => {
       // console.log("Received odds data:", data);
       if (data) {
-        setMatchData(data?.data || []);
+        setMatchData(data?.data?.t1 || []);
       }
     });
     socket.on("disconnect", () => {
       console.log("Disconnected from the server");
     });
     socket.emit("startDataFetching", "cricket");
-
     return () => {
       socket.disconnect();
     };
   }, []);
   useEffect(() => {
     FetchData();
+    console.log(matchData,"gfcghg")
+
   }, [currentPage]);
 
   console.log(process.env.NEXT_PUBLIC_BASE_URL, "env dd");
@@ -108,27 +112,51 @@ const CricketData = ({
   const handlePrevClick = () => {
     setCurrentPage((pre) => pre - 1);
   };
-
+const finalData:any=[]
   useEffect(() => {
-    if (matchData) {
-      let liveMatch = matchData.filter((item: any) => item.inPlay == "True");
-      let upcommingCount = matchData.length - liveMatch.length;
+    const finaldata = matchData &&
+    matchData.length > 0 &&
+    matchData.map((item: any) => {
+      let matchItem: any = data.find(
+        (ele: any) => ele.match_id == item.gid
+      );
+      if(matchItem!==undefined){
+        finalData.push(matchItem)
+
+      }
+    });
+  
+
+    const countMatches = matchData.reduce((count, item:any) => {
+      const matchItem = data.find((ele:any) => ele.match_id === item.gid && item.iplay === true);
+      if (matchItem !== undefined) {
+        count++;
+      }
+      return count;
+    }, 0);
+console.log(countMatches,"count")
+ 
+      let upcommingCount = finalData?.length-countMatches;
+    
       setgameCounts((prev: any) => {
         return {
           ...prev,
-          cricketLiveCount: liveMatch.length,
+          cricketLiveCount: countMatches,
           cricketUpcomingCount: upcommingCount,
           // Update other counts accordingly
         };
       });
-    }
+    
+    console.log(matchData,"matchData checking")
+    console.log(data,"data in cricketdata")
+
   }, [matchData]);
 
   let newData =
     matchFilter === "Inplay"
-      ? matchData?.filter((item) => item.inPlay === "True")
+      ? matchData.length>0&&matchData.filter((item) => item.iplay ===true)
       : matchFilter === "Upcoming"
-      ? matchData?.filter((item) => item.inPlay === "False")
+      ? matchData.length>0&&matchData.filter((item) => item.iplay === false)
       : matchData;
 
   const handleMouseOver = (team: String, match_id: String) => {
@@ -177,15 +205,15 @@ const CricketData = ({
             <div
               className={` m-auto w-[100%]  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:w-[100wh] mt-[16px] `}
             >
-              {matchData &&
+              {matchData.length>0 &&
                 matchData.slice(0, limit ? 9 : 100).map((item: CricketData) => {
                   let matchItem:any = data.find(
-                    (ele: any) => ele.match_id == item.gameId
+                    (ele: any) => ele.match_id == item.gid
                   );
                   return (
                     <>
-                      {/* {data.includes(item.gameId as any) && ( */}
-                    {matchItem && <Link key={item.gameId} href={`/sports/${item.gameId}/4`}>
+                      {/* {data.includes(item.gid as any) && ( */}
+                    {matchItem && <Link key={item.gid} href={`/sports/${item.gid}/4`}>
                         <div
                           className={`bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] w-[100%] 
                        rounded-[10px] md:rounded-[16px]  `}
@@ -197,7 +225,7 @@ const CricketData = ({
                             <div className="flex flex-col w-[100%]  gap-3">
                               <div className="flex justify-between w-[100%]  ">
                                 <div className="flex items-center w-[85%] gap-4  sm:gap-4">
-                                  {item.inPlay == "True" ? (
+                                  {item.iplay === true ? (
                                     <button className="px-2 text-center text-[8px] w-[50px] h-[20px] flex items-center justify-center animate-pulse md:text-[10px] rounded-[4px] p-[1px] bg-red-600">
                                       Live
                                     </button>
@@ -212,14 +240,14 @@ const CricketData = ({
                                         isRunning &&
                                         isRunningTeamName ==
                                           "ICC world cup 2023" &&
-                                        item.gameId == isRunningMatchId
+                                        item.gid == isRunningMatchId
                                           ? "running"
                                           : ""
                                       }`}
                                       onMouseOver={() =>
                                         handleMouseOver(
                                           "ICC world cup 2023",
-                                          item.gameId
+                                          item.gid
                                         )
                                       }
                                       onMouseOut={() => handleMouseOut()}
@@ -230,11 +258,11 @@ const CricketData = ({
                                   {/* <div className="flex justify-between ">
                             <p className=" text-[12px] sm:text-[10px] text-[#FFF]">
                               Date:
-                              {item.eventName.split(" / ")[1].split("  ")[0]}
+                              {item.ename.split(" / ")[1].split("  ")[0]}
                             </p>
                             <p className="text-[12px] sm:text-[10px]  text-[#FFF]">
                               Time:
-                              {item.eventName.split(" / ")[1].split("  ")[1]}
+                              {item.ename.split(" / ")[1].split("  ")[1]}
                             </p>
                           </div> */}
                                 </div>
@@ -252,14 +280,14 @@ const CricketData = ({
                          
 
 
-                          {item.eventName.split(" / ")[0]}
+                          {item.ename.split(" / ")[0]}
                         </p> */}
                                 <div className="w-[100%] flex  justify-between items-center   ">
                                   <div className="flex flex-col items-center gap-1">
                                     <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
                                       <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
                                         {getTeamShortName(
-                                          item.eventName
+                                          item.ename
                                             .split("/")[0]
                                             .split("v")[0]
                                         )}
@@ -270,25 +298,25 @@ const CricketData = ({
                                         className={`marquee-text text-center  text-xs w-[80px] ${
                                           isRunning &&
                                           isRunningTeamName ==
-                                            item.eventName
+                                            item.ename
                                               .split("/")[0]
                                               .split("v")[0] &&
-                                          item.gameId == isRunningMatchId
+                                          item.gid == isRunningMatchId
                                             ? "running"
                                             : ""
                                         }`}
                                         onMouseOver={() =>
                                           handleMouseOver(
-                                            item.eventName
+                                            item.ename
                                               .split("/")[0]
                                               .split("v")[0],
-                                            item.gameId
+                                            item.gid
                                           )
                                         }
                                         onMouseOut={() => handleMouseOut()}
                                       >
                                         {
-                                          item.eventName
+                                          item.ename
                                             .split("/")[0]
                                             .split("v")[0]
                                         }
@@ -330,7 +358,7 @@ const CricketData = ({
                                     <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
                                       <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
                                         {getTeamShortName(
-                                          item.eventName
+                                          item.ename
                                             .split("/")[0]
                                             .split("v")[1]
                                         )}
@@ -341,25 +369,25 @@ const CricketData = ({
                                         className={`marquee-text text-center text-xs w-[80px] ${
                                           isRunning &&
                                           isRunningTeamName ==
-                                            item.eventName
+                                            item.ename
                                               .split("/")[0]
                                               .split("v")[1] &&
-                                          item.gameId == isRunningMatchId
+                                          item.gid == isRunningMatchId
                                             ? "running"
                                             : ""
                                         }`}
                                         onMouseOver={() =>
                                           handleMouseOver(
-                                            item.eventName
+                                            item.ename
                                               .split("/")[0]
                                               .split("v")[1],
-                                            item.gameId
+                                            item.gid
                                           )
                                         }
                                         onMouseOut={() => handleMouseOut()}
                                       >
                                         {
-                                          item.eventName
+                                          item.ename
                                             .split("/")[0]
                                             .split("v")[1]
                                         }
@@ -373,18 +401,18 @@ const CricketData = ({
                             <div className="flex text-white justify-between text-[9px] w-[90%] m-auto sm:w-[100%]">
                               <div className="flex  gap-2">
                                 <button className="min-w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
-                                  {item.back1}
+                                  {item.b1}
                                 </button>
                                 <button className="min-w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
-                                  {item.lay1}
+                                  {item.l1}
                                 </button>
                               </div>
                               <div className="flex  gap-2">
                                 <button className="min-w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
-                                  {item.back11}
+                                  {item.b2}
                                 </button>
                                 <button className="min-w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
-                                  {item.lay11}
+                                  {item.l2}
                                 </button>
                               </div>
                             </div>
@@ -455,14 +483,15 @@ const CricketData = ({
               }  sm:w-[100wh] mt-[16px] flex flex-col sm:flex-row gap-2 `}
             >
               {newData &&
-                newData.map((item: CricketData) => {
+               newData.length > 0 &&
+                newData.map((item: any) => {
                   let matchItem:any = data.find(
-                    (ele: any) => ele.match_id == item.gameId
+                    (ele: any) => ele.match_id == item.gid
                   );
                   return (
                     <>
-                      {/* {data.includes(item.gameId as any) && ( */}
-                    {matchItem&&<Link key={item.gameId} href={`/sports/${item.gameId}/4`}>
+                      {/* {data.includes(item.gid as any) && ( */}
+                    {matchItem&&<Link key={item.gid} href={`/sports/${item.gid}/4`}>
                         <div
                           className={`bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] w-[100%]   ${
                             !seeAll ? "lg:w-[270px]" : "w-[100%] "
@@ -475,7 +504,7 @@ const CricketData = ({
                             <div className="flex flex-col w-[100%]  gap-3">
                               <div className="flex justify-between w-[100%]  ">
                                 <div className="flex items-center w-[85%] gap-4  sm:gap-4">
-                                  {item.inPlay == "True" ? (
+                                  {item.iplay === true ? (
                                     <button className="px-2 text-center text-[8px] w-[50px] h-[20px] flex items-center justify-center animate-pulse md:text-[10px] rounded-[4px] p-[1px] bg-red-600">
                                       Live
                                     </button>
@@ -491,14 +520,14 @@ const CricketData = ({
                                         isRunning &&
                                         isRunningTeamName ==
                                           "ICC world cup 2023" &&
-                                        item.gameId == isRunningMatchId
+                                        item.gid == isRunningMatchId
                                           ? "running"
                                           : ""
                                       }`}
                                       onMouseOver={() =>
                                         handleMouseOver(
                                           "ICC world cup 2023",
-                                          item.gameId
+                                          item.gid
                                         )
                                       }
                                       onMouseOut={() => handleMouseOut()}
@@ -509,11 +538,11 @@ const CricketData = ({
                                   {/* <div className="flex justify-between ">
                               <p className=" text-[12px] sm:text-[10px] text-[#FFF]">
                                 Date:
-                                {item.eventName.split(" / ")[1].split("  ")[0]}
+                                {item.ename.split(" / ")[1].split("  ")[0]}
                               </p>
                               <p className="text-[12px] sm:text-[10px]  text-[#FFF]">
                                 Time:
-                                {item.eventName.split(" / ")[1].split("  ")[1]}
+                                {item.ename.split(" / ")[1].split("  ")[1]}
                               </p>
                             </div> */}
                                 </div>
@@ -531,14 +560,14 @@ const CricketData = ({
                            
 
 
-                            {item.eventName.split(" / ")[0]}
+                            {item.ename.split(" / ")[0]}
                           </p> */}
                                 <div className="w-[100%] flex  justify-between items-center   ">
                                   <div className="flex flex-col items-center gap-1">
                                     <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
                                       <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
                                         {getTeamShortName(
-                                          item.eventName
+                                          item.ename
                                             .split("/")[0]
                                             .split("v")[0]
                                         )}
@@ -549,25 +578,25 @@ const CricketData = ({
                                         className={`marquee-text text-center  text-xs w-[80px] ${
                                           isRunning &&
                                           isRunningTeamName ==
-                                            item.eventName
+                                            item.ename
                                               .split("/")[0]
                                               .split("v")[0] &&
-                                          item.gameId == isRunningMatchId
+                                          item.gid == isRunningMatchId
                                             ? "running"
                                             : ""
                                         }`}
                                         onMouseOver={() =>
                                           handleMouseOver(
-                                            item.eventName
+                                            item.ename
                                               .split("/")[0]
                                               .split("v")[0],
-                                            item.gameId
+                                            item.gid
                                           )
                                         }
                                         onMouseOut={() => handleMouseOut()}
                                       >
                                         {
-                                          item.eventName
+                                          item.ename
                                             .split("/")[0]
                                             .split("v")[0]
                                         }
@@ -609,7 +638,7 @@ const CricketData = ({
                                     <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
                                       <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
                                         {getTeamShortName(
-                                          item.eventName
+                                          item.ename
                                             .split("/")[0]
                                             .split("v")[1]
                                         )}
@@ -620,25 +649,25 @@ const CricketData = ({
                                         className={`marquee-text text-center text-xs w-[80px] ${
                                           isRunning &&
                                           isRunningTeamName ==
-                                            item.eventName
+                                            item.ename
                                               .split("/")[0]
                                               .split("v")[1] &&
-                                          item.gameId == isRunningMatchId
+                                          item.gid == isRunningMatchId
                                             ? "running"
                                             : ""
                                         }`}
                                         onMouseOver={() =>
                                           handleMouseOver(
-                                            item.eventName
+                                            item.ename
                                               .split("/")[0]
                                               .split("v")[1],
-                                            item.gameId
+                                            item.gid
                                           )
                                         }
                                         onMouseOut={() => handleMouseOut()}
                                       >
                                         {
-                                          item.eventName
+                                          item.ename
                                             .split("/")[0]
                                             .split("v")[1]
                                         }
@@ -652,18 +681,18 @@ const CricketData = ({
                             <div className="flex text-white justify-between text-[9px] w-[90%] m-auto sm:w-[100%]">
                               <div className="flex  gap-2">
                                 <button className="min-w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
-                                  {item.back1}
+                                  {item.b1}
                                 </button>
                                 <button className="min-w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
-                                  {item.lay1}
+                                  {item.l1}
                                 </button>
                               </div>
                               <div className="flex  gap-2">
                                 <button className="min-w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
-                                  {item.back11}
+                                  {item.b2}
                                 </button>
                                 <button className="min-w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
-                                  {item.lay11}
+                                  {item.l2}
                                 </button>
                               </div>
                             </div>
