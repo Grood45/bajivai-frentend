@@ -29,7 +29,7 @@ function MainComponent() {
     } catch (error: any) {
       setLoading(false);
       toast({
-        title: error.data.message,
+        title: error?.data?.message,
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -65,7 +65,7 @@ function MainComponent() {
     } catch (error: any) {
       toast({
         title: "Update Status.",
-        description: `${error.data.message}`,
+        description: `${error?.data?.message}`,
         status: "error",
         duration: 4000,
         position: "top",

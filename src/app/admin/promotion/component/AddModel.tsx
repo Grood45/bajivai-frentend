@@ -90,7 +90,7 @@ function AddModel() {
         }
       } catch (error: any) {
         toast({
-          title: error.data.message,
+          title: error?.data?.message,
           status: "error",
           duration: 2000,
           isClosable: true,
@@ -149,7 +149,7 @@ setType(e.target.value)
       onClose();
     } catch (error: any) {
       toast({
-        title: error.data.message,
+        title:error?.data?.message,
         status: "error",
         duration: 2000,
         isClosable: true,

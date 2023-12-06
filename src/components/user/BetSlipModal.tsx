@@ -54,7 +54,7 @@ function BetSlipModal() {
       setLoading1(false);
     } catch (error: any) {
       toast({
-        description: `${error.data.message}`,
+        description: `${error?.data?.message}`,
         status: "error",
         duration: 4000,
         position: "top",

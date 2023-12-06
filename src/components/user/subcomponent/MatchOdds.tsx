@@ -210,7 +210,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       dispatch(fetchUserDataAsync());
     } catch (error: any) {
       toast({
-        description: error.data.message,
+        description: error?.data?.message,
         status: "error",
         position: "top",
         duration: 4000,
@@ -241,7 +241,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       setBet(data);
     } catch (error: any) {
       toast({
-        description: error.data.message || "Something went wrong",
+        description: error?.data?.message || "Something went wrong",
         status: "error",
         position: "top",
         duration: 4000,

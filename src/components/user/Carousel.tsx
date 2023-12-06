@@ -31,7 +31,7 @@ import { RootState } from '@/app/redux-arch/store';
         setSliderData(response.data);
       } catch (error: any) {
         toast({
-          title: error.data.message,
+          title: error?.data?.message,
           status: "error",
           duration: 2000,
           isClosable: true,

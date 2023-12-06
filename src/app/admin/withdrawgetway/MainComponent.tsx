@@ -241,7 +241,7 @@ const MainComponent = () => {
       setFormData(initialFormData);
     } catch (error: any) {
       toast({
-        title: error.data.message,
+        title: error?.data?.message,
         status: "error",
         position: "top",
         duration: 2000,

@@ -116,20 +116,44 @@ const TennisData = ({
       socket.disconnect();
     };
   }, []);
+
+
+const finalData:any=[]
   useEffect(() => {
-    if (matchData.length>0) {
-      let liveMatch = matchData.filter((item) => item.iplay == true);
-      let upcommingCount = matchData.length - liveMatch.length;
+    const finaldata = matchData &&
+    matchData.length > 0 &&
+    matchData.map((item: any) => {
+      let matchItem: any = data.find(
+        (ele: any) => ele.match_id == item.gmid
+      );
+      if(matchItem!==undefined){
+        finalData.push(matchItem)
+
+      }
+    });
+  
+    console.log(finalData,"finalData")
+    const countMatches = matchData.reduce((count, item:any) => {
+      const matchItem = data.find((ele:any) => ele.match_id == item.gmid && item.iplay === true);
+      if (matchItem !== undefined) {
+        count++;
+      }
+      return count;
+    }, 0);
+ 
+      let upcommingCount = finalData?.length-countMatches;
       setgameCounts((prev: any) => {
         return {
           ...prev,
-          tennisLiveCount: liveMatch.length,
+          tennisLiveCount: countMatches,
           tennisUpcomingCount: upcommingCount,
           // Update other counts accordingly
         };
       });
-    }
+    
   }, [matchData]);
+
+
 
   useEffect(() => {
     FetchData();

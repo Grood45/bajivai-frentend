@@ -72,7 +72,7 @@ const MainComponent = () => {
       setRulesRegulation(data);
     } catch (error: any) {
       toast({
-        description: error.data.message,
+        description: error?.data?.message,
         status: "error",
         position: "top",
         duration: 4000,
@@ -90,10 +90,11 @@ const MainComponent = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/get-single-match/${param.id}`
       );
       let data = response.data;
+      console.log(data,"singlematch")
       setSingleMatch(data);
     } catch (error: any) {
       toast({
-        description: error.data.message,
+        description: error?.data?.message,
         status: "error",
         position: "top",
         duration: 4000,
@@ -154,7 +155,10 @@ const MainComponent = () => {
           <div className=" w-[100%] lg:w-[70%] first-letter: mx-auto">
             {/* cricket srcore */}
             <div>
-              <div>
+           {scoreData?<>
+            <CricketScore scoreData={scoreData} singleMatch={singleMatch} />
+           </>:<>
+           <div>
                 <iframe
                   src={`https://diamondapi.uk/dcasino/sr.php?eventid=${param.id}&sportid=${param.sport_id}`}
                   className="w-[100%] overflow-visible min-h-[263px]"
@@ -166,6 +170,9 @@ const MainComponent = () => {
                   }}
                 ></iframe>
               </div>
+           </>}
+            
+
             </div>
             <div className="p-2 flex gap-4 mt-3 ">
               {category.map((item) => {

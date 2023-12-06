@@ -111,9 +111,9 @@ const Withdrawal = ({
       }
       setWithdrawLoading(false);
     } catch (error: any) {
-      // alert(error.data.message)
+      // alert(error?.data?.message)
       toast({
-        title: error.data.message,
+        title: error?.data?.message,
         status: "error",
         duration: 2000,
         position: "top",

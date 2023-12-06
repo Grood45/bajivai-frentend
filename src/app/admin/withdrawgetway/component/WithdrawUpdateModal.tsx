@@ -101,7 +101,7 @@ const[imageLoading,setImageLoading]=useState(false)
       }
     } catch (error: any) {
       toast({
-        title: error.data.message,
+        title: error?.data?.message,
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -157,7 +157,7 @@ const[imageLoading,setImageLoading]=useState(false)
       onClose();
     } catch (error: any) {
       toast({
-        title: error.data.message,
+        title: error?.data?.message,
         status: "error",
         duration: 2000,
         isClosable: true,

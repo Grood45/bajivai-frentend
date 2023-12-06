@@ -86,6 +86,8 @@ const SoccerData = ({
       );
       const data = response.data;
       setData(data);
+      console.log(data,"soccer")
+
       setPagination(response.pagination);
     } catch (error: any) {
       toast({
@@ -129,19 +131,44 @@ const SoccerData = ({
     setCurrentPage((pre) => pre - 1);
   };
 
+
+const finalData:any=[]
+
   useEffect(() => {
-    if (matchData.length>0) {
-      let liveMatch = matchData.filter((item: any) => item.iplay === true);
-      let upcommingCount = matchData.length - liveMatch.length;
+    const finaldata = matchData &&
+    matchData.length > 0 &&
+    matchData.map((item: any) => {
+      let matchItem: any = data.find(
+        (ele: any) => ele.match_id == item.gmid
+      );
+      if(matchItem!==undefined){
+        finalData.push(matchItem)
+
+      }
+    });
+  
+    console.log(finalData,"finalData")
+    const countMatches = matchData.reduce((count, item:any) => {
+      const matchItem = data.find((ele:any) => ele.match_id == item.gmid && item.iplay === true);
+      if (matchItem !== undefined) {
+        count++;
+      }
+      return count;
+    }, 0);
+ 
+      let upcommingCount = finalData?.length-countMatches;
       setgameCounts((prev: any) => {
         return {
           ...prev,
-          soccerLiveCount: liveMatch.length,
+          soccerLiveCount: countMatches,
           soccerUpcomingCount: upcommingCount,
           // Update other counts accordingly
         };
       });
-    }
+
+    console.log(matchData,"matchdata")
+
+    
   }, [matchData]);
 
 
