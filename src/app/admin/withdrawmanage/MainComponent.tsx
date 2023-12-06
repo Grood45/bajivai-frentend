@@ -273,7 +273,7 @@ const MainComponent = () => {
                           alt=""
                           className="h-[15px] w-[15px]"
                         />
-                        <span>{item.wallet_amount}</span>
+                        <span>{item.wallet_amount.toFixed(2)}</span>
                       </div>
                     </td>
 

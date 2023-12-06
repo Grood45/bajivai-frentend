@@ -32,14 +32,16 @@ const MainComponent = () => {
   const params = useParams();
   const getAllDepositDetails = async () => {
     setLoading(true);
-    let url = `http://localhost:8090/api/transaction/get-all-deposit?page=1&limit=10`;
+    // let url = `http://localhost:8090/api/transaction/get-all-deposit?page=1&limit=10`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-deposit?page=1&limit=10`;
+
     if (transactionType) {
       url += `&transaction_type=${transactionType}`;
     }
     if (search) {
       url += `&search=${search}`;
     }
-    alert(url)
+    // alert(url)
     try {
       let response = await fetchGetRequest(url);
       setAllDeposit(response.data);
@@ -52,6 +54,7 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
+      console.log(error);
       setLoading(false)
     }
   };

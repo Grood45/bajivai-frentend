@@ -326,7 +326,7 @@ const pathname=usePathname()
                       theme ? "black" : "white"
                     } text-[10px] ml-2 md:ml-0  lg:text-sm gap-2 md:gap-6`}
                   >
-                    {amount}{" "}
+                    {amount.toFixed(2)}{" "}
                     <span className=" mr-1 md:mr-0">
                       <SlArrowDown color={theme ? "black" : "white"} />
                     </span>

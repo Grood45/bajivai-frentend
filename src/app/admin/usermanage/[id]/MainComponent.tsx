@@ -323,7 +323,7 @@ const MainComponent = () => {
             </div>
           </div>
           <div>
-          <p className=" text-[12px] md:text-xl font-semibold  text-white">Total Balance : <span className="text-gray-500 text-xs md:text-lg"> &#8377; {userData?.amount}</span></p>
+          <p className=" text-[12px] md:text-xl font-semibold  text-white">Total Balance : <span className="text-gray-500 text-xs md:text-lg"> &#8377; {userData?.amount.toFixed(2)}</span></p>
 
           </div>
 

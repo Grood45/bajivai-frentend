@@ -144,7 +144,7 @@ const Transaction = ({
               </svg>
             </div>
           </div>
-          <div className="flex flex-col gap-5 w-[88%]  m-auto ">
+          <div className="flex flex-col gap-5 w-[100%] md:w-[98%]  m-auto ">
             <p className="text-lg  text-center font-semibold">Transaction</p>
             <div className="mt-12 h-[80vh] overflow-scroll">
               <div className="flex justify-between">

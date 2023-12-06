@@ -309,12 +309,12 @@ function StatementModel() {
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex bg-gray-800 justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
                                       <Image
                                         src={
-                                          item.event_type === "casino"
+                                          item.event_type !== "casino"
                                             ? bollyball
                                             : card
                                         }
@@ -447,7 +447,7 @@ function StatementModel() {
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex bg-gray-800 justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
                                       <Image src={bollyball} alt="" />
@@ -577,7 +577,7 @@ function StatementModel() {
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex bg-gray-800 justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
                                       <Image src={card} alt="" />
@@ -707,12 +707,12 @@ function StatementModel() {
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex justify-between bg-gray-800 cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
                                       <Image
                                         src={
-                                          item.event_type === "casino"
+                                          item.event_type !== "casino"
                                             ? bollyball
                                             : card
                                         }
@@ -844,12 +844,12 @@ function StatementModel() {
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex bg-gray-800 justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
                                       <Image
                                         src={
-                                          item.event_type === "casino"
+                                          item.event_type !== "casino"
                                             ? bollyball
                                             : card
                                         }

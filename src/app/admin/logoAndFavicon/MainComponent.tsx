@@ -63,7 +63,7 @@ const Maincomponent = () => {
       }
     } catch (error: any) {
       toast({
-        title: error?.data?.message,
+        title: error.data.message,
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -79,6 +79,7 @@ const Maincomponent = () => {
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/logofav/get-logo-fav/6532c132ed5efb8183a66703`
       );
+      console.log(response, "response");
 
       setMarque(response.data.marque);
       setSelectedFaviconImage(response.data.fav_icon);
@@ -86,6 +87,7 @@ const Maincomponent = () => {
       setFaq(response.data.fnq);
       setTc(response.data.tc);
     } catch (error: any) {
+      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -117,6 +119,7 @@ const Maincomponent = () => {
         isClosable: true,
       });
     } catch (error: any) {
+      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -131,6 +134,7 @@ const Maincomponent = () => {
     getLogoAndFav();
   }, []);
 
+  console.log();
 
   const handleRulesChange = (value: string) => {
     setTc(value);
@@ -141,14 +145,17 @@ const Maincomponent = () => {
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/gameslider/get-slider/6551e31439cda85a6c606fef`
       );
+      console.log(response, "response in carousel");
       setSliderData(response.data);
     } catch (error: any) {
+      console.error("Error uploading image:", error.message);
       toast({
-        title: error?.data?.message,
+        title: error.data.message,
         status: "error",
         duration: 2000,
         isClosable: true,
       });
+      console.log(error, "errr");
     }
   };
 
@@ -166,6 +173,7 @@ const Maincomponent = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
+    console.log(imageurl,"iamge urkl check")
     try {
       
       const payload={
@@ -186,6 +194,7 @@ const Maincomponent = () => {
         isClosable: true,
       });
       setLoading(false);
+      console.log(error);
     }
   };
 
@@ -219,7 +228,7 @@ const Maincomponent = () => {
       }
     } catch (error: any) {
       toast({
-        title:error?.data?.message,
+        title: error.data.message,
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -245,6 +254,7 @@ const Maincomponent = () => {
         isClosable: true,
       });
     } catch (error: any) {
+      console.error("Error uploading image:", error.message);
       toast({
         title: error.message,
         status: "error",
@@ -257,9 +267,11 @@ const Maincomponent = () => {
   return (
     <div className="p-6">
       <div className="flex flex-col mt-6 items-center space-y-4">
-        <div className="flex gap-6 w-[100%]">
+        <div className="bg-[#051B41] rounded-[12px] w-[100%] py-5">
+
+        <div className="flex   justify-evenly gap-6 w-[100%]">
           {loading && selectedIndex == "0" ? (
-            <div className="h-[200px] w-[200px]">
+            <div className="h-[200px]  w-[200px]">
               <CircularProgress
                 isIndeterminate
                 value={30}
@@ -268,7 +280,7 @@ const Maincomponent = () => {
               />
             </div>
           ) : (
-            <div className="flex  gap-6">
+            <div className="flex  border mb-2 gap-6">
               <img
                 src={
                   selectedLogoImage ||
@@ -290,7 +302,7 @@ const Maincomponent = () => {
               />
             </div>
           ) : (
-            <div className="flex  gap-6">
+            <div className="flex border mb-2 gap-6">
               <img
                 src={
                   selectedFaviconImage ||
@@ -302,8 +314,7 @@ const Maincomponent = () => {
             </div>
           )}
         </div>
-
-        <div className="flex gap-6 w-[100%] ">
+        <div className="flex gap-6 justify-evenly w-[100%] ">
           <div className="w-[20%]">
             <label htmlFor="file-upload" className="cursor-pointer">
               <span
@@ -338,7 +349,11 @@ const Maincomponent = () => {
             />
           </div>
         </div>
-        <div className="h-[100%] w-[100%]">
+        </div>
+     
+
+  
+        <div className="h-[100%] bg-[#051B41] rounded-xl p-4 w-[100%]">
           <h1 className="text-white text-center mt-5 font-bold text-xl">
             Add Marquee{" "}
           </h1>
@@ -350,7 +365,8 @@ const Maincomponent = () => {
             placeholder="Enter Marque..."
           />
         </div>
-        <div className={`mt-5 w-[100%]`}>
+
+        <div className={`mt-5 w-[100%] bg-[#051B41] rounded-xl p-4 `}>
           <h1 className="text-white text-center mt-10 font-bold text-xl">
             {" "}
             FAQ{" "}
@@ -360,7 +376,7 @@ const Maincomponent = () => {
 
      
 
-        <div className="mt-12  w-[100%]">
+        <div className="mt-12 bg-[#051B41] rounded-xl p-4 h-[400px]  w-[100%]">
           <p className=" text-bold text-center my-5 text-white text-lg ">
             {" "}
             Terms And Condition Writes here
@@ -384,7 +400,7 @@ const Maincomponent = () => {
 
         <Button
           style={{
-            backgroundColor: "#003FA7",
+            backgroundColor: "green",
             marginTop: "65px",
             color: "white",
           }}

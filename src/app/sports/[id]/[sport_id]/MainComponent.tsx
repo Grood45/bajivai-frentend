@@ -159,15 +159,14 @@ const MainComponent = () => {
            {scoreData?<>
             <CricketScore scoreData={scoreData} singleMatch={singleMatch} />
            </>:<>
-           <div>
+           <div >
                 <iframe
                   src={`https://diamondapi.uk/dcasino/sr.php?eventid=${param.id}&sportid=${param.sport_id}`}
-                  className="w-[100%] overflow-visible min-h-[263px]"
+                  className="w-[100%] border border-yellow-500 p-[1px] overflow-visible min-h-[263px]"
                   style={{
                     overflow: "visible",
                     padding: 10,
                     borderRadius: "10px",
-                    border: "10px solid",
                   }}
                 ></iframe>
               </div>

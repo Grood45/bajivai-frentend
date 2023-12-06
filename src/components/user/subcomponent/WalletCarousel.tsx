@@ -22,6 +22,7 @@ const WCarousel = () => {
     user_id = "",
     full_name = "",
     amount = 0,
+    exposure_limit=0
   } = userAuth?.combineR?.userAuth?.data?.user || {};
 
   const settings = {
@@ -64,7 +65,7 @@ const WCarousel = () => {
       title: username,
       userid: user_id,
       ballancetitle: "Withdraw Balance",
-      balance: amount,
+      balance: amount-exposure_limit,
       img: greencard,
     },
     {
@@ -72,7 +73,7 @@ const WCarousel = () => {
       title: username,
       userid: user_id,
       ballancetitle: "Exposure Balance",
-      balance: amount,
+      balance: exposure_limit,
       img: pinkcard,
     },
   ];

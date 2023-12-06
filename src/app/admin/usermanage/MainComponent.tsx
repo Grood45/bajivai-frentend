@@ -241,7 +241,7 @@ const MainComponent = () => {
                           alt=""
                           className="h-[15px] w-[15px]"
                         />
-                        <p>{item.amount}</p>
+                        <p>{item.amount.toFixed(2)}</p>
                       </div>
                     </td>
 
@@ -255,7 +255,7 @@ const MainComponent = () => {
                       </button>
                     </td>
                     <td>
-                      <p>{item.amount}</p>
+                      <p>{item.exposure_limit.toFixed(2)}</p>
                     </td>
 
                     <td>
