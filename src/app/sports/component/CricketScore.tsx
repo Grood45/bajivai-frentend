@@ -20,6 +20,7 @@ const CricketScore = ({
   singleMatch: any;
 }) => {
   const [remainingTime, setTimeRemaining] = useState("");
+  console.log(singleMatch,scoreData,"aadsds")
 
   const lastBall =
     scoreData?.last24ballsNew && scoreData.last24ballsNew.length > 0
@@ -28,12 +29,12 @@ const CricketScore = ({
   const countdown = singleMatch?.open_date || "Match Start";
   useEffect(() => {
     // alert(countdown)
+
     try {
       const targetDate = new Date(countdown).getTime();
       if (isNaN(targetDate)) {
         throw new Error("0");
       }
-
       const timer = setInterval(() => {
         const currentTime = new Date().getTime();
         const remainingTime = targetDate - currentTime;
@@ -224,7 +225,7 @@ const CricketScore = ({
                   </div>
                 ) : (
                   <div className=" text-[10px] text-center gap-1  flex items-center justify-center ">
-                    {scoreData?.last24ballsNew?.map((ele: any) => (
+                    {scoreData?.last24ballsNew?.slice(scoreData?.last24ballsNew.length-6,scoreData?.last24ballsNew.length).map((ele: any) => (
                       <>
                         <p
                           className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
@@ -262,7 +263,8 @@ const CricketScore = ({
               <p className="text-xs  md:text-sm  text-gray-300"></p>
             </div>
             <div className=" text-xs text-center gap-1  flex items-center  ">
-              {scoreData?.last24ballsNew?.map((ele: any) => (
+            {scoreData?.last24ballsNew?.slice(scoreData?.last24ballsNew.length-6,scoreData?.last24ballsNew.length).map((ele: any) => (
+
                 <>
                   <p
                     className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${

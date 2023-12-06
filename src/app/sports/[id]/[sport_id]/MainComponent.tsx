@@ -90,7 +90,7 @@ const MainComponent = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/get-single-match/${param.id}`
       );
       let data = response.data;
-      console.log(data,"singlematch")
+      console.log(data,scoreData,"singlematch")
       setSingleMatch(data);
     } catch (error: any) {
       toast({
@@ -105,6 +105,7 @@ const MainComponent = () => {
 
   useEffect(() => {
     getMatch();
+
   }, []);
 
   useEffect(() => {
