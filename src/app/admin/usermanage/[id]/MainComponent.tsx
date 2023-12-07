@@ -89,7 +89,7 @@ const MainComponent = () => {
     try {
       let response = await fetchGetRequest(url);
       const data = response.data;
-
+console.log(data,"asdff")
       setLoading(false);
       const receivedData: UserInterface = response.data;
       if (receivedData) {

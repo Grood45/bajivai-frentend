@@ -30,6 +30,8 @@ const MainComponent = () => {
   const [transactionCount, aetTransactionCount] = useState<TransactionsCount>();
   const toast = useToast();
   const params = useParams();
+
+
   const getAllDepositDetails = async () => {
     setLoading(true);
     // let url = `http://localhost:8090/api/transaction/get-all-deposit?page=1&limit=10`;
@@ -41,10 +43,10 @@ const MainComponent = () => {
     if (search) {
       url += `&search=${search}`;
     }
-    // alert(url)
     try {
       let response = await fetchGetRequest(url);
       setAllDeposit(response.data);
+      aetTransactionCount(response.transactionsCount);
       setLoading(false);
     } catch (error: any) {
       toast({

@@ -316,9 +316,9 @@ const Transaction = ({
                     {transactionDetails?.status}
                   </p>
                 </div>
-                <div className="flex justify-between w-[100%]">
+                <div className="flex justify-between gap-4 w-[100%]">
                   <p className=" text-sm font-medium">TrxID</p>
-                  <p className=" text-sm flex items-center gap-4">
+                  <p className=" text-sm  flex items-center gap-2">
                     {transactionDetails?.transaction_id}
                     <span>
                       <BiSolidCopy
@@ -337,21 +337,7 @@ const Transaction = ({
                     {transactionDetails?.initiated_at}
                   </p>
                 </div>
-                <div className="flex justify-between w-[100%]">
-                  <p className=" text-sm font-medium">UTR Number</p>
-                  <p className=" text-sm flex items-center gap-4">
-                    {transactionDetails?.transaction_id}
-                    <span>
-                      <BiSolidCopy
-                        onClick={() =>
-                          copyToClipboard(transactionDetails?.method)
-                        }
-                        cursor="pointer"
-                        fontSize="20px"
-                      />
-                    </span>
-                  </p>
-                </div>
+               
               </div>
 
               <div className="flex flex-col gap-2">

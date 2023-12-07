@@ -18,6 +18,7 @@ export interface DepositTransaction {
   after_deposit: number;
   wallet_amount: number;
   admin_response: string;
+  user_details:[]
 }
 
 export interface WithdrawalTransaction {
