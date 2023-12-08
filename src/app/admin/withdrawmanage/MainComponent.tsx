@@ -34,7 +34,7 @@ const MainComponent = () => {
 
   const getAllWithdrawDetails = async () => {
     setLoading(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-withdraw?transaction_type=${transactionType}&page=1&limit=30`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-withdraw?transaction_type=${transactionType}&page=1&limit=50`;
     try {
       let response = await fetchGetRequest(url);
       // const data = response.data;

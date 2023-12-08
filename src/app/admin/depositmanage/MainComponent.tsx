@@ -35,14 +35,17 @@ const MainComponent = () => {
   const getAllDepositDetails = async () => {
     setLoading(true);
     // let url = `http://localhost:8090/api/transaction/get-all-deposit?page=1&limit=10`;
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-deposit?page=1&limit=10`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-deposit?page=1&limit=100`;
+
+    if (search) {
+      url += `&search=${search}`;
+    }
 
     if (transactionType) {
       url += `&transaction_type=${transactionType}`;
     }
-    if (search) {
-      url += `&search=${search}`;
-    }
+   
+   
     try {
       let response = await fetchGetRequest(url);
       setAllDeposit(response.data);
