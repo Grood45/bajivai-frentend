@@ -338,7 +338,7 @@ function DashboardTable() {
           <Table
             variant="striped"
             colorScheme="primary"
-            className="table table-hover bet-table"
+            className="table table-hover text-xs bet-table"
           >
             <Thead bg="primary" className=" bg-[#E91E63]">
               <Tr>
@@ -672,6 +672,8 @@ function DashboardTable() {
             </Tbody>
           </Table>
         </div>
+
+
         {data && data.length > 0 && (
           <div className="text-[16px] flex m-auto justify-end gap-3 align-middle items-center p-6">
             <span className="ag-paging-row-summary-panel">

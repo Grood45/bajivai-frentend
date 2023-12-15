@@ -6,8 +6,10 @@ import socketIOClient from "socket.io-client";
 import Bet from "../Bet";
 import { fetchGetRequest, sendPostRequest } from "@/api/api";
 import { BetSlip, Match } from "../../../../utils/typescript.module";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux-arch/store";
+import { fetchUserDataAsync } from "@/app/redux-arch/userauth/auth.slice";
+import { ThunkDispatch } from "redux-thunk";
 type BetType = "back" | "lay";
 
 interface FancytData {
@@ -48,15 +50,18 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
   const [rate, setRate] = useState<number>(0);
   const [stake, setStake] = useState<number>(0);
   const [team, setTeam] = useState<string>("");
+  const [size, setSize] = useState<string>("0");
   const [leagueName, setLeagueName] = useState<string>("");
   const [betType, setBetType] = useState<BetType>();
   const [matchName, setMatchName] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
+
+  const [sId, setSId] = useState<any>();
   const [bet, setBet] = useState<any>();
   const [betLoading, setBetLoading] = useState<boolean>();
   const toast = useToast();
   const param = useParams();
-
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const userAuth = useSelector((state: RootState) => state);
   const {
     username = "",
@@ -65,6 +70,9 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     max_limit = 10000,
     exposure_limit = 0,
     amount = 0,
+    parent_admin_id = "",
+    parent_admin_username = "",
+    parent_admin_role_type = "",
   } = userAuth?.combineR?.userAuth?.data?.user || {};
   const { token = "", otpless_token = "" } =
     userAuth?.combineR?.userAuth?.data?.data || {};
@@ -72,11 +80,13 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
   useEffect(() => {
     const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
+      //console.log("Connected to the server");
       setLoading(true);
     });
     socket.on("fancyData", (data) => {
+      console.log("Received fancy data:", data);
       if (data) {
-        let sortedData = (data?.t4 || data?.t3 || []).sort(
+        let sortedData = (data?.t3 || data?.t4 || []).sort(
           (a: any, b: any) => a.sid - b.sid
         );
         setData(sortedData || []);
@@ -84,6 +94,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       setLoading(false);
     });
     socket.on("disconnect", () => {
+      //console.log("Disconnected from the server");
       setLoading(false);
     });
 
@@ -93,6 +104,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
+      //console.log("socket disconnected");
       setLoading(false);
     };
   }, [param.id]);
@@ -100,7 +112,10 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
   const handleBet = (
     odd: number,
     team: string,
-    betType: BetType
+    betType: BetType,
+    size: string,
+    sid: string,
+    nat: string
     // matchName: string
   ) => {
     if (odd < 1) {
@@ -111,8 +126,10 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     // setMatchName(matchName);
     setTeam(team);
     setBetType(betType);
+    setSize(size);
+    setSId(sid);
+    setQuestion(nat);
   };
-
   const handlePlaceBet = async () => {
     if (!token || !otpless_token) {
       toast({
@@ -122,6 +139,21 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
         position: "bottom",
         isClosable: true,
       });
+      setBetShow(false);
+      setBetLoading(false);
+      return;
+    }
+    let singleFancy = data.find((ele: any) => ele.sid == sId);
+    if (singleFancy?.gstatus !== "") {
+      toast({
+        description: `Fancy ${singleFancy?.gstatus}`,
+        status: "warning",
+        duration: 4000,
+        position: "bottom",
+        isClosable: true,
+      });
+      setBetShow(false);
+      setBetLoading(false);
       return;
     }
     if (stake < min_limit) {
@@ -134,7 +166,6 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       });
       return;
     }
-
     if (stake > max_limit) {
       toast({
         description: `Maximum amount to place a bet is ${max_limit}.`,
@@ -160,6 +191,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       match_name: singleMatch?.match_name,
       bet_type: betType,
       runner_name: team,
+      question: question,
       stake: stake,
       match_id,
       match_date: singleMatch?.open_date,
@@ -168,6 +200,11 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       league_name: singleMatch?.league_name,
       rate,
       bet_category: "fancy",
+      size: size,
+      parent_admin_id ,
+      parent_admin_username ,
+      parent_admin_role_type ,
+      // sid:sid,
     };
     let oldExposure = stake + exposure_limit;
     let allBet = [...bet, payload];
@@ -190,6 +227,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       setBetLoading(false);
       setBetShow(false);
       setBet((prev: any) => [...prev, response.data.bet]);
+      dispatch(fetchUserDataAsync());
       toast({
         description: response.message,
         status: "success",
@@ -213,6 +251,10 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     const category = "fancy";
     const match_id = param.id;
 
+    if (!user_id) {
+      return;
+    }
+
     try {
       // user id then match_id we have to pass here
       const response = await fetchGetRequest(
@@ -228,6 +270,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
         duration: 4000,
         isClosable: true,
       });
+      //console.error(error);
     }
   };
 
@@ -262,18 +305,51 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
                 </span>
                 FANCY
               </p>
+              <div>
+                <Tooltip
+                  hasArrow
+                  arrowSize={20}
+                  label={
+                    <div className="  text-white p-2 flex text-xs flex-col items-center gap-5">
+                      <p>
+                        Stake Limit : {min_limit} - {max_limit}
+                      </p>
+                      <p>Max Profit : 10000000</p>
+                    </div>
+                  }
+                  width="100%"
+                  height={"100%"}
+                  borderRadius={"10px"}
+                  placement="left"
+                  bg="#212632"
+                  border="1px solid gray"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M10 0C4.49 0 0 4.49 0 10C0 15.51 4.49 20 10 20C15.51 20 20 15.51 20 10C20 4.49 15.51 0 10 0ZM9.25 6C9.25 5.59 9.59 5.25 10 5.25C10.41 5.25 10.75 5.59 10.75 6V11C10.75 11.41 10.41 11.75 10 11.75C9.59 11.75 9.25 11.41 9.25 11V6ZM10.92 14.38C10.87 14.51 10.8 14.61 10.71 14.71C10.61 14.8 10.5 14.87 10.38 14.92C10.26 14.97 10.13 15 10 15C9.87 15 9.74 14.97 9.62 14.92C9.5 14.87 9.39 14.8 9.29 14.71C9.2 14.61 9.13 14.51 9.08 14.38C9.03 14.26 9 14.13 9 14C9 13.87 9.03 13.74 9.08 13.62C9.13 13.5 9.2 13.39 9.29 13.29C9.39 13.2 9.5 13.13 9.62 13.08C9.86 12.98 10.14 12.98 10.38 13.08C10.5 13.13 10.61 13.2 10.71 13.29C10.8 13.39 10.87 13.5 10.92 13.62C10.97 13.74 11 13.87 11 14C11 14.13 10.97 14.26 10.92 14.38Z"
+                      fill="white"
+                    />
+                  </svg>
+                </Tooltip>
+              </div>
             </div>
-            <div className="  flex flex-col gap-3 w-[100%] ">
+            <div className="  flex flex-col  gap-3 w-[100%] ">
               {data &&
                 data.map((item) => (
                   <div
                     key={item.sid}
-                    className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[16px]"
+                    className=" bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[16px]"
                   >
                     <div
                       key={item.sid}
                       style={{ border: "0.5px solid #444" }}
-                      className="h-[100%] flex items-center rounded-[16px] bg-[#212632] justify-between p-3   w-[100%]"
+                      className="h-[100%]  flex items-center rounded-[16px] bg-[#212632] justify-between p-3   w-[100%]"
                     >
                       <div className="flex  gap-3">
                         <div>
@@ -282,70 +358,55 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 lg:gap-6">
+                      <div className="flex items-center  gap-2 lg:gap-6">
                         {item.gstatus !== "" ? (
-                          <div className=" text-center w-[163px] bg-red-400 opacity-30 h-[45px]">
-                            <Text className="m-auto flex  justify-center opacity-150 text-white items-center font-bold text-center rounded-[8px]  py-1 px-6">
+                          <div className=" text-center  bg-black  opacity-60 rounded-2xl flex items-center justify-center h-[45px]">
+                            <Text className="m-auto flex  justify-center opacity-150 text-red-600 items-center font-bold text-center rounded-[8px]  py-1 px-6">
                               {" "}
                               {item.gstatus}
                             </Text>
                           </div>
                         ) : (
-                          <div className="flex gap-1">
-                            <button
+                          <div className="flex  gap-1">
+                             <button
                               onClick={() =>
-                                handleBet(Number(item.b1), item.nat, "lay")
+                                handleBet(
+                                  Number(item.l1),
+                                  item.nat,
+                                  "lay",
+                                  item.bs1,
+                                  item.sid,
+                                  item.nat
+                                )
                               }
-                              className="bg-[#41ADFA]  text-white flex flex-col  rounded-[8px] py-1 px-6 "
-                            >
-                              <span className="text-xs">{item.b1}</span>
-                              <span className="text-[10px]">{item.bs1}</span>
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleBet(Number(item.l1), item.nat, "lay")
-                              }
-                              className="bg-[#FD5FA1]  text-white flex flex-col  rounded-[8px]  py-1 px-6"
+                              className="bg-[#FD5FA1] w-[70px]  flex items-center justify-center   text-white  flex-col  rounded-[8px]  py-1 px-6"
                             >
                               <span className="text-xs">{item.l1}</span>
                               <span className="text-[10px]">{item.ls1}</span>
                             </button>
+                            <button
+                              onClick={() =>
+                                handleBet(
+                                  Number(item.b1),
+                                  item.nat,
+                                  "back",
+                                  item.bs1,
+                                  item.sid,
+                                  item.nat
+                                )
+                              }
+                              className="bg-[#41ADFA] w-[70px]  flex items-center justify-center text-white  flex-col  rounded-[8px] py-1 px-6 "
+                            >
+                              <span className="text-xs text-center">
+                                {item.b1}
+                              </span>
+                              <span className="text-[10px] text-center">
+                                {item.bs1}
+                              </span>
+                            </button>
+                           
                           </div>
                         )}
-
-                        <div>
-                          <Tooltip
-                            hasArrow
-                            arrowSize={20}
-                            label={
-                              <div className="  text-white p-2 flex text-xs flex-col items-center gap-5">
-                                <p>
-                                  Stake Limit : {min_limit} - {max_limit}
-                                </p>
-                                <p>Max Profit : 10000000</p>
-                              </div>
-                            }
-                            width="100%"
-                            height={"100%"}
-                            borderRadius={"10px"}
-                            placement="left"
-                            bg="#212632"
-                            border="1px solid gray"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="20"
-                              height="20"
-                              viewBox="0 0 20 20"
-                              fill="none"
-                            >
-                              <path
-                                d="M10 0C4.49 0 0 4.49 0 10C0 15.51 4.49 20 10 20C15.51 20 20 15.51 20 10C20 4.49 15.51 0 10 0ZM9.25 6C9.25 5.59 9.59 5.25 10 5.25C10.41 5.25 10.75 5.59 10.75 6V11C10.75 11.41 10.41 11.75 10 11.75C9.59 11.75 9.25 11.41 9.25 11V6ZM10.92 14.38C10.87 14.51 10.8 14.61 10.71 14.71C10.61 14.8 10.5 14.87 10.38 14.92C10.26 14.97 10.13 15 10 15C9.87 15 9.74 14.97 9.62 14.92C9.5 14.87 9.39 14.8 9.29 14.71C9.2 14.61 9.13 14.51 9.08 14.38C9.03 14.26 9 14.13 9 14C9 13.87 9.03 13.74 9.08 13.62C9.13 13.5 9.2 13.39 9.29 13.29C9.39 13.2 9.5 13.13 9.62 13.08C9.86 12.98 10.14 12.98 10.38 13.08C10.5 13.13 10.61 13.2 10.71 13.29C10.8 13.39 10.87 13.5 10.92 13.62C10.97 13.74 11 13.87 11 14C11 14.13 10.97 14.26 10.92 14.38Z"
-                                fill="white"
-                              />
-                            </svg>
-                          </Tooltip>
-                        </div>
                       </div>
                     </div>
                   </div>

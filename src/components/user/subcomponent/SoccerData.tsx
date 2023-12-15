@@ -381,18 +381,18 @@ const finalData:any=[]
 
                               <div className="flex text-white justify-between text-[9px] w-[90%] m-auto sm:w-[100%]">
                                 <div className="flex  gap-2">
-                                  <button className="px-2 p-1 bg-[#0096FF] min-w-[50px] rounded-[6px]">
+                                  <button className="px-2 p-1 bg-[#0096FF] w-[50px] rounded-[6px]">
                                     {item.section[1].odds[0].odds}
                                   </button>
-                                  <button className="px-2 p-1 bg-[#FF6A8A] min-w-[50px] rounded-[6px]">
+                                  <button className="px-2 p-1 bg-[#FF6A8A] w-[50px] rounded-[6px]">
                                     {item.section[1].odds[1].odds}
                                   </button>
                                 </div>
                                 <div className="flex  gap-2">
-                                  <button className="px-2 p-1 bg-[#0096FF] min-w-[50px] rounded-[6px]">
+                                  <button className="px-2 p-1 bg-[#0096FF] w-[50px] rounded-[6px]">
                                     {item.section[2].odds[1].odds}
                                   </button>
-                                  <button className="px-2 p-1 bg-[#FF6A8A] min-w-[50px] rounded-[6px]">
+                                  <button className="px-2 p-1 bg-[#FF6A8A] w-[50px] rounded-[6px]">
                                     {item.section[2].odds[0].odds}
                                   </button>
                                 </div>
@@ -617,18 +617,18 @@ const finalData:any=[]
 
                               <div className="flex text-white justify-between text-[9px] w-[90%] m-auto sm:w-[100%]">
                                 <div className="flex  gap-2">
-                                  <button className="px-2 p-1 bg-[#0096FF] min-w-[50px] rounded-[6px]">
+                                  <button className="px-2 p-1 bg-[#0096FF] w-[50px] rounded-[6px]">
                                     {item.section[1].odds[0].odds}
                                   </button>
-                                  <button className="px-2 p-1 bg-[#FF6A8A] min-w-[50px] rounded-[6px]">
+                                  <button className="px-2 p-1 bg-[#FF6A8A] w-[50px] rounded-[6px]">
                                     {item.section[1].odds[1].odds}
                                   </button>
                                 </div>
                                 <div className="flex  gap-2">
-                                  <button className="px-2 p-1 bg-[#0096FF] min-w-[50px] rounded-[6px]">
+                                  <button className="px-2 p-1 bg-[#0096FF] w-[50px] rounded-[6px]">
                                     {item.section[2].odds[1].odds}
                                   </button>
-                                  <button className="px-2 p-1 bg-[#FF6A8A] min-w-[50px] rounded-[6px]">
+                                  <button className="px-2 p-1 bg-[#FF6A8A] w-[50px] rounded-[6px]">
                                     {item.section[2].odds[0].odds}
                                   </button>
                                 </div>

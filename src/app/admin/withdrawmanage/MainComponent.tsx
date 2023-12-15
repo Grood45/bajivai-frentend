@@ -262,7 +262,7 @@ const MainComponent = () => {
                           </span>
                         </p>
                         <p className="text-xs  text-[#A0AEC0]  ">
-                          {item.withdraw_amount + item.bonus} INR
+                          {item.withdraw_amount + item.bonus} BDT
                         </p>
                       </div>
                     </td>

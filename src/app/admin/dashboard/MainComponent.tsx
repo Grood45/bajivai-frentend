@@ -82,13 +82,13 @@ const MainComponent = () => {
       }
       setLoading(false);
     } catch (error: any) {
-      toast({
-        description: `${error?.data?.message}`,
-        status: "error",
-        duration: 4000,
-        position: "top",
-        isClosable: true,
-      });
+      // toast({
+      //   description: `${error?.data?.message}`,
+      //   status: "error",
+      //   duration: 4000,
+      //   position: "top",
+      //   isClosable: true,
+      // });
     }
   };
 

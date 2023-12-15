@@ -177,7 +177,7 @@ const Deposit = () => {
                           </span>
                         </p>
                         <p className="text-xs  text-[#A0AEC0]  ">
-                          {item.deposit_amount + item.bonus} INR
+                          {item.deposit_amount + item.bonus} BDT
                         </p>
                       </div>
                     </td>

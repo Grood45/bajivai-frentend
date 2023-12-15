@@ -28,12 +28,13 @@ function MainComponent() {
       setLoading(false);
     } catch (error: any) {
       setLoading(false);
-      toast({
-        title: error?.data?.message,
-        status: "error",
-        duration: 2000,
-        isClosable: true,
-      });
+      console.log(error?.data?.message)
+      // toast({
+      //   title: error?.data?.message,
+      //   status: "error",
+      //   duration: 2000,
+      //   isClosable: true,
+      // });
     }
   };
   useEffect(() => {

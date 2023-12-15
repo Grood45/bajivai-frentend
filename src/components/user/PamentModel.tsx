@@ -19,8 +19,18 @@ import Transaction from "./subcomponent/Transaction";
 import cancel from "../../assetuser/authsocial/CANCLE.png";
 import themeChange from "@/theme";
 import Image from "next/image";
-import { useAppSelector } from "@/app/redux-arch/store";
+import { RootState, useAppSelector } from "@/app/redux-arch/store";
+import { useSelector } from "react-redux";
 function PamentModel({ heading, code }: { heading: string; code: string }) {
+  const userAuth = useSelector((state: RootState) => state);
+
+  const {
+    username = "",
+    max_limit = 0,
+     user_id="",
+    min_limit = 0,
+  } = userAuth?.combineR?.userAuth?.data?.user || {};
+
   const {
     isOpen,
     onOpen,
@@ -136,7 +146,7 @@ function PamentModel({ heading, code }: { heading: string; code: string }) {
             {/* for withdrawal model */}
 
             {code === "1" && <Withdrawal onClose={onClose} />}
-            {code === "0" && <Withdrawal onClose={onClose} />}
+            {code === "0"  && <Withdrawal onClose={onClose} />}
 
             {/* for transaction model */}
             {code === "2" && (

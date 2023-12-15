@@ -56,6 +56,7 @@ const Bet: React.FC<BetProps> = ({
     setStake(value);
     setActiveValue(index);
   };
+  console.log(stake * rate, "ans", stake, rate);
 
   return (
     <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] w-[100%] lg:w-[50%] left-0 lg:left-[18%] lg:mx-auto  fixed bottom-0 z-50  rounded-[15px]">
@@ -161,15 +162,18 @@ const Bet: React.FC<BetProps> = ({
           </div>
           <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ...  rounded-[7px] p-[1px]  w-[100%]">
             <div className="flex  w-[100%] h-[100%] justify-between bg-[#44444452]   rounded-[7px]">
-              <button className="bg-[#EAAB0F] rounded-l-[7px] h-[100%] text-[8px] w-[30%] text-center text-white  ">
-                P/L
+              <button className={` ${betType==="lay"?"bg-blue-600":"bg-[#EAAB0F]"}  rounded-l-[7px] h-[100%] text-[8px] w-[30%] text-center text-white  `}>
+               
+                {betType==="lay"&&betCategory==="bookmaker"||betType==="lay"&&betCategory==="odds"?"EXP":"P/L"}
               </button>
               <input
                 type="text"
                 className=" w-[70%]  bg-[#44444452] text-sm  p-2  text-center outline-none focus:outline-none"
                 placeholder=""
-                value={Number((+(rate * stake) - stake).toFixed(2))}
+                value={betCategory=="fancy"?stake:Number((+(rate * stake) - stake).toFixed(2))}
+
               />
+
             </div>
           </div>
         </div>
@@ -191,7 +195,7 @@ const Bet: React.FC<BetProps> = ({
         </div>
 
         <div className="flex w-[100%] px-2  gap-2 lg:gap-4 jusify-between">
-          <button className="w-[100%] flex justify-center gap-1 items-center text-[10px] md:text-xs p-2 bg-[#DCA029] rounded-[10px]">
+          <button    onClick={() => setBetShow(false)} className="w-[100%] flex justify-center gap-1 items-center text-[10px] md:text-xs p-2 bg-[#DCA029] rounded-[10px]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -224,7 +228,7 @@ const Bet: React.FC<BetProps> = ({
             </svg>
             <span>Clear</span>
           </button>
-          <button className="w-[100%] flex justify-center gap-1 items-center text-[10px] md:text-xs p-2 bg-[#DCA029] rounded-[10px]">
+          <button onClick={handlePlaceBet} className="w-[100%] flex justify-center gap-1 items-center text-[10px] md:text-xs p-2 bg-[#DCA029] rounded-[10px]">
             {betLoading ? (
               <CircularProgress size={"16px"} />
             ) : (
@@ -249,7 +253,7 @@ const Bet: React.FC<BetProps> = ({
                     fill="white"
                   />
                 </svg>{" "}
-                <button onClick={handlePlaceBet}>Place Bet</button>
+                <button >Place Bet</button>
               </span>
             )}
           </button>

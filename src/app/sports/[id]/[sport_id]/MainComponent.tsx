@@ -39,28 +39,7 @@ const MainComponent = () => {
   const { showSideBar2, showSideBar1 } = useAppSelector(
     (store) => store.combineR.NavStateReducer
   );
-  const category = [
-    {
-      id: 1,
-      title: "ALL",
-    },
-    {
-      id: 2,
-      title: "MATCH ODDS",
-    },
-    {
-      id: 3,
-      title: "BOOKMAKER",
-    },
-    {
-      id: 4,
-      title: "TOSS",
-    },
-    {
-      id: 5,
-      title: "FANCY",
-    },
-  ];
+
 
   // fetch rules and regulaition
   const rulesAndRegulation = async () => {
@@ -131,6 +110,46 @@ const MainComponent = () => {
       setLoading(false);
     };
   }, [param.id, param.sport_id]);
+
+  const countdown: any = singleMatch?.open_date;
+  // const countdown:any="12/11/2023 8:15:00 AM"
+  console.log(countdown && countdown, "flase&true");
+  const countdownDate = new Date(countdown && countdown).getTime();
+  const hasCountdownPassed = () => {
+    if (isNaN(countdownDate)) {
+      // Handle invalid date
+      console.error("Invalid date format for open_date");
+      return false;
+    }
+    const currentTime = new Date().getTime();
+    return currentTime > Number(countdownDate);
+  };
+  const isCountdownPassed = hasCountdownPassed();
+  console.log(isCountdownPassed);
+
+
+  const category = [
+    {
+      id: 1,
+      title: "ALL",
+    },
+    {
+      id: 2,
+      title: "MATCH ODDS",
+    },
+    {
+      id: 3,
+      title: "BOOKMAKER",
+    },
+    {
+      id: 4,
+      title: isCountdownPassed?"":"Toss",
+    },
+    {
+      id: 5,
+      title: "FANCY",
+    },
+  ];
   return (
     <div className=" text-white bg-gray-950 min-h-[100vh]">
       <div className="w-[100%]">
@@ -200,8 +219,15 @@ const MainComponent = () => {
                   {param.sport_id == (4).toString() && (
                     <Bookmaker singleMatch={singleMatch} />
                   )}
-                  {param.sport_id == (4).toString() && (
-                    <WhoWinTheToss singleMatch={singleMatch} />
+                  {!isCountdownPassed ? (
+                    <>
+                      {" "}
+                      {param.sport_id == (4).toString() && (
+                        <WhoWinTheToss singleMatch={singleMatch} />
+                      )}
+                    </>
+                  ) : (
+                    ""
                   )}
                   {param.sport_id == (4).toString() && (
                     <Fancy singleMatch={singleMatch} />
@@ -212,7 +238,13 @@ const MainComponent = () => {
               ) : categoryActive == 3 && param.sport_id == (4).toString() ? (
                 <Bookmaker singleMatch={singleMatch} />
               ) : categoryActive == 4 && param.sport_id == (4).toString() ? (
-                <WhoWinTheToss singleMatch={singleMatch} />
+                isCountdownPassed ? (
+                  <>
+                    <WhoWinTheToss singleMatch={singleMatch} />
+                  </>
+                ) : (
+                  ""
+                )
               ) : (
                 param.sport_id == (4).toString() && (
                   <Fancy singleMatch={singleMatch} />

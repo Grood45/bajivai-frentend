@@ -11,6 +11,7 @@ import {
   useDisclosure,
   Input,
   useToast,
+  CircularProgress,
 } from "@chakra-ui/react";
 import cancel from "../../assetuser/authsocial/CANCLE.png";
 import userprofile from "../../assetuser/other/userprofile.png";
@@ -80,6 +81,7 @@ function GlobalSettingModel() {
 
   const handleVerfiyEmail = () => {};
   const handleOtpEmail = () => {
+    console.log(sendotp, "ram");
     setEmail(true);
   };
 
@@ -139,6 +141,7 @@ function GlobalSettingModel() {
     try {
       let response = await sendPatchRequest(url, payload);
       const data = response.data;
+      console.log(data);
       toast({
         description: response.message,
         status: "success",
@@ -158,6 +161,66 @@ function GlobalSettingModel() {
       setLoading1(false);
     }
   };
+
+
+  const [prev_pass,setPrevPass]=useState('')
+const [new_pass,setNewPass]=useState('')
+const [confirm_new_pass,setConfirmNewPass]=useState('')
+const [changePasswordLoading,setChangePasswordLoading]=useState(false)
+
+
+  const handleUpdatePassword = async (e:any) => {
+    e.preventDefault()
+    if (new_pass === confirm_new_pass) {
+      const payload = {
+        prev_pass,
+        new_pass
+
+      };
+
+      setChangePasswordLoading(true);
+      try {
+        const response = await sendPatchRequest(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/user-change-password/${user_id}`,
+          payload
+        );
+        toast({
+          title: response.message,
+          status: "success",
+          duration: 2000,
+          position: "top",
+          isClosable: true,
+        });
+        // setCredential(initialCredential);
+        setChangePasswordLoading(false);
+      } catch (error: any) {
+        toast({
+          title: error?.response?.data?.message,
+          status: "error",
+          duration: 2000,
+          position: "top",
+          isClosable: true,
+        });
+        console.log(error, "erroro");
+      }
+      setChangePasswordLoading(false);
+    }
+     else {
+      toast({
+        title: "Confirm password are not match with new password",
+        status: "error",
+        duration: 2000,
+        position: "top",
+        isClosable: true,
+      });
+    }
+  };
+
+
+
+
+
+
 
   return (
     <>
@@ -384,12 +447,12 @@ function GlobalSettingModel() {
                               </div>
                             </div>
 
-                            <Image src={verify} alt="" />
-                            {!phone && (
+                           
+                            {!phone ? (
                               <p className="text-red-600 text-semibold">
                                 Pending...
                               </p>
-                            )}
+                            ): <Image src={verify} alt="" />}
                           </div>
                           </div>
                           <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... rounded-[10px] p-[1px]" >
@@ -419,9 +482,11 @@ function GlobalSettingModel() {
                                 </p>
                               </div>
                             </div>
-                            <div>
-                              <Image src={verify} alt="" />
-                            </div>
+                            {!email ? (
+                              <p className="text-red-600 text-semibold">
+                                Pending...
+                              </p>
+                            ): <Image src={verify} alt="" />}
 
                             {!account_number && bank_name && (
                               <p className="text-red-600 text-semibold">
@@ -458,7 +523,11 @@ function GlobalSettingModel() {
                               </div>
                             </div>
                             <div>
-                              <Image src={verify} alt="" />
+                            {!account_number ? (
+                              <p className="text-red-600 text-semibold">
+                                Pending...
+                              </p>
+                            ): <Image src={verify} alt="" />}
                             </div>
                           </div>
                           </div>
@@ -517,6 +586,7 @@ function GlobalSettingModel() {
                     )}
 
                     {details === 2 && (
+                      <form onSubmit={handleUpdatePassword} >
                       <div className="flex flex-col sm:min-h-[370px] gap-3">
                         <p className="text-sm font-medium">
                           Generate New Password
@@ -524,21 +594,38 @@ function GlobalSettingModel() {
                         <div className="flex flex-col  mb-4 lg:mb-10 gap-5">
                           <Input
                             className="rounded-[8px] outline-none text-sm"
+                            onChange={(e)=>setPrevPass(e.target.value)}
+                            value={prev_pass}
                             placeholder="Enter old password"
                           />
                           <Input
                             className="rounded-[8px] text-sm"
                             placeholder="Enter new password"
+                            value={new_pass}
+                            onChange={(e)=>setNewPass(e.target.value)}
+
                           />
                           <Input
                             className="rounded-[8px] text-sm"
                             placeholder="Confirm password"
+                            onChange={(e)=>setConfirmNewPass(e.target.value)}
+                            value={confirm_new_pass}
+
                           />
-                          <button className="p-3 px-5 w-[70%] mx-auto bg-[#EAAB0F] rounded-[6px] text-sm">
-                            Submit
+                          <button type="submit" className="p-3 px-5 w-[70%] mx-auto bg-[#EAAB0F] rounded-[6px] text-sm">
+                          {changePasswordLoading ? (
+                    <CircularProgress
+                      isIndeterminate
+                      color="orange.600"
+                      size={"16px"}
+                    />
+                  ) : (
+                    "Submit"
+                  )}
                           </button>
                         </div>
                       </div>
+                      </form>
                     )}
 
                     {details === 3 && (
@@ -599,6 +686,7 @@ function GlobalSettingModel() {
                                 onClick={handleVerfiyEmail}
                               >
                                 Verify
+                           
                               </button>
                             </div>
                           ) : (

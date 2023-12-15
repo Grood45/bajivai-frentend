@@ -236,6 +236,7 @@ export interface Allbets {
   event_type: string;
   league_id: string;
   league_name: string;
+  result:string;
   match_date: string;
   match_id: string;
   match_name: string;

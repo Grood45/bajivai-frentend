@@ -30,6 +30,7 @@ import themeChange from "@/theme";
 import { FaRupeeSign } from "react-icons/fa";
 import ModalComponent from "./subcomponent/LoginModal";
 import LoginModal from "./LoginModal";
+import { TbCurrencyTaka } from "react-icons/tb";
 const TopNavbar = ({ value }: { value?: number }) => {
   const [isLeftActive, setIsLeftActive] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
@@ -77,6 +78,13 @@ const [login,setLogin]=useState(false)
     handleGetLogoAndFav();
     dispatch(fetchUserDataAsync());
   }, [theme]);
+
+
+  console.log(token,"token")
+  console.log(otpless_token,"otpless_token")
+  console.log(showSideBar3,"showSideBar3")
+
+  
 
 const pathname=usePathname()
   return (
@@ -275,12 +283,9 @@ const pathname=usePathname()
           <div className="hidden  lg:contents">
             <div className=" border-none">
             <img className=" w-[170px] ml-5 xl:ml-16  " src={logoAndFav?.logo} />
-
             </div>
           </div>
         </div>
-
-       
 
         {/* after auth */}
         {token && otpless_token ? (
@@ -299,7 +304,7 @@ const pathname=usePathname()
               >
                 {/* <Image className="w-[20px] h-[20px] " src={coin} alt="coin" /> */}
                 <span className="h-[20px] w-[20px] rounded-[50%] flex items-center justify-center bg-yellow-400">
-                  <FaRupeeSign color="white" fontSize="15px" />
+                <TbCurrencyTaka   color="white" fontSize="15px" /> 
                 </span>
                 <Tooltip
                   hasArrow
@@ -355,7 +360,7 @@ const pathname=usePathname()
         <div className="">
           <Profile />
         </div>
-      )}
+)} 
     </div>
   );
 };

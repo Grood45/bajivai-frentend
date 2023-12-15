@@ -26,6 +26,7 @@ import { UserInterface } from "../../../../../utils/typescript.module";
 import AddBalance from "../component/AddBalance";
 import SubtractBalance from "../component/SubtractBalance";
 import SendMail from "../component/SendMail";
+import { getTimeAgo } from "../../../../../utils/getTimeInDetail";
 
 interface Status{
   email_verified:Boolean;
@@ -40,7 +41,11 @@ const MainComponent = () => {
   const router = useRouter();
   const [active, setActive] = useState(1);
   const [userData, setUserData] = useState<UserInterface>();
+  const [plData, setPlData] = useState<any>();
+
   const [loading, setLoading] = useState<Boolean>(false);
+  const [loading1, setLoading1] = useState<Boolean>(false);
+
   const [statusLoading, setStatusLoading] = useState<Boolean>(false);
   const toast = useToast();
   const param = useParams();
@@ -70,11 +75,11 @@ const MainComponent = () => {
       title: "Refferrals",
       icon: <AiOutlineShareAlt />,
     },
-    {
-      id: 6,
-      title: "Profit & Loss",
-      icon: <MdOutlineAccountBalanceWallet />,
-    },
+    // {
+    //   id: 6,
+    //   title: "Profit & Loss",
+    //   icon: <MdOutlineAccountBalanceWallet />,
+    // },
     {
       id: 7,
       title: "Bet History",
@@ -105,6 +110,39 @@ console.log(data,"asdff")
       });
     }
   };
+
+  const profitLossData = async () => {
+    if(!userData){
+      return
+    }
+     setLoading1(true);
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-transaction-pl/${userData?.user_id}?username=${userData?.username}&type=user`;
+
+    try {
+      let response = await fetchGetRequest(url);
+      setLoading1(false);
+      if (response) {
+        setPlData(response);
+      }
+      console.log(response, "p/ldata");
+    } catch (error: any) {
+      setLoading1(false);
+      toast({
+        description: `${error?.data?.message|| error?.message}`,
+        status: "error",
+        duration: 4000,
+        position: "top",
+        isClosable: true,
+      });
+      console.log(error);
+    }
+  };
+  
+
+  useEffect(()=>{
+    profitLossData();
+
+  },[userData])
 
   useEffect(() => {
     getUserData();
@@ -307,7 +345,7 @@ console.log(data,"asdff")
       </div>
       <div className="w-[95%]  md:w-[90%] mx-auto">
         <div className="w-[100%] flex  bg-[#071845] rounded-[10px]   justify-between items-center p-1 md:p-3   ">
-          <div className="flex items-center gap-2">
+          <div className="flex w-[100%] items-center gap-2">
             <Image
               className="rounded-[50%] cursor-pointer h-[40px] w-[40px] md:h-[60px] md:w-[60px]"
               src={logo}
@@ -322,20 +360,29 @@ console.log(data,"asdff")
               </p>
             </div>
           </div>
-          <div>
+         
+          <div className="flex w-[100%] justify-center items-center flex-col gap-1">
           <p className=" text-[12px] md:text-xl font-semibold  text-white">Total Balance : <span className="text-gray-500 text-xs md:text-lg"> &#8377; {userData?.amount.toFixed(2)}</span></p>
 
+            <p className=" text-[10px] md:text-xs font-semibold  text-white">
+              Profit / Loss :{" "}
+              <span className={`text-xs ${plData?.totalAmount>0?"text-green-400":"text-red-400"} text-green-400 text-[10px] md:text-xs`}>
+                {" "}
+                &#8377; {plData&&plData?.totalAmount}
+              </span>
+            </p>
           </div>
+          
 
-          <div className="flex flex-col justify-between items-center gap-2">
+          <div className="flex w-[100%] flex-col justify-between items-center gap-2">
             <button className=" flex items-center gap-1 p-1 md:p-[6px]  px-4 text-xs text-white font-semibold bg-[#01B574] rounded-md">
               Onilne
             </button>
-           
-         
-            <p className="text-[#FFF] font-medium text-[10px]">
-              Joined At 26 Aug, 2023 03:45 PM
-            </p>
+
+            <div className="text-[#FFF] flex flex-col items-center justify-center font-medium text-[10px]">
+              <p>{userData?.joined_at}</p>
+              <p>{getTimeAgo(userData?.joined_at)}</p>
+            </div>
           </div>
         </div>
         {active === 1 && userData && <Profile userData={userData} />}
@@ -343,7 +390,6 @@ console.log(data,"asdff")
         {active === 3 && <WithDrawl />}
         {active === 4 && <Transaction />}
         {active === 5 && <Referral />}
-        {active === 6 && <ProfiltAndLoss />}
         {active === 7 && <BetHistory />}
       </div>
     </div>

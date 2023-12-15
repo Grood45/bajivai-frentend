@@ -63,6 +63,7 @@ const CricketData = ({
       );
       const data = response.data;
       setData(data);
+      console.log(data,"cricket")
       setPagination(response.pagination);
     } catch (error: any) {
       toast({
@@ -216,7 +217,7 @@ const finalData:any=[]
                             <div className="flex flex-col w-[100%]  gap-3">
                               <div className="flex justify-between w-[100%]  ">
                                 <div className="flex items-center w-[85%] gap-4  sm:gap-4">
-                                  {item.iplay === true ? (
+                                  {item?.iplay === true ? (
                                     <button className="px-2 text-center text-[8px] w-[50px] h-[20px] flex items-center justify-center animate-pulse md:text-[10px] rounded-[4px] p-[1px] bg-red-600">
                                       Live
                                     </button>
@@ -231,7 +232,7 @@ const finalData:any=[]
                                         isRunning &&
                                         isRunningTeamName ==
                                           "ICC world cup 2023" &&
-                                        item.gid == isRunningMatchId
+                                        item?.gid == isRunningMatchId
                                           ? "running"
                                           : ""
                                       }`}
@@ -278,7 +279,7 @@ const finalData:any=[]
                                     <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
                                       <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
                                         {getTeamShortName(
-                                          item.ename
+                                          item?.ename
                                             .split("/")[0]
                                             .split("v")[0]
                                         )}
@@ -289,16 +290,16 @@ const finalData:any=[]
                                         className={`marquee-text text-center  text-xs w-[80px] ${
                                           isRunning &&
                                           isRunningTeamName ==
-                                            item.ename
+                                            item?.ename
                                               .split("/")[0]
                                               .split("v")[0] &&
-                                          item.gid == isRunningMatchId
+                                          item?.gid == isRunningMatchId
                                             ? "running"
                                             : ""
                                         }`}
                                         onMouseOver={() =>
                                           handleMouseOver(
-                                            item.ename
+                                            item?.ename
                                               .split("/")[0]
                                               .split("v")[0],
                                             item.gid
@@ -307,7 +308,7 @@ const finalData:any=[]
                                         onMouseOut={() => handleMouseOut()}
                                       >
                                         {
-                                          item.ename
+                                          item?.ename
                                             .split("/")[0]
                                             .split("v")[0]
                                         }
@@ -349,7 +350,7 @@ const finalData:any=[]
                                     <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
                                       <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
                                         {getTeamShortName(
-                                          item.ename
+                                          item?.ename
                                             .split("/")[0]
                                             .split("v")[1]
                                         )}
@@ -360,25 +361,25 @@ const finalData:any=[]
                                         className={`marquee-text text-center text-xs w-[80px] ${
                                           isRunning &&
                                           isRunningTeamName ==
-                                            item.ename
+                                            item?.ename
                                               .split("/")[0]
                                               .split("v")[1] &&
-                                          item.gid == isRunningMatchId
+                                          item?.gid == isRunningMatchId
                                             ? "running"
                                             : ""
                                         }`}
                                         onMouseOver={() =>
                                           handleMouseOver(
-                                            item.ename
+                                            item?.ename
                                               .split("/")[0]
                                               .split("v")[1],
-                                            item.gid
+                                            item?.gid
                                           )
                                         }
                                         onMouseOut={() => handleMouseOut()}
                                       >
                                         {
-                                          item.ename
+                                          item?.ename
                                             .split("/")[0]
                                             .split("v")[1]
                                         }
@@ -391,19 +392,19 @@ const finalData:any=[]
 
                             <div className="flex text-white justify-between text-[9px] w-[90%] m-auto sm:w-[100%]">
                               <div className="flex  gap-2">
-                                <button className="min-w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
-                                  {item.b1}
+                                <button className="w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
+                                  {item?.b1}
                                 </button>
-                                <button className="min-w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
-                                  {item.l1}
+                                <button className="w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
+                                  {item?.l1}
                                 </button>
                               </div>
                               <div className="flex  gap-2">
-                                <button className="min-w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
-                                  {item.b2}
+                                <button className="w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
+                                  {item?.b2}
                                 </button>
-                                <button className="min-w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
-                                  {item.l2}
+                                <button className="w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
+                                  {item?.l2}
                                 </button>
                               </div>
                             </div>
@@ -495,7 +496,7 @@ const finalData:any=[]
                             <div className="flex flex-col w-[100%]  gap-3">
                               <div className="flex justify-between w-[100%]  ">
                                 <div className="flex items-center w-[85%] gap-4  sm:gap-4">
-                                  {item.iplay === true ? (
+                                  {item?.iplay === true ? (
                                     <button className="px-2 text-center text-[8px] w-[50px] h-[20px] flex items-center justify-center animate-pulse md:text-[10px] rounded-[4px] p-[1px] bg-red-600">
                                       Live
                                     </button>
@@ -511,7 +512,7 @@ const finalData:any=[]
                                         isRunning &&
                                         isRunningTeamName ==
                                           "ICC world cup 2023" &&
-                                        item.gid == isRunningMatchId
+                                        item?.gid == isRunningMatchId
                                           ? "running"
                                           : ""
                                       }`}
@@ -558,7 +559,7 @@ const finalData:any=[]
                                     <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
                                       <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
                                         {getTeamShortName(
-                                          item.ename
+                                          item?.ename
                                             .split("/")[0]
                                             .split("v")[0]
                                         )}
@@ -569,25 +570,25 @@ const finalData:any=[]
                                         className={`marquee-text text-center  text-xs w-[80px] ${
                                           isRunning &&
                                           isRunningTeamName ==
-                                            item.ename
+                                            item?.ename
                                               .split("/")[0]
                                               .split("v")[0] &&
-                                          item.gid == isRunningMatchId
+                                          item?.gid == isRunningMatchId
                                             ? "running"
                                             : ""
                                         }`}
                                         onMouseOver={() =>
                                           handleMouseOver(
-                                            item.ename
+                                            item?.ename
                                               .split("/")[0]
                                               .split("v")[0],
-                                            item.gid
+                                            item?.gid
                                           )
                                         }
                                         onMouseOut={() => handleMouseOut()}
                                       >
                                         {
-                                          item.ename
+                                          item?.ename
                                             .split("/")[0]
                                             .split("v")[0]
                                         }
@@ -629,7 +630,7 @@ const finalData:any=[]
                                     <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
                                       <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
                                         {getTeamShortName(
-                                          item.ename
+                                          item?.ename
                                             .split("/")[0]
                                             .split("v")[1]
                                         )}
@@ -640,25 +641,25 @@ const finalData:any=[]
                                         className={`marquee-text text-center text-xs w-[80px] ${
                                           isRunning &&
                                           isRunningTeamName ==
-                                            item.ename
+                                            item?.ename
                                               .split("/")[0]
                                               .split("v")[1] &&
-                                          item.gid == isRunningMatchId
+                                          item?.gid == isRunningMatchId
                                             ? "running"
                                             : ""
                                         }`}
                                         onMouseOver={() =>
                                           handleMouseOver(
-                                            item.ename
+                                            item?.ename
                                               .split("/")[0]
                                               .split("v")[1],
-                                            item.gid
+                                            item?.gid
                                           )
                                         }
                                         onMouseOut={() => handleMouseOut()}
                                       >
                                         {
-                                          item.ename
+                                          item?.ename
                                             .split("/")[0]
                                             .split("v")[1]
                                         }
@@ -671,19 +672,19 @@ const finalData:any=[]
 
                             <div className="flex text-white justify-between text-[9px] w-[90%] m-auto sm:w-[100%]">
                               <div className="flex  gap-2">
-                                <button className="min-w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
-                                  {item.b1}
+                                <button className="w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
+                                  {item?.b1}
                                 </button>
-                                <button className="min-w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
-                                  {item.l1}
+                                <button className="w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
+                                  {item?.l1}
                                 </button>
                               </div>
                               <div className="flex  gap-2">
-                                <button className="min-w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
-                                  {item.b2}
+                                <button className="w-[50px] p-1 bg-[#0096FF] rounded-[6px]">
+                                  {item?.b2}
                                 </button>
-                                <button className="min-w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
-                                  {item.l2}
+                                <button className="w-[50px] p-1 bg-[#FF6A8A] rounded-[6px]">
+                                  {item?.l2}
                                 </button>
                               </div>
                             </div>

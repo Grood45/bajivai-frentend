@@ -51,13 +51,14 @@ const Transaction = ({
 
       setLoading1(false);
     } catch (error: any) {
-      toast({
-        description: `${error?.data?.message}`,
-        status: "error",
-        duration: 4000,
-        position: "top",
-        isClosable: true,
-      });
+      console.log(error?.data?.message)
+      // toast({
+      //   description: `${error?.data?.message}`,
+      //   status: "error",
+      //   duration: 4000,
+      //   position: "top",
+      //   isClosable: true,
+      // });
     }
   };
 
@@ -192,7 +193,7 @@ const Transaction = ({
                           >
                             {item.type === "withdraw" ? "-" : "+"}{" "}
                             {item.deposit_amount || item.withdraw_amount}{" "}
-                            <span className="text-[10px] font-light">INR</span>
+                            <span className="text-[10px] font-light">BDT</span>
                           </p>
                           <p
                             className={`text-xs ${
@@ -272,7 +273,7 @@ const Transaction = ({
               >
                 {transactionDetails?.deposit_amount ||
                   transactionDetails?.withdraw_amount}{" "}
-                <span className="">INR</span>
+                <span className="">BDT</span>
               </p>
             </div>
             <div

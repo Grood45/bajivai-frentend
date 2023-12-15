@@ -85,7 +85,7 @@ function ResultMaker() {
     } catch (error: any) {
       toast({
         title: "Fetch Data.",
-        description: `${error.data.error}`,
+        description: `${error?.data?.error}`,
         status: "error",
         duration: 4000,
         position: "top",
@@ -217,7 +217,7 @@ function ResultMaker() {
       setLoading(false);
       toast({
         title: "Update results.",
-        description: `${response.message}`,
+        description: `${response?.message}`,
         status: "success",
         duration: 4000,
         position: "top",
@@ -229,7 +229,7 @@ function ResultMaker() {
     } catch (error: any) {
       toast({
         title: "Update results.",
-        description: `${error.data.error}`,
+        description: `${error?.data?.error}`,
         status: "error",
         duration: 4000,
         position: "top",

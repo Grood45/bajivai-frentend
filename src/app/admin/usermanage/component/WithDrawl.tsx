@@ -171,7 +171,7 @@ const WithDrawl = () => {
                         </span>
                       </p>
                       <p className="text-xs  text-[#A0AEC0]  ">
-                        {Number(item.bonus)+Number(item.withdraw_amount)} INR
+                        {Number(item.bonus)+Number(item.withdraw_amount)} BDT
                       </p>
                     </div>
                   </td>

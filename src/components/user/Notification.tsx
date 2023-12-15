@@ -63,7 +63,7 @@ function Notification() {
 
   const getAllNotification = async () => {
     setLoading1(true);
-    let url = `http://localhost:8090/api/notification/get-all-notification?user_id=${user_id}&type=${"user"}`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/notification/get-all-notification?user_id=${user_id}&type=${"user"}`;
     try {
       let response = await fetchGetRequest(url);
       const data = response.data;
@@ -73,13 +73,14 @@ function Notification() {
       }
       setLoading1(false);
     } catch (error: any) {
-      toast({
-        description: `${error?.data?.message}`,
-        status: "error",
-        duration: 4000,
-        position: "top",
-        isClosable: true,
-      });
+      console.log(error?.data?.message)
+      // toast({
+      //   description: `${error?.data?.message}`,
+      //   status: "error",
+      //   duration: 4000,
+      //   position: "top",
+      //   isClosable: true,
+      // });
     }
   };
 

@@ -69,13 +69,13 @@ function WalletModel() {
       }
       setLoading1(false);
     } catch (error: any) {
-      toast({
-        description: `${error?.data?.message}`,
-        status: "error",
-        duration: 4000,
-        position: "top",
-        isClosable: true,
-      });
+      // toast({
+      //   description: `${error?.data?.message}`,
+      //   status: "error",
+      //   duration: 4000,
+      //   position: "top",
+      //   isClosable: true,
+      // });
     }
   };
 
@@ -631,7 +631,7 @@ function WalletModel() {
                               >
                                 {item.value}
                                 <span className="text-[10px] font-light">
-                                  INR
+                                 BDT
                                 </span>
                               </p>
                               <p className="text-xs  text-[#EAAB0F]">
@@ -690,7 +690,7 @@ function WalletModel() {
                                             {item.deposit_amount ||
                                               item.withdraw_amount}{" "}
                                             <span className="text-[10px] font-light">
-                                               INR
+                                            BDT
                                             </span>
                                           </p>
                                           <p
@@ -803,7 +803,7 @@ function WalletModel() {
                               >
                                 {transactionDetails?.deposit_amount ||
                                   transactionDetails?.withdraw_amount}{" "}
-                                <span className="">INR</span>
+                                <span className="">BDT</span>
                               </p>
                             </div>
                             <div className="bg-[#1D2025] pl-5 flex items-center gap-3 w-[100%] p-2 rounded-[4px]">

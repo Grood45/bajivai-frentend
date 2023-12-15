@@ -46,6 +46,8 @@ const Withdrawal = ({
     amount = 0,
   } = userAuth?.combineR?.userAuth?.data?.user || {};
 
+
+
   
   const [userfilldetails, setUserFillDetails] = useState<any>([]);
   const [copiedItem, setCopiedItem] = useState(null);
@@ -482,7 +484,7 @@ const Withdrawal = ({
 
               <div className="text-sm flex flex-col items-center justify-center gap-1 font-medium">
                 <p>Withdrawal Amount</p>
-                <p className="text-xs font-light">{value} INR</p>
+                <p className="text-xs font-light">{value} BDT</p>
               </div>
             </div>
 
@@ -662,7 +664,7 @@ const Withdrawal = ({
               Transaction Details
             </p>
             <p className="text-sm text-center mt-6 text-[#18FB05]">
-              {viewReceipt.payable} INR
+              {viewReceipt.payable} BDT
             </p>
             <div
               className={`${

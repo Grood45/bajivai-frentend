@@ -741,7 +741,7 @@ const Deposit = ({
               Transaction Details
             </p>
             <p className="text-sm text-center mt-6 text-[#18FB05]">
-              {viewReceipt.payable} INR
+              {viewReceipt.payable} BDT
             </p>
             <div
               className={`${

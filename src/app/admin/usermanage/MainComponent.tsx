@@ -222,7 +222,7 @@ const MainComponent = () => {
                     </td>
                     <td>
                       <div className="flex flex-col text-center gap-[2px] ">
-                        <p>{item.country}</p>
+                        <p>{item?.country}</p>
                         <p className="text-xs  text-[#A0AEC0] ">{item.state}</p>
                       </div>
                     </td>

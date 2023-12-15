@@ -42,7 +42,7 @@ const MyProfile = ({
     referal_code = "",
   } = userAuth?.combineR?.userAuth?.data?.user || {};
   const toast = useToast();
-
+console.log(username,"username",joined_at,"joined_at")
   const getAllTransaction = async () => {
     setLoading1(true);
     let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-transaction/${user_id}`;
@@ -55,13 +55,15 @@ const MyProfile = ({
       }
       setLoading1(false);
     } catch (error: any) {
-      toast({
-        description: `${error?.data?.message}`,
-        status: "error",
-        duration: 4000,
-        position: "top",
-        isClosable: true,
-      });
+      console.log(error?.data?.message)
+
+      // toast({
+      //   description: `${error?.data?.message}`,
+      //   status: "error",
+      //   duration: 4000,
+      //   position: "top",
+      //   isClosable: true,
+      // });
     }
   };
 
@@ -155,7 +157,7 @@ const MyProfile = ({
           >
             <p className="text-sm  font-medium">Total Balance</p>
             <p className="text-sm  font-medium">
-              {amount}.00<span className="text-[10px] font-light">INR</span>
+              {amount}.00<span className="text-[10px] font-light">BDT</span>
             </p>
           </div>
 
@@ -266,7 +268,7 @@ const MyProfile = ({
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2">Profit & Loss</p>
               <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">INR</span>
+                50.00<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -381,7 +383,7 @@ const MyProfile = ({
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2 ">Sport Profit</p>
               <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">INR</span>
+                50.00<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -496,7 +498,7 @@ const MyProfile = ({
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2 ">Casino Profit</p>
               <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">INR</span>
+                50.00<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -541,7 +543,7 @@ const MyProfile = ({
                       >
                         {item.type === "withdraw" ? "-" : "+"}{" "}
                         {item.deposit_amount || item.withdraw_amount}{" "}
-                        <span className="text-[10px] font-light">INR</span>
+                        <span className="text-[10px] font-light">BDT</span>
                       </p>
                       <p
                         className={`text-xs ${
@@ -619,7 +621,7 @@ const MyProfile = ({
               >
                 {transactionDetails?.deposit_amount ||
                   transactionDetails?.withdraw_amount}{" "}
-                <span className="">INR</span>
+                <span className="">BDT</span>
               </p>
             </div>
             <div className={`${theme ?`bg-[${themeChange.light.bg2}]` : `bg-[${themeChange.dark.bg2}]`} shadow-2xl  pl-5 flex items-center gap-3 w-[100%] p-2 rounded-[4px]`}>

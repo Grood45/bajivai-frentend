@@ -306,7 +306,6 @@ const MainComponent = () => {
       <div className="md:contents hidden">
         {provider.length > 0 && (
           <div className="flex flex-col gap-[40px]">
-            {/* {seamless game} */}
             {provider
               .slice(10, 15)
               .map(
@@ -396,11 +395,11 @@ const MainComponent = () => {
 
       <TennisData setgameCounts={setgameCounts} matchFilter={matchFilter} />
 
-      <div className="">
+      {/* <div className="">
         {provider.length > 0 && (
-          <div className="flex flex-col gap-[40px]">
+          <div className="flex flex-col gap-[40px]"> */}
             {/* {seamless game} */}
-            {provider
+            {/* {provider
               .slice(42, 60)
               .map(
                 (ele: any) =>
@@ -413,10 +412,10 @@ const MainComponent = () => {
                   )
               )}
           </div>
-        )}
+        )} */}
 
         {/* <HCarousel casinodata={casinodata} /> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 };

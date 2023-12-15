@@ -61,6 +61,7 @@ const MainComponent = () => {
   const { token = "", otpless_token = "" } =
     userAuth?.combineR?.userAuth?.data?.data || {};
   const toast = useToast();
+
   const sportbardata = [
     {
       id: 1,
@@ -90,6 +91,7 @@ const MainComponent = () => {
   const {
     username = "",
     max_limit = 0,
+     user_id="",
     min_limit = 0,
   } = userAuth?.combineR?.userAuth?.data?.user || {};
 
@@ -224,7 +226,7 @@ const MainComponent = () => {
             </div>
 
           
-            <div className="w-[100%]">
+            {/* <div className="w-[100%]">
               <div className="flex justify-between">
                 <div className="flex items-center gap-2">
                   <Image src={tennisc} alt="" />
@@ -238,13 +240,13 @@ const MainComponent = () => {
                 </div>
               </div>
               <GameCard handleGame={handleGame} gameTypeData={AllGameType} />
-            </div>
+            </div> */}
             {/* Casino*/}
-            <CasinoGame />
+            {/* <CasinoGame /> */}
 
             {/* Games game */}
 
-            <GamesGame />
+            {/* <GamesGame /> */}
 
             {provider.length > 0 && (
               <div className="flex flex-col gap-[40px]">

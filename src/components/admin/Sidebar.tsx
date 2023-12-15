@@ -102,12 +102,12 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
       icon: <FaVimeo fontSize={"20px"} />,
       route: "/admin/logoAndFavicon",
     },
-    {
-      id: 23,
-      title: "Casino Manage",
-      icon: <FaVimeo fontSize={"20px"} />,
-      route: "/admin/casinomanage",
-    },
+    // {
+    //   id: 23,
+    //   title: "Casino Manage",
+    //   icon: <FaVimeo fontSize={"20px"} />,
+    //   route: "/admin/casinomanage",
+    // },
     {
       id: 24,
       title: "Sports Admin",
@@ -212,7 +212,7 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
       </div>
       <div
         className={`overflow-scroll ${
-          status === 0 ? "h-[87vh]" : "h-[90vh]"
+          status === 0 ? "h-[84vh]" : "h-[90vh]"
         } pb-[15px]`}
       >
         <div className="flex flex-col  mt-2">
@@ -264,7 +264,7 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
             );
           })}
         </div>
-        <div className="need h-[240px]   flex p-3 flex-col justify-start items-start gap-4 w-[100%] mt-10 m-auto rounded-2xl">
+        {/* <div className="need h-[240px]   flex p-3 flex-col justify-start items-start gap-4 w-[100%] mt-10 m-auto rounded-2xl">
           <span className="rounded-[40%] cursor-pointer p-3 bg-[#1A1F37]">
             <AiFillQuestionCircle fontSize="25px" color="#0075FF" />
           </span>
@@ -276,7 +276,7 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
               Please check your docs
             </h2>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

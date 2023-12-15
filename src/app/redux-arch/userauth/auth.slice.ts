@@ -110,9 +110,9 @@ export const authSlice = createSlice({
       })
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.token = action.payload.data.token;
-        state.message = action.payload.message; // Set the message from the payload
-        state.data = action.payload;
+        state.token = action?.payload?.data?.token;
+        state.message = action?.payload?.message; // Set the message from the payload
+        state.data = action?.payload;
         setUserCookie("userData", action.payload, { path: "/" });
         // Cookies.set("token", action.payload.token); // Save token in cookie
       })

@@ -83,13 +83,14 @@ const Profile = () => {
       setTodayWithdraw(percentOfWithdraw);
      
     } catch (error: any) {
-      toast({
-        description: error.message,
-        status: "error",
-        position: "top",
-        duration: 4000,
-        isClosable: true,
-      });
+      console.log(error)
+      // toast({
+      //   description: error?.message,
+      //   status: "error",
+      //   position: "top",
+      //   duration: 4000,
+      //   isClosable: true,
+      // });
     }
   };
 

@@ -27,7 +27,7 @@ const MainComponent: React.FC = () => {
           position: "top",
           isClosable: true,
         });
-        router.push(ans.payload.redirect);
+        router.push("/admin/dashboard");
       } else if (!ans.payload.success && ans.payload.status === "401") {
         toast({
           title: ans.payload.message,

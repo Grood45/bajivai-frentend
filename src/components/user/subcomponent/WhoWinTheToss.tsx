@@ -51,6 +51,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
     betType: BetType
     // matchName: string
   ) => {
+    console.log(odd);
     if (odd < 1) {
       return;
     }
@@ -160,18 +161,24 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
   useEffect(() => {
     const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
+      //console.log("Connected to the server");
       setLoading(true);
     });
     socket.on("tossData", (data) => {
+      // //console.log("Received odds data:", data);
     });
     socket.on("disconnect", () => {
+      //console.log("Disconnected from the server");
       setLoading(false);
     });
 
+    // Emit the "startFetching" event with the eventID
     socket.emit("startFetchingToss", param.id);
 
+    // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
+      //console.log("socket disconnected");
       setLoading(false);
     };
   }, [param.id]);
@@ -179,6 +186,10 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
   const fetchBetData = async () => {
     const category = "toss";
     const match_id = param.id;
+
+    if(!user_id){
+      return;
+    }
 
     try {
       // user id then match_id we have to pass here
@@ -196,6 +207,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
         duration: 4000,
         isClosable: true,
       });
+      //console.error(error);
     }
   };
 
@@ -300,7 +312,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "back"
                         )
                       }
-                      className="bg-[#41ADFA] min-w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#41ADFA] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -315,7 +327,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "back"
                         )
                       }
-                      className="bg-[#41ADFA] min-w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#41ADFA] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -330,7 +342,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "back"
                         )
                       }
-                      className="bg-[#41ADFA] min-w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#41ADFA] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -347,7 +359,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "lay"
                         )
                       }
-                      className="bg-[#FD5FA1] min-w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -362,7 +374,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "lay"
                         )
                       }
-                      className="bg-[#FD5FA1] min-w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -377,7 +389,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "lay"
                         )
                       }
-                      className="bg-[#FD5FA1] min-w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -412,7 +424,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "back"
                         )
                       }
-                      className="bg-[#41ADFA] min-w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#41ADFA] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -427,7 +439,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "back"
                         )
                       }
-                      className="bg-[#41ADFA] min-w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#41ADFA] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -442,7 +454,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "back"
                         )
                       }
-                      className="bg-[#41ADFA] min-w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#41ADFA] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -459,7 +471,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "lay"
                         )
                       }
-                      className="bg-[#FD5FA1] min-w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#FD5FA1] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -474,7 +486,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "lay"
                         )
                       }
-                      className="bg-[#FD5FA1] min-w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#FD5FA1] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>
@@ -489,7 +501,7 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
                           "lay"
                         )
                       }
-                      className="bg-[#FD5FA1] min-w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                      className="bg-[#FD5FA1] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                     >
                       <span className="text-xs">1.98</span>
                       <span className="text-[10px]">2345</span>

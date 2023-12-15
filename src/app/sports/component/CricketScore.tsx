@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import team1 from "../../../assetuser/other/Team Logo (1).png";
 import team2 from "../../../assetuser/other/Team Logo.png";
 import { MdLiveTv } from "react-icons/md";
+import { BiCricketBall } from "react-icons/bi";
+import { TbCricket } from "react-icons/tb";
+import getTeamShortName from "../../../../utils/getTeamShortName";
 
 function formatTime(ms: number) {
   const seconds = Math.floor((ms / 1000) % 60);
@@ -20,11 +23,11 @@ const CricketScore = ({
   singleMatch: any;
 }) => {
   const [remainingTime, setTimeRemaining] = useState("");
-  console.log(singleMatch,scoreData,"aadsds")
+  console.log(scoreData, "scoreDatasdaaddsaa");
 
   const lastBall =
-    scoreData?.last24ballsNew && scoreData.last24ballsNew.length > 0
-      ? scoreData.last24ballsNew[scoreData.last24ballsNew.length - 1]
+    scoreData?.last24balls && scoreData.last24balls.length > 0
+      ? scoreData.last24balls[scoreData.last24balls.length - 1]
       : null;
   const countdown = singleMatch?.open_date || "Match Start";
   useEffect(() => {
@@ -56,30 +59,45 @@ const CricketScore = ({
   }, [singleMatch]);
 
   return (
-    <div className="bg-gradient-to-r from-indigo-700 to bg-purple-900 ... p-[1px] h-[230px] md:h-[260px] rounded-2xl  ">
+    <div className="bg-gradient-to-r from-indigo-700 to bg-purple-900 ... p-[1px] h-[240px] rounded-2xl  ">
       <div className="flex justify-between items-center p-3">
         <p className="text-sm font-semibold">{singleMatch?.league_name}</p>
 
-       <div className="w-[33%] text-center m-auto">
-        {remainingTime === "0" && (
-          <p className="px-2 py-[2px] ml-[10px] w-[40px] rounded-[6px] bg-red-500 text-white animate-pulse text-xs">
-            Live
-          </p>
-        )}
+        <div className="w-[33%] text-center m-auto">
+          {remainingTime === "0" && (
+            <p className="px-2 py-[2px] ml-[10px] w-[40px] rounded-[6px] bg-red-500 text-white animate-pulse text-xs">
+              Live
+            </p>
+          )}
         </div>
-<div className="">
-        <MdLiveTv  cursor="pointer" fontSize={"25px"} color="white" />
+        <div className="">
+          <MdLiveTv cursor="pointer" fontSize={"25px"} color="white" />
         </div>
       </div>
       <div className="flex mt-6 justify-between px-4 md:px-10">
         <div className="flex  gap-2 items-center flex-col">
-          <Image
+          {/* <Image
             src={team2}
             className="h-[30px] w-[30px]  md:w-[60px] md:h-[60px]"
             alt=""
-          />
+          /> */}
+          {/* <TbCricket fontSize="50px" /> */}
+          <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
+            <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
+              {scoreData &&
+              scoreData.teams &&
+              scoreData.teams[0] &&
+              scoreData.teams[0].team_name
+                ? getTeamShortName(
+                    scoreData.teams[0].team_name.split("/")[0].split("v")[0]
+                  )
+                : ""}
+            </p>
+          </span>
           {scoreData?.teams ? (
-            <p className="text-xs">{scoreData?.teams[0]?.team_name || ""}</p>
+            <p className=" text-[10px] md:text-xs">
+              {scoreData?.teams[0]?.team_name || ""}
+            </p>
           ) : (
             ""
           )}
@@ -100,7 +118,12 @@ const CricketScore = ({
             <div className="flex flex-col gap-1">
               {scoreData?.teams ? (
                 <p className="text-sm md:text-2xl font-semibold text-white">
-                  {scoreData?.teams[0]?.score.split(" ")[0] || ""}
+                  {scoreData &&
+                  scoreData.teams &&
+                  scoreData.teams[0] &&
+                  scoreData.teams[0].score
+                    ? scoreData.teams[0].score.split(" ")[0]
+                    : ""}
                 </p>
               ) : (
                 ""
@@ -153,13 +176,28 @@ const CricketScore = ({
         )}
 
         <div className="flex  gap-2 items-center flex-col">
-          <Image
+          {/* <Image
             src={team1}
             className="h-[30px] w-[30px]  md:w-[60px] md:h-[60px]"
             alt=""
-          />
+          /> */}
+          {/* <BiCricketBall fontSize="50px" /> */}
+          <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
+            <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
+              {scoreData &&
+              scoreData.teams &&
+              scoreData.teams[1] &&
+              scoreData.teams[1].team_name
+                ? getTeamShortName(
+                    scoreData.teams[1].team_name.split("/")[0].split("v")[0]
+                  )
+                : ""}
+            </p>
+          </span>
           {scoreData?.teams ? (
-            <p className="text-xs">{scoreData?.teams[1]?.team_name || ""}</p>
+            <p className="text-[10px] md:text-xs">
+              {scoreData?.teams[1]?.team_name || ""}
+            </p>
           ) : (
             ""
           )}
@@ -176,7 +214,7 @@ const CricketScore = ({
 
       {/* when  match start */}
       {remainingTime === "0" && (
-        <div className="p-4 mt-6 w-[98%] h-[65px]  font-bold  mb-2  gap-6 rounded-[12px] m-auto bg-gradient-to-r from-yellow-700 to to-pink-500 ... flex items-center justify-between">
+        <div className="p-4  mt-6 w-[98%] h-[65px]  font-bold  mb-2  gap-6 rounded-[12px] m-auto bg-gradient-to-r from-yellow-700 to to-pink-500 ... flex items-center justify-between">
           {/* batsman details */}
           <div className="flex flex-col gap-2  w-[100%]">
             <div className="flex gap-2 justify-between">
@@ -225,28 +263,28 @@ const CricketScore = ({
                   </div>
                 ) : (
                   <div className=" text-[10px] text-center gap-1  flex items-center justify-center ">
-                    {scoreData?.last24ballsNew?.slice(scoreData?.last24ballsNew.length-6,scoreData?.last24ballsNew.length).map((ele: any) => (
-                      <>
-                        <p
-                          className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
-                            ele.score_card === "0" ||
-                            ele.score_card === "1" ||
-                            ele.score_card === "2" ||
-                            ele.score_card === "3"
-                              ? "bg-[gray]"
-                              : ele.score_card === "4"
-                              ? "bg-[green]"
-                              : ele.score_card === "ww"
-                              ? "bg-[red]"
-                              : ele.score_card === "6"
-                              ? "bg-[blue]"
-                              : "bg-[gray]"
-                          }`}
-                        >
-                          {ele.score_card}
-                        </p>
-                      </>
-                    ))}
+                    {scoreData?.last24balls?.map((ele: any) => (
+                        <>
+                          <p
+                            className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
+                              ele.score_card === "0" ||
+                              ele.score_card === "1" ||
+                              ele.score_card === "2" ||
+                              ele.score_card === "3"
+                                ? "bg-[gray]"
+                                : ele.score_card === "4"
+                                ? "bg-[green]"
+                                : ele.score_card === "ww"
+                                ? "bg-[red]"
+                                : ele.score_card === "6"
+                                ? "bg-[blue]"
+                                : "bg-[gray]"
+                            }`}
+                          >
+                            {ele.score_card}
+                          </p>
+                        </>
+                      ))}
                   </div>
                 )}
               </div>
@@ -263,29 +301,28 @@ const CricketScore = ({
               <p className="text-xs  md:text-sm  text-gray-300"></p>
             </div>
             <div className=" text-xs text-center gap-1  flex items-center  ">
-            {scoreData?.last24ballsNew?.slice(scoreData?.last24ballsNew.length-6,scoreData?.last24ballsNew.length).map((ele: any) => (
-
-                <>
-                  <p
-                    className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
-                      ele.score_card === "0" ||
-                      ele.score_card === "1" ||
-                      ele.score_card === "2" ||
-                      ele.score_card === "3"
-                        ? "bg-[gray]"
-                        : ele.score_card === "4"
-                        ? "bg-[green]"
-                        : ele.score_card === "ww"
-                        ? "bg-[red]"
-                        : ele.score_card === "6"
-                        ? "bg-[blue]"
-                        : "bg-[gray]"
-                    }`}
-                  >
-                    {ele.score_card}
-                  </p>
-                </>
-              ))}
+              {scoreData?.last24balls?.map((ele: any) => (
+                  <>
+                    <p
+                      className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
+                        ele.score_card === "0" ||
+                        ele.score_card === "1" ||
+                        ele.score_card === "2" ||
+                        ele.score_card === "3"
+                          ? "bg-[gray]"
+                          : ele.score_card === "4"
+                          ? "bg-[green]"
+                          : ele.score_card === "ww"
+                          ? "bg-[red]"
+                          : ele.score_card === "6"
+                          ? "bg-[blue]"
+                          : "bg-[gray]"
+                      }`}
+                    >
+                      {ele.score_card}
+                    </p>
+                  </>
+                ))}
             </div>
           </div>
         </div>

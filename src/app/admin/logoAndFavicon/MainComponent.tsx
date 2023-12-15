@@ -80,14 +80,15 @@ const Maincomponent = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/logofav/get-logo-fav/6532c132ed5efb8183a66703`
       );
       console.log(response, "response");
-
+      if(response.data){
       setMarque(response.data.marque);
       setSelectedFaviconImage(response.data.fav_icon);
       setSelectedLogoImage(response.data.logo);
       setFaq(response.data.fnq);
       setTc(response.data.tc);
+      }
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
+      console.error("Error uploading image:", error?.message);
       toast({
         title: error.message,
         status: "error",

@@ -53,6 +53,7 @@ function StatementModel() {
         setStateMentData(receivedData);
       }
       setLoading1(false);
+      console.log(data, "getAllbets data");
     } catch (error: any) {
       toast({
         description: `${error?.data?.message}`,
@@ -61,6 +62,7 @@ function StatementModel() {
         position: "top",
         isClosable: true,
       });
+      console.log(error);
     }
   };
 
@@ -220,7 +222,7 @@ function StatementModel() {
                                   boxShadow:
                                     "1px 5px 24px 8px rgba(110, 117, 136, 0.07",
                                 }}
-                                className={`flex w-[100%] cursor-pointer flex-col justify-center items-center ${
+                                className={`flex w-[100%] cursor-pointer h-[100%] flex-col justify-center items-center ${
                                   theme
                                     ? `bg-[${themeChange.light.bg2}]`
                                     : `bg-[${themeChange.dark.bg3}]`
@@ -309,10 +311,10 @@ function StatementModel() {
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex bg-gray-800 justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
-                                      <Image
+                                                                           <Image
                                         src={
                                           item.event_type !== "casino"
                                             ? bollyball
@@ -335,9 +337,9 @@ function StatementModel() {
                                     <div className="flex text-center flex-col gap-1">
                                       <p
                                         className={`text-sm  ${
-                                          item.status === "pending"
-                                            ? "text-[#FF0202]"
-                                            : "text-[#0FBF00]"
+                                          item.result == "lose"
+                                            ? "text-[#FF0202]":item.result=="win"?
+                                            "text-[#0FBF00]":"text-[#EAAB0F]"
                                         }  font-medium`}
                                       >
                                         {item.stake}
@@ -345,8 +347,14 @@ function StatementModel() {
                                           {/* INR */}
                                         </span>
                                       </p>
-                                      <p className="text-xs  text-[#EAAB0F]">
-                                        {item.status}
+                                      <p className={`text-xs   ${
+                                          item.result == "lose"
+                                            ? "text-[#FF0202]":item.result=="win"?
+                                            "text-[#0FBF00]":"text-[#EAAB0F]"
+                                        }`}>
+
+                                        {item.result==""?"pending":item.result}
+                                     
                                       </p>
                                     </div>
                                   </div>
@@ -360,7 +368,7 @@ function StatementModel() {
                   )}
 
                   {showStatement === 1 && (
-                    <div className="h-[90vh] overflow-visible">
+                    <div className="h-[90vh] overflow-scroll">
                       <div>
                         <div className="flex  justify-end">
                           <svg
@@ -436,18 +444,20 @@ function StatementModel() {
                                 View All
                               </p>
                             </div>
+                            
+                            <div className="overflow-scroll  h-[100vh]">
                             {sportsdata.map((item) => {
                               return (
                                 <div
                                   key={item._id}
-                                  className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
+                                  className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
                                 >
                                   <div
                                     style={{
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex bg-gray-800 justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
                                       <Image src={bollyball} alt="" />
@@ -484,6 +494,8 @@ function StatementModel() {
                                 </div>
                               );
                             })}
+                            </div>
+                           
                           </div>
                         </div>
                       </div>
@@ -577,7 +589,7 @@ function StatementModel() {
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex bg-gray-800 justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
                                       <Image src={card} alt="" />
@@ -596,9 +608,9 @@ function StatementModel() {
                                     <div className="flex text-center flex-col gap-1">
                                       <p
                                         className={`text-sm  ${
-                                          item.status === "pending"
-                                            ? "text-[#FF0202]"
-                                            : "text-[#0FBF00]"
+                                          item.result == "lose"
+                                            ? "text-[#FF0202]":item.result=="win"?
+                                            "text-[#0FBF00]":"text-[#EAAB0F]"
                                         }  font-medium`}
                                       >
                                         {item.stake}
@@ -606,8 +618,12 @@ function StatementModel() {
                                           {/* INR */}
                                         </span>
                                       </p>
-                                      <p className="text-xs  text-[#EAAB0F]">
-                                        {item.status}
+                                      <p className={`text-xs  ${
+                                          item.result == "lose"
+                                            ? "text-[#FF0202]":item.result=="win"?
+                                            "text-[#0FBF00]":"text-[#EAAB0F]"
+                                        }`}>
+                                       {item.result==""?"pending":item.result}
                                       </p>
                                     </div>
                                   </div>
@@ -696,21 +712,22 @@ function StatementModel() {
                                 View All
                               </p>
                             </div>
+                            <div className="overflow-scroll   h-[100vh]">
                             {statemendatas.map((item) => {
                               return (
                                 <div
                                   key={item._id}
-                                  className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
+                                  className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
                                 >
                                   <div
                                     style={{
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex justify-between bg-gray-800 cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex justify-between m  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
-                                      <Image
+                                                                           <Image
                                         src={
                                           item.event_type !== "casino"
                                             ? bollyball
@@ -733,9 +750,9 @@ function StatementModel() {
                                     <div className="flex text-center flex-col gap-1">
                                       <p
                                         className={`text-sm  ${
-                                          item.status === "pending"
-                                            ? "text-[#FF0202]"
-                                            : "text-[#0FBF00]"
+                                          item.result == "lose"
+                                            ? "text-[#FF0202]":item.result=="win"?
+                                            "text-[#0FBF00]":"text-[#EAAB0F]"
                                         }  font-medium`}
                                       >
                                         {item.stake}
@@ -743,14 +760,20 @@ function StatementModel() {
                                           {/* INR */}
                                         </span>
                                       </p>
-                                      <p className="text-xs  text-[#EAAB0F]">
-                                        {item.status}
+                                      <p className={`text-xs  ${
+                                          item.result == "lose"
+                                            ? "text-[#FF0202]":item.result=="win"?
+                                            "text-[#0FBF00]":"text-[#EAAB0F]"
+                                        }`}>
+                                    {item.result==""?"pending":item.result}
                                       </p>
                                     </div>
                                   </div>
                                 </div>
                               );
                             })}
+                            </div>
+                         
                           </div>
                         </div>
                       </div>
@@ -844,10 +867,10 @@ function StatementModel() {
                                       boxShadow:
                                         "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
                                     }}
-                                    className="flex bg-gray-800 justify-between cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
-                                      <Image
+                                                                           <Image
                                         src={
                                           item.event_type !== "casino"
                                             ? bollyball
@@ -870,9 +893,9 @@ function StatementModel() {
                                     <div className="flex text-center flex-col gap-1">
                                       <p
                                         className={`text-sm  ${
-                                          item.status === "pending"
-                                            ? "text-[#FF0202]"
-                                            : "text-[#0FBF00]"
+                                          item.result == "lose"
+                                            ? "text-[#FF0202]":item.result=="win"?
+                                            "text-[#0FBF00]":"text-[#EAAB0F]"
                                         }  font-medium`}
                                       >
                                         {item.stake}
@@ -880,8 +903,12 @@ function StatementModel() {
                                           {/* INR */}
                                         </span>
                                       </p>
-                                      <p className="text-xs  text-[#EAAB0F]">
-                                        {item.status}
+                                      <p className={`text-xs  ${
+                                          item.result == "lose"
+                                            ? "text-[#FF0202]":item.result=="win"?
+                                            "text-[#0FBF00]":"text-[#EAAB0F]"
+                                        }`}>
+                                       {item.result==""?"pending":item.result}
                                       </p>
                                     </div>
                                   </div>

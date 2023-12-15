@@ -63,9 +63,13 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     amount = 0,
     max_limit = 10000,
     min_limit = 100,
+    parent_admin_id = "",
+    parent_admin_username = "",
+    parent_admin_role_type = "",
   } = userAuth?.combineR?.userAuth?.data?.user || {};
   const toast = useToast();
   const param = useParams();
+  console.log(param, "param");
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   // fetch data of odds, bbokmaker, fancy, toss
   const { token = "", otpless_token = "" } =
@@ -103,6 +107,16 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     // matchName: string
   ) => {
     if (odd < 1) {
+      return;
+    }
+    if (odd > 10) {
+      toast({
+        description: "odd value should be less than 10",
+        status: "warning",
+        duration: 4000,
+        position: "bottom",
+        isClosable: true,
+      });
       return;
     }
     setBetShow(true);
@@ -166,6 +180,9 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       league_name: singleMatch?.league_name,
       rate,
       bet_category: "odds",
+      parent_admin_id ,
+      parent_admin_username ,
+      parent_admin_role_type ,
     };
     setBetLoading(true);
     let oldExposure = Math.min(firstTeamPl, secondTeamPl);
@@ -217,6 +234,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
         isClosable: true,
       });
       setBetLoading(false);
+      console.log(error, "1");
     }
   };
   useEffect(() => {
@@ -224,6 +242,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     if (Array.isArray(team)) {
       const result = calculatePL(bet, team[0], team[1]);
       let [pl1, pl2] = result;
+      console.log(pl1, pl2, "pl of");
       // alert("hihninik")
       setFirstTeamPl(pl1);
       setSecondTeamPl(pl2);
@@ -232,13 +251,17 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
   const fetchBetData = async () => {
     const category = "odds";
     const match_id = param.id;
+    if (!user_id) {
+      return;
+    }
     try {
       // user id then match_id we have to pass here
       const response = await fetchGetRequest(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?category=${category}&match_id=${match_id}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?category=${category}&match_id=${match_id}&status=pending`
       );
       const data = response.data;
       setBet(data);
+      console.log(data, "bet data");
     } catch (error: any) {
       toast({
         description: error?.data?.message || "Something went wrong",
@@ -247,6 +270,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
         duration: 4000,
         isClosable: true,
       });
+      console.log(error);
     }
   };
 
@@ -331,7 +355,11 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                         <p className="text-white  text-xs font-semibold">
                           {data[0]?.section[0]?.nat}
                         </p>
-                        <p className="text-[#0FBF00] text-xs font-semibold">
+                        <p
+                          className={` ${
+                            !firstTeamPl && "text-red-800"
+                          } text-[#0FBF00] text-xs font-semibold`}
+                        >
                           {firstTeamPl}
                         </p>
                       </div>
@@ -339,13 +367,13 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                     <div className="flex items-center gap-3">
                       <div className="flex gap-1">
                         <div className="hidden lg:contents">
-                          <button className="bg-[#41ADFA]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                          <button className="bg-[#41ADFA] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
                             <span className="text-xs">{"-"}</span>
                             <span className="text-[10px]">{"-"}</span>
                           </button>
                         </div>
                         <div className="hidden lg:contents">
-                          <button className="bg-[#41ADFA]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                          <button className="bg-[#41ADFA] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
                             <span className="text-xs">{"-"}</span>
                             <span className="text-[10px]">{"-"}</span>
                           </button>
@@ -359,7 +387,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                                 "back"
                               )
                             }
-                            className="bg-[#41ADFA]   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            className="bg-[#41ADFA] w-[90px]   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                           >
                             <span className="text-xs">
                               {data[0]?.section[2]?.odds[0]?.odds || "-"}
@@ -380,7 +408,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                                 "lay"
                               )
                             }
-                            className="bg-[#FD5FA1]  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            className="bg-[#FD5FA1] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 "
                           >
                             <span className="text-xs">
                               {data[0]?.section[0]?.odds[1]?.odds || "-"}
@@ -391,13 +419,13 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                           </button>
                         </div>
                         <div className="hidden lg:contents">
-                          <button className="bg-[#FD5FA1]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                          <button className="bg-[#FD5FA1] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
                             <span className="text-xs">{"-"}</span>
                             <span className="text-[10px]">{"-"}</span>
                           </button>
                         </div>
                         <div className="">
-                          <button className="bg-[#FD5FA1]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                          <button className="bg-[#FD5FA1] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
                             <span className="text-xs">{"-"}</span>
                             <span className="text-[10px]">{"-"}</span>
                           </button>
@@ -416,7 +444,11 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                         <p className="text-white text-xs font-semibold">
                           {data[0]?.section[1]?.nat}
                         </p>
-                        <p className="text-[#0FBF00] text-xs font-semibold">
+                        <p
+                          className={`${
+                            !secondTeamPl && "text-red-800"
+                          }text-[#0FBF00] text-xs font-semibold`}
+                        >
                           {secondTeamPl}
                         </p>
                       </div>
@@ -424,13 +456,13 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                     <div className="flex items-center gap-3">
                       <div className="flex gap-1">
                         <div className="hidden lg:contents">
-                          <button className="bg-[#41ADFA]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                          <button className="bg-[#41ADFA] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
                             <span className="text-xs">{"-"}</span>
                             <span className="text-[10px]">{"-"}</span>
                           </button>
                         </div>
                         <div className="hidden lg:contents">
-                          <button className="bg-[#41ADFA]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                          <button className="bg-[#41ADFA] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
                             <span className="text-xs">{"-"}</span>
                             <span className="text-[10px]">{"-"}</span>
                           </button>
@@ -444,7 +476,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                                 "back"
                               )
                             }
-                            className="bg-[#41ADFA]  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            className="bg-[#41ADFA] w-[90px]   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                           >
                             <span className="text-xs">
                               {data[0]?.section[1]?.odds[0]?.odds || "-"}
@@ -465,7 +497,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                                 "lay"
                               )
                             }
-                            className="bg-[#FD5FA1]  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            className="bg-[#FD5FA1] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 "
                           >
                             <span className="text-xs">
                               {data[0]?.section[1]?.odds[1]?.odds || "-"}
@@ -476,13 +508,13 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                           </button>
                         </div>
                         <div className="hidden lg:contents">
-                          <button className="bg-[#FD5FA1]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                          <button className="bg-[#FD5FA1]  w-[90px] text-white flex flex-col  rounded-[8px] py-1 px-6 ">
                             <span className="text-xs">{"-"}</span>
                             <span className="text-[10px]">{"-"}</span>
                           </button>
                         </div>
                         <div className="">
-                          <button className="bg-[#FD5FA1]  text-white flex flex-col   rounded-[8px] py-1 px-6 ">
+                          <button className="bg-[#FD5FA1] w-[90px]  text-white flex flex-col   rounded-[8px] py-1 px-6 ">
                             <span className="text-xs">{"-"}</span>
                             <span className="text-[10px]">{"-"}</span>
                           </button>
@@ -502,105 +534,112 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                 <>
                   {/* <div key={item.sid} className="h-[1px] bg-[#444444C7]"></div> */}
                   {item.nat !== "The Draw" && (
-                  <div className="h-[100%] flex items-center gap-2 justify-between p-3   w-[100%]">
-                    <div className="flex  gap-3">
-                      {/* <button className="h-[30px] w-[30px] text-[10px] bg-[#EAAB0F] border-2 border-[black]  text-white rounded-[50%]">
+                    <div className="h-[100%] flex items-center gap-2 justify-between p-3   w-[100%]">
+                      <div className="flex  gap-3">
+                        {/* <button className="h-[30px] w-[30px] text-[10px] bg-[#EAAB0F] border-2 border-[black]  text-white rounded-[50%]">
                         BA
                       </button> */}
-                      <div>
-                        <p className="text-white text-xs font-semibold">
-                          {item.nat}
-                        </p>
-                        <p className="text-[#0FBF00] text-xs font-semibold">
-                          {index == 0 ? firstTeamPl : secondTeamPl}
-                        </p>
+                        <div>
+                          <p className="text-white text-xs font-semibold">
+                            {item.nat}
+                          </p>
+                          <p
+                            className={`${
+                              secondTeamPl<0&&index==1? "text-red-800" : "text-[#0FBF00]"
+                            } ${
+                              firstTeamPl<0&&index==0? "text-red-800" : "text-[#0FBF00]"
+                            } text-xs font-semibold`}
+                          >
+                            {index == 0 ? firstTeamPl : secondTeamPl}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 lg:gap-3">
+                        <div className="flex gap-1 ">
+                          <div className="hidden lg:contents ">
+                            <button
+                              onClick={() =>
+                                handleBet(Number(item.b1), item.nat, "back")
+                              }
+                              className="bg-[#41ADFA]  w-[90px] items-center justify-center text-white flex flex-col    rounded-[8px]   "
+                            >
+                              <span className="text-xs">{item?.b1 || "-"}</span>
+                              <span className="text-[10px]">
+                                {(+item.bs1).toFixed(1) || "-"}
+                              </span>
+                            </button>
+                          </div>
+                          <div className="hidden lg:contents">
+                            <button
+                              onClick={() =>
+                                handleBet(Number(+item.b2), item.nat, "back")
+                              }
+                              className="bg-[#41ADFA] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            >
+                              <span className="text-xs">{item.b2 || "-"}</span>
+                              <span className="text-[10px]">
+                                {(+item.bs2).toFixed(1) || "-"}
+                              </span>
+                            </button>
+                          </div>
+                          <div className="">
+                            <button
+                              onClick={() =>
+                                handleBet(Number(item.b3), item.nat, "back")
+                              }
+                              className="bg-[#41ADFA] w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            >
+                              <span className="text-xs">{item.b3 || "-"}</span>
+                              <span className="text-[10px]">
+                                {(+item.bs3).toFixed(1) || "-"}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                        <div className="flex gap-1">
+                          <div className="hidden lg:contents ">
+                            <button
+                              onClick={() =>
+                                handleBet(Number(item.l1), item.nat, "lay")
+                              }
+                              className="bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            >
+                              <span className="text-xs">{item?.l1 || "-"}</span>
+                              <span className="text-[10px]">
+                                {(+item?.ls1).toFixed(1) || "-"}
+                              </span>
+                            </button>
+                          </div>
+                          <div className="hidden lg:contents">
+                            <button
+                              onClick={() =>
+                                handleBet(+item?.l2, item.nat, "lay")
+                              }
+                              className="bg-[#FD5FA1] w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            >
+                              <span className="text-xs">{item?.l2 || "-"}</span>
+                              <span className="text-[10px]">
+                                {(+item.ls2).toFixed(1) || "-"}
+                              </span>
+                            </button>
+                          </div>
+                          <div className="">
+                            <button
+                              onClick={() =>
+                                handleBet(Number(item.l3), item.nat, "lay")
+                              }
+                              className="bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                            >
+                              <span className="text-xs">{item?.l3 || "-"}</span>
+                              <span className="text-[10px]">
+                                {(+item?.ls3).toFixed(1) || "-"}
+                              </span>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 lg:gap-3">
-                      <div className="flex gap-1 ">
-                        <div className="hidden lg:contents ">
-                          <button
-                            onClick={() =>
-                              handleBet(Number(item.b1), item.nat, "back")
-                            }
-                            className="bg-[#41ADFA]  min-w-[90px] items-center justify-center text-white flex flex-col    rounded-[8px]   "
-                          >
-                            <span className="text-xs">{item?.b1 || "-"}</span>
-                            <span className="text-[10px]">
-                              {(+item.bs1).toFixed(1) || "-"}
-                            </span>
-                          </button>
-                        </div>
-                        <div className="hidden lg:contents">
-                          <button
-                            onClick={() =>
-                              handleBet(Number(+item.b2), item.nat, "back")
-                            }
-                            className="bg-[#41ADFA] min-w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
-                          >
-                            <span className="text-xs">{item.b2 || "-"}</span>
-                            <span className="text-[10px]">
-                              {(+item.bs2).toFixed(1) || "-"}
-                            </span>
-                          </button>
-                        </div>
-                        <div className="">
-                          <button
-                            onClick={() =>
-                              handleBet(Number(item.b3), item.nat, "back")
-                            }
-                            className="bg-[#41ADFA] min-w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6 "
-                          >
-                            <span className="text-xs">{item.b3 || "-"}</span>
-                            <span className="text-[10px]">
-                              {(+item.bs3).toFixed(1) || "-"}
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex gap-1">
-                        <div className="hidden lg:contents ">
-                          <button
-                            onClick={() =>
-                              handleBet(Number(item.l1), item.nat, "lay")
-                            }
-                            className="bg-[#FD5FA1] min-w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
-                          >
-                            <span className="text-xs">{item?.l1 || "-"}</span>
-                            <span className="text-[10px]">
-                              {(+item?.ls1).toFixed(1) || "-"}
-                            </span>
-                          </button>
-                        </div>
-                        <div className="hidden lg:contents">
-                          <button
-                            onClick={() =>
-                              handleBet(+item?.l2, item.nat, "lay")
-                            }
-                            className="bg-[#FD5FA1] min-w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6 "
-                          >
-                            <span className="text-xs">{item?.l2 || "-"}</span>
-                            <span className="text-[10px]">
-                              {(+item.ls2).toFixed(1) || "-"}
-                            </span>
-                          </button>
-                        </div>
-                        <div className="">
-                          <button
-                            onClick={() =>
-                              handleBet(Number(item.l3), item.nat, "lay")
-                            }
-                            className="bg-[#FD5FA1] min-w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
-                          >
-                            <span className="text-xs">{item?.l3 || "-"}</span>
-                            <span className="text-[10px]">
-                              {(+item?.ls3).toFixed(1) || "-"}
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>)}
+                  )}
                   {index === 0 && (
                     <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
                   )}
