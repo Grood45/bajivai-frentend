@@ -25,10 +25,10 @@ function LoginModal({ ID }: { ID: any }) {
     <>
       {ID === 1 && (
         <button
-          className="px-3 justify-end text-white  p-1 font-semibold bg-[#DCA029] text-[16px] rounded-[8px]"
+          className="px-6   justify-end text-white  p-1 font-semibold bg-[#DCA029] text-[14px] rounded-[8px]"
           onClick={onOpen}
         >
-          Signup/Login
+        Login
         </button>
       )}
 
