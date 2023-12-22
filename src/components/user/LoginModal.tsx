@@ -28,7 +28,7 @@ function LoginModal({ ID }: { ID: any }) {
           className="px-6   justify-end text-white  p-1 font-semibold bg-[#DCA029] text-[16px] rounded-[8px]"
           onClick={onOpen}
         >
-        Signup/Login
+        Login
         </button>
       )}
 
