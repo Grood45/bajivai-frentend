@@ -165,7 +165,7 @@ export const GameProviders = [
   },
   {
     gpId: 20,
-    gpName: "EvolutionGaming12",
+    gpName: "EvolutionGaming",
     gameId: 0,
     gameName: "Lobby",
     gameNameChinese: "EvolutionGaming 大厅",
