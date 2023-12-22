@@ -32,4 +32,6 @@ jobs:
         script: |
           cd /var/www/html/bajivai-frentend/
           git pull origin main
+          npm install
+          npm run build
           pm2 restart bajivaifronted
