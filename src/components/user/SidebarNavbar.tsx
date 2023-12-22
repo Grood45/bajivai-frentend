@@ -321,7 +321,7 @@ const SidebarNavbar = ({
           <span className=" lg:bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[12px]">
             {" "}
 
-            <Link href={whatsappLink} target="_blank" rel="noopener noreferrer">
+            {/* <Link href={whatsappLink} target="_blank" rel="noopener noreferrer"> */}
             <button
               
               className={`w-[100%]  ${
@@ -364,7 +364,7 @@ const SidebarNavbar = ({
                 Support
               </span>
             </button>
-            </Link>
+            {/* </Link> */}
           </span>
         </div>
       </div>
