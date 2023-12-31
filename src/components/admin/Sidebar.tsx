@@ -102,12 +102,12 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
       icon: <FaVimeo fontSize={"20px"} />,
       route: "/admin/logoAndFavicon",
     },
-    // {
-    //   id: 23,
-    //   title: "Casino Manage",
-    //   icon: <FaVimeo fontSize={"20px"} />,
-    //   route: "/admin/casinomanage",
-    // },
+    {
+      id: 23,
+      title: "Casino Manage",
+      icon: <FaVimeo fontSize={"20px"} />,
+      route: "/admin/casinomanage",
+    },
     {
       id: 24,
       title: "Sports Admin",
