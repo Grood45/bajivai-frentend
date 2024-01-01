@@ -82,7 +82,7 @@ const TennisData = ({
     try {
       // user id then match_id we have to pass here
       const response = await fetchGetRequest(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/get-tennis-match?page=${currentPage}&limit=1000`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/get-tennis-match?page=${currentPage}&limit=100000000`
       );
       const data = response.data;
       setData(data);

@@ -143,7 +143,7 @@ const MainComponent = () => {
     },
     {
       id: 4,
-      title: isCountdownPassed?"":"Toss",
+      title: isCountdownPassed?"":"TOSS",
     },
     {
       id: 5,

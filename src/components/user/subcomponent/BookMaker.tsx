@@ -61,7 +61,7 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
   const [secondTeamPl, setSecondTeamPl] = useState(0);
   const [bet, setBet] = useState<BetSlip[]>([]);
   const [betLoading, setBetLoading] = useState<boolean>();
-
+  const [prevCricketDataofOdds, setPrevCricketDataofOdds] = useState<any>([]);
   const userAuth = useSelector((state: RootState) => state);
   const {
     username = "",
@@ -234,8 +234,12 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     socket.on("bookmakerData", (data) => {
       // console.log("Received bookmaker data:", data);
       if (data.t2) {
-        setData(data?.t2[0]?.bm1 || []);
+        setData((prev: any) => {
+          setPrevCricketDataofOdds(prev);
+          return data?.t2[0]?.bm1 || [];
+        });
       }
+      
     });
     socket.on("disconnect", () => {
       //console.log("Disconnected from the server");
@@ -392,7 +396,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                 onClick={() =>
                                   handleBet(Number(item.b3), item.nat, "back")
                                 }
-                                className="bg-[#41ADFA] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                                className={`${
+                                  (prevCricketDataofOdds &&
+                                    prevCricketDataofOdds[index]?.b3 !==
+                                      item?.b3) ||
+                                  prevCricketDataofOdds[index]?.bs3 !==
+                                    item?.bs3
+                                    ? "animate-pulse  bg-blue-600 opacity-4 w-[90px] items-center justify-center text-white flex flex-col rounded-[8px] py-1 px-6"
+                                    : "bg-[#41ADFA] w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                }`}
                               >
                                 <span className="text-xs">{item?.b3}</span>
                                 <span className="text-[10px]">
@@ -405,7 +417,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                 onClick={() =>
                                   handleBet(Number(item.b2), item.nat, "back")
                                 }
-                                className="bg-[#41ADFA] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                                className={`${
+                                  (prevCricketDataofOdds &&
+                                    prevCricketDataofOdds[index]?.b2 !==
+                                      item?.b2) ||
+                                  prevCricketDataofOdds[index]?.bs2 !==
+                                    item?.bs2
+                                    ? "animate-pulse  bg-blue-600 opacity-4 w-[90px] items-center justify-center text-white flex flex-col rounded-[8px] py-1 px-6"
+                                    : "bg-[#41ADFA] w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                }`}
                               >
                                 <span className="text-xs">{item?.b2}</span>
                                 <span className="text-[10px]">
@@ -419,7 +439,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                   handleBet(Number(item.b1), item.nat, "back")
                                 
                                 }
-                                className="bg-[#41ADFA] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                                className={`${
+                                  (prevCricketDataofOdds &&
+                                    prevCricketDataofOdds[index]?.b1 !==
+                                      item.b1) ||
+                                  prevCricketDataofOdds[index]?.bs1 !==
+                                    item.bs1
+                                    ? "animate-pulse  bg-blue-600 opacity-4 w-[90px] items-center justify-center text-white flex flex-col rounded-[8px] py-1 px-6"
+                                    : "bg-[#41ADFA] w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                }`}
                                 
                              
                              >
@@ -436,7 +464,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                 onClick={() =>
                                   handleBet(Number(item.l1), item.nat, "lay")
                                 }
-                                className="bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                                className={`${
+                                  (prevCricketDataofOdds &&
+                                    prevCricketDataofOdds[index]?.l1 !==
+                                      item?.l1) ||
+                                  prevCricketDataofOdds[index]?.ls1 !==
+                                    item?.ls1
+                                    ? "animate-pulse opacity-3 bg-red-600 w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                    : "bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                }`}
                               
                               >
                                 <span className="text-xs">{item?.l1}</span>
@@ -450,7 +486,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                 onClick={() =>
                                   handleBet(Number(item.l2), item.nat, "lay")
                                 }
-                                className="bg-[#FD5FA1] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                                className={`${
+                                  (prevCricketDataofOdds &&
+                                    prevCricketDataofOdds[index]?.l2 !==
+                                      item.l2) ||
+                                  prevCricketDataofOdds[index]?.ls2 !==
+                                    item.ls2
+                                    ? "animate-pulse opacity-3 bg-red-600 w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                    : "bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                }`}
                               
                               >
                                 <span className="text-xs">{item?.l2}</span>
@@ -464,7 +508,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                 onClick={() =>
                                   handleBet(Number(item.l3), item.nat, "lay")
                                 }
-                                className="bg-[#FD5FA1] w-[90px] items-center justify-center   text-white flex flex-col  rounded-[8px] py-1 px-6 "
+                                className={`${
+                                  (prevCricketDataofOdds &&
+                                    prevCricketDataofOdds[index]?.l3 !==
+                                      item?.l3) ||
+                                  prevCricketDataofOdds[index]?.ls3 !==
+                                    item?.ls3
+                                    ? "animate-pulse opacity-3 bg-red-600 w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                    : "bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
+                                }`}
                               
                               >
                                 <span className="text-xs">{item?.l3}</span>
