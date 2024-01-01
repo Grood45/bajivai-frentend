@@ -84,19 +84,14 @@ const CricketScore = ({
           {/* <TbCricket fontSize="50px" /> */}
           <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
             <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
-              {scoreData &&
-              scoreData.teams &&
-              scoreData.teams[0] &&
-              scoreData.teams[0].team_name
-                ? getTeamShortName(
-                    scoreData.teams[0].team_name.split("/")[0].split("v")[0]
-                  )
+              {singleMatch
+                ? getTeamShortName(singleMatch?.match_name.split(" v ")[0])
                 : ""}
             </p>
           </span>
-          {scoreData?.teams ? (
+          {singleMatch ? (
             <p className=" text-[10px] md:text-xs">
-              {scoreData?.teams[0]?.team_name || ""}
+              {singleMatch?.match_name.split(" v ")[0] || ""}
             </p>
           ) : (
             ""
@@ -118,12 +113,7 @@ const CricketScore = ({
             <div className="flex flex-col gap-1">
               {scoreData?.teams ? (
                 <p className="text-sm md:text-2xl font-semibold text-white">
-                  {scoreData &&
-                  scoreData.teams &&
-                  scoreData.teams[0] &&
-                  scoreData.teams[0].score
-                    ? scoreData.teams[0].score.split(" ")[0]
-                    : ""}
+                  {singleMatch ? singleMatch?.match_name?.split(" v ")[1] : ""}
                 </p>
               ) : (
                 ""
@@ -184,19 +174,14 @@ const CricketScore = ({
           {/* <BiCricketBall fontSize="50px" /> */}
           <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... flex items-center justify-center h-[40px] w-[40px] p-[2px] rounded-[50%] ">
             <p className="rounded-[50%] text-black text-xs w-[100%] h-[100%] flex items-center justify-center bg-orange-200 p-1">
-              {scoreData &&
-              scoreData.teams &&
-              scoreData.teams[1] &&
-              scoreData.teams[1].team_name
-                ? getTeamShortName(
-                    scoreData.teams[1].team_name.split("/")[0].split("v")[0]
-                  )
+              {singleMatch
+                ? getTeamShortName(singleMatch?.match_name.split(" v ")[1])
                 : ""}
             </p>
           </span>
-          {scoreData?.teams ? (
+          {singleMatch ? (
             <p className="text-[10px] md:text-xs">
-              {scoreData?.teams[1]?.team_name || ""}
+              {singleMatch?.match_name.split(" v ")[1] || ""}
             </p>
           ) : (
             ""
@@ -264,27 +249,27 @@ const CricketScore = ({
                 ) : (
                   <div className=" text-[10px] text-center gap-1  flex items-center justify-center ">
                     {scoreData?.last24balls?.map((ele: any) => (
-                        <>
-                          <p
-                            className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
-                              ele.score_card === "0" ||
-                              ele.score_card === "1" ||
-                              ele.score_card === "2" ||
-                              ele.score_card === "3"
-                                ? "bg-[gray]"
-                                : ele.score_card === "4"
-                                ? "bg-[green]"
-                                : ele.score_card === "ww"
-                                ? "bg-[red]"
-                                : ele.score_card === "6"
-                                ? "bg-[blue]"
-                                : "bg-[gray]"
-                            }`}
-                          >
-                            {ele.score_card}
-                          </p>
-                        </>
-                      ))}
+                      <>
+                        <p
+                          className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
+                            ele.score_card === "0" ||
+                            ele.score_card === "1" ||
+                            ele.score_card === "2" ||
+                            ele.score_card === "3"
+                              ? "bg-[gray]"
+                              : ele.score_card === "4"
+                              ? "bg-[green]"
+                              : ele.score_card === "ww"
+                              ? "bg-[red]"
+                              : ele.score_card === "6"
+                              ? "bg-[blue]"
+                              : "bg-[gray]"
+                          }`}
+                        >
+                          {ele.score_card}
+                        </p>
+                      </>
+                    ))}
                   </div>
                 )}
               </div>
@@ -302,27 +287,27 @@ const CricketScore = ({
             </div>
             <div className=" text-xs text-center gap-1  flex items-center  ">
               {scoreData?.last24balls?.map((ele: any) => (
-                  <>
-                    <p
-                      className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
-                        ele.score_card === "0" ||
-                        ele.score_card === "1" ||
-                        ele.score_card === "2" ||
-                        ele.score_card === "3"
-                          ? "bg-[gray]"
-                          : ele.score_card === "4"
-                          ? "bg-[green]"
-                          : ele.score_card === "ww"
-                          ? "bg-[red]"
-                          : ele.score_card === "6"
-                          ? "bg-[blue]"
-                          : "bg-[gray]"
-                      }`}
-                    >
-                      {ele.score_card}
-                    </p>
-                  </>
-                ))}
+                <>
+                  <p
+                    className={`rounded-[50%] h-[20px] w-[20px] flex justify-center items-center ${
+                      ele.score_card === "0" ||
+                      ele.score_card === "1" ||
+                      ele.score_card === "2" ||
+                      ele.score_card === "3"
+                        ? "bg-[gray]"
+                        : ele.score_card === "4"
+                        ? "bg-[green]"
+                        : ele.score_card === "ww"
+                        ? "bg-[red]"
+                        : ele.score_card === "6"
+                        ? "bg-[blue]"
+                        : "bg-[gray]"
+                    }`}
+                  >
+                    {ele.score_card}
+                  </p>
+                </>
+              ))}
             </div>
           </div>
         </div>

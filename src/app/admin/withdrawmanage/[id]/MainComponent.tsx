@@ -23,7 +23,7 @@ const MainComponent = () => {
       const receivedData = response.data;
       if (receivedData) {
         setWithdrawData(receivedData);
-        console.log(data,"recived data")
+        console.log(data, "recived data");
       }
       setLoading(false);
     } catch (error: any) {
@@ -93,7 +93,7 @@ const MainComponent = () => {
       setLoading(false);
     } catch (error: any) {
       toast({
-        description: `${error?.data?.message}`,
+        description: `${error?.data?.message || error?.message}`,
         status: "error",
         duration: 4000,
         position: "top",
@@ -243,7 +243,6 @@ const MainComponent = () => {
           User Withdrawal Information
         </p>
         <div className="flex flex-col  w-[100%] gap-4 mt-3">
-        
           {withdrawData?.type === "deposit" ? (
             <>
               {withdrawData?.admin_details?.map((item: any, index: any) => {
@@ -310,7 +309,9 @@ const MainComponent = () => {
           )}
 
           <div className=" ">
-            <p className="text-white  p-3   text-xs font-bold ">Withdrawal Slip</p>
+            <p className="text-white  p-3   text-xs font-bold ">
+              Withdrawal Slip
+            </p>
             <div className="w-[100%] mt-3  rounded-sm">
               <img
                 src={withdrawData?.withdraw_slip}
