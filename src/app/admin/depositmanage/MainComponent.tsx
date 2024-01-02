@@ -272,7 +272,7 @@ const MainComponent = () => {
                           </span>
                         </p>
                         <p className="text-xs  text-[#A0AEC0]  ">
-                          {item.deposit_amount + item.bonus} BDT
+                          {item.deposit_amount.toFixed(2) + item.bonus} BDT
                         </p>
                       </div>
                     </td>
@@ -283,7 +283,7 @@ const MainComponent = () => {
                           alt=""
                           className="h-[15px] w-[15px]"
                         />
-                        <span>{item.wallet_amount}</span>
+                        <span>{item.wallet_amount.toFixed(2)}</span>
                       </div>
                     </td>
 
@@ -399,7 +399,7 @@ const MainComponent = () => {
                         Deposit Amount :-
                       </p>
                       <p className="text-[#fff] font-medium text-xs">
-                        ${item.deposit_amount}
+                        ${item.deposit_amount.toFixed(2)}
                       </p>
                     </div>
 
@@ -414,7 +414,7 @@ const MainComponent = () => {
                           className="h-[15px] w-[15px]"
                         />
                         <p className="text-white text-xs">
-                          {item.wallet_amount}
+                          {item.wallet_amount.toFixed(2)}
                         </p>
                       </div>
                     </div>
