@@ -135,7 +135,7 @@ function BetSlipModal() {
       </div>
       <Modal size={"sm"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent style={{borderRadius:'16px'}}>
           {/* <ModalCloseButton className='' color={"white"} /> */}
           <ModalBody style={{ padding: "0px" }}>
           <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-2xl sticky top-[85px]">

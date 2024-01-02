@@ -317,6 +317,7 @@ const MainComponent = () => {
       {/* card show instead of table    */}
 
       <div className=" contents md:hidden pb-4 ">
+        <div className="pb-[100px]">
         <p className="text-white font-bold text-md mt-8">
           All Withdrawal details
         </p>
@@ -336,9 +337,16 @@ const MainComponent = () => {
                     <p className="text-white p-3  text-xs font-bold ">
                       User Details
                     </p>
-                    <button className="text-[#fff] h-[20px] px-2 p-1 rounded-lg bg-green-600 font-medium text-[10px]">
-                      Online
-                    </button>
+                  
+                    <button
+                          className={`px-2 p-1 rounded-md  font-medium text-[10px] ${
+                            item.status == "approved"
+                              ? "bg-[#01B574]"
+                              : "bg-red-500"
+                          } text-white`}
+                        >
+                          {item.status}
+                        </button>
                   </div>
                   <div className="flex  justify-start gap-4">
                     <Image
@@ -403,7 +411,7 @@ const MainComponent = () => {
                     <div className="flex justify-end p-3">
                       <Link
                         key={item.transaction_id}
-                        href={`/admin/withdrawmanage/${item.transaction_id}`}
+                        href={`/admin/withdrawmanage/${item._id}`}
                       >
                         <button className="p-[6px] px-2 text-xs text-white rounded-[4px] bg-none border ">
                           View All
@@ -414,6 +422,7 @@ const MainComponent = () => {
                 </div>
               );
             })}
+        </div>
         </div>
       </div>
     </div>

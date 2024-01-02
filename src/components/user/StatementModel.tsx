@@ -344,7 +344,7 @@ function StatementModel() {
                                       >
                                         {item.stake}
                                         <span className="text-[10px] font-light">
-                                          {/* INR */}
+                                          {/* BDT */}
                                         </span>
                                       </p>
                                       <p className={`text-xs   ${
@@ -483,7 +483,7 @@ function StatementModel() {
                                       >
                                         {item.stake}
                                         <span className="text-[10px] font-light">
-                                          {/* INR */}
+                                          {/* BDT */}
                                         </span>
                                       </p>
                                       <p className="text-xs  text-[#EAAB0F]">
@@ -615,7 +615,7 @@ function StatementModel() {
                                       >
                                         {item.stake}
                                         <span className="text-[10px] font-light">
-                                          {/* INR */}
+                                          {/* BDT */}
                                         </span>
                                       </p>
                                       <p className={`text-xs  ${
@@ -757,7 +757,7 @@ function StatementModel() {
                                       >
                                         {item.stake}
                                         <span className="text-[10px] font-light">
-                                          {/* INR */}
+                                          {/* BDT */}
                                         </span>
                                       </p>
                                       <p className={`text-xs  ${
@@ -900,7 +900,7 @@ function StatementModel() {
                                       >
                                         {item.stake}
                                         <span className="text-[10px] font-light">
-                                          {/* INR */}
+                                          {/* BDT */}
                                         </span>
                                       </p>
                                       <p className={`text-xs  ${

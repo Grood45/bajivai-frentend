@@ -1,10 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import googlepay from "../../assetuser/other/Google_Pay_Logo_(2020).svg.png";
-import phonepay from "../../assetuser/other/PhonePe_Logo.svg.png";
 import upi from "../../assetuser/other/upi.png";
-import paytm from "../../assetuser/other/Paytm_logo.jpg";
+import bp1 from "../../assetuser/other/bp1.png";
+import bp2 from "../../assetuser/other/bp2.png";
+import bp3 from "../../assetuser/other/bp3.png";
+
+
+
 import Image from "next/image";
 import linense1 from "../../assetuser/payment/license1.png";
 import linense2 from "../../assetuser/payment/license2.png";
@@ -87,22 +90,17 @@ const Footer = () => {
             </p>
             <div className="flex gap-3 w-[100%]  ">
               <Image
-                src={phonepay}
-                className="w-[80px] cursor-pointer h-[20px]"
+                src={bp1}
+                className="w-[80px] rounded-lg cursor-pointer h-[20px]"
                 alt=""
               />
               <Image
-                src={googlepay}
-                className="w-[80px] cursor-pointer h-[20px]"
-                alt=""
-              />
-              <Image
-                src={paytm}
+                src={bp2}
                 className="w-[80px] cursor-pointer rounded-lg h-[20px]"
                 alt=""
               />
               <Image
-                src={upi}
+                src={bp3}
                 className="w-[80px] cursor-pointer h-[20px]"
                 alt=""
               />
