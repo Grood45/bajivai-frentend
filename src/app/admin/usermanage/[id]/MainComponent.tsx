@@ -368,7 +368,7 @@ console.log(data,"asdff")
               Profit / Loss :{" "}
               <span className={`text-xs ${plData?.totalAmount>0?"text-green-400":"text-red-400"} text-green-400 text-[10px] md:text-xs`}>
                 {" "}
-                &#8377; {plData&&plData?.totalAmount}
+                &#8377; {plData&&plData?.totalAmount.toFixed(2)}
               </span>
             </p>
           </div>

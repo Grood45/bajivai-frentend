@@ -310,6 +310,7 @@ const pathname=usePathname()
                   hasArrow
                   arrowSize={20}
                   label={
+                    
                     <div
                       className={` ${
                         theme ? "black" : "white"
@@ -325,17 +326,21 @@ const pathname=usePathname()
                   placement="bottom"
                   bg="#212632"
                   border="1px solid gray"
-                >
+                > 
+                  <div className="flex flex-col justify-center pl-3 lg:pl-0 lg:flex-row items-center lg:gap-4">
                   <p
                     className={`flex items-center ${
                       theme ? "black" : "white"
-                    } text-[10px] ml-2 md:ml-0  lg:text-sm gap-2 md:gap-6`}
+                    } text-[10px] md:ml-0  lg:text-sm gap-2 md:gap-6`}
                   >
-                    {amount.toFixed(2)}{" "}
-                    <span className=" mr-1 md:mr-0">
+                    {amount}
+                    {/* <span className=" mr-1 md:mr-0">
                       <SlArrowDown color={theme ? "black" : "white"} />
-                    </span>
+                    </span> */}
                   </p>
+                      <p className="text-[8px] lg:text-[10px]">Exp: <span className="text-red-400">{exposure_limit}</span></p>
+                  </div>
+              
                 </Tooltip>
 
                 <PamentModel heading="deposit" code="3" />
@@ -360,7 +365,7 @@ const pathname=usePathname()
         <div className="">
           <Profile />
         </div>
-)} 
+)}
     </div>
   );
 };

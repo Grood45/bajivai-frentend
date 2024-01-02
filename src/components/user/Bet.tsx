@@ -149,7 +149,7 @@ const Bet: React.FC<BetProps> = ({
           <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ...  rounded-[7px] p-[1px]  w-[100%]">
             <div className="flex  w-[100%] h-[100%] justify-between bg-[#44444452]   rounded-[7px]">
               <button className="bg-[#EAAB0F] rounded-l-[7px] h-[100%] text-[9px] w-[30%] text-center text-white  ">
-                INR
+                BDT
               </button>
               <input
                 type="number"

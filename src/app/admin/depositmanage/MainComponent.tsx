@@ -272,7 +272,7 @@ const MainComponent = () => {
                           </span>
                         </p>
                         <p className="text-xs  text-[#A0AEC0]  ">
-                          {item.deposit_amount + item.bonus} BDT
+                          {item.deposit_amount.toFixed(2) + item.bonus} BDT
                         </p>
                       </div>
                     </td>
@@ -283,7 +283,7 @@ const MainComponent = () => {
                           alt=""
                           className="h-[15px] w-[15px]"
                         />
-                        <span>{item.wallet_amount}</span>
+                        <span>{item.wallet_amount.toFixed(2)}</span>
                       </div>
                     </td>
 
@@ -329,7 +329,8 @@ const MainComponent = () => {
 
 
 
-      <div className=" contents md:hidden pb-4 ">
+      <div className=" contents md:hidden ">
+        <div className="pb-[100px]">
         <p className="text-white font-bold text-md mt-8">All Deposit details</p>
         <div className="flex flex-col gap-4 mt-2">
           {allDeposit &&
@@ -347,9 +348,16 @@ const MainComponent = () => {
                     <p className="text-white p-3  text-xs font-bold ">
                       User Details
                     </p>
-                    <button className="text-[#fff] h-[20px] px-2 p-1 rounded-lg bg-green-600 font-medium text-[10px]">
-                      Online
-                    </button>
+                  
+                    <button
+                          className={` px-2 p-1 rounded-md text-[10px] ${
+                            item.status == "approved"
+                              ? "bg-[#01B574]"
+                              : "bg-red-500"
+                          } text-white`}
+                        >
+                          {item.status}
+                        </button>
                   </div>
                   <div className="flex  justify-start gap-4">
                     <img
@@ -391,7 +399,7 @@ const MainComponent = () => {
                         Deposit Amount :-
                       </p>
                       <p className="text-[#fff] font-medium text-xs">
-                        ${item.deposit_amount}
+                        ${item.deposit_amount.toFixed(2)}
                       </p>
                     </div>
 
@@ -406,7 +414,7 @@ const MainComponent = () => {
                           className="h-[15px] w-[15px]"
                         />
                         <p className="text-white text-xs">
-                          {item.wallet_amount}
+                          {item.wallet_amount.toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -425,6 +433,7 @@ const MainComponent = () => {
                 </div>
               );
             })}
+        </div>
         </div>
       </div>
     </div>

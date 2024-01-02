@@ -619,21 +619,23 @@ const MainComponent = () => {
           </div>
           <div className="h-[300px] w-[100%] mt-8 overflow-scroll">
             <table className="w-[100%]">
-              <thead className="text-left sticky top-0 p-2 z-[1000]  border-b h-[30px] border-gray-600 text-[10px] font-bold text-[#A0AEC0]">
-                <tr>
-                  <th>USER NAME</th>
+              <thead
+               
+              className="text-left sticky top-0 p-2 z-[1000] bg-[#011237]  border-b h-[30px]  border-gray-600 text-[10px] font-bold text-[#A0AEC0]">
+                <tr className=" ">
+                  <th className="pl-10">USER NAME</th>
                   <th>Sports/Casino</th>
                   <th>Stack</th>
                   <th className="text-center">Back/Lay</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className=''>
                 {allBet &&
                   allBet.slice(0, 10).map((item, index) => {
                     return (
                       <tr
                         key={index}
-                        className="text-left h-[50px] m-auto border-b border-gray-600 text-[10px] sm:text-xs text-white"
+                        className="text-left h-[50px]  m-auto border-b border-gray-600 text-[10px] sm:text-xs text-white"
                       >
                         <td>
                           <div className="flex gap-1 items-center">

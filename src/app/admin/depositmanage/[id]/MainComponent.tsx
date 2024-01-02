@@ -99,7 +99,7 @@ const MainComponent = () => {
       setLoading1(false);
     } catch (error: any) {
       toast({
-        description: `${error?.data?.message}`,
+        description: `${error?.data?.message||error?.message}`,
         status: "error",
         duration: 4000,
         position: "top",
@@ -134,7 +134,7 @@ const MainComponent = () => {
       .catch((err) => console.error("Failed to copy: ", err));
   };
   return (
-    <div className=" w-[95%] lg:w-[80%] flex flex-col lg:flex-row gap-8 mt-8  m-auto">
+    <div className=" w-[95%] lg:w-[80%] flex flex-col pb-[100px] lg:pb-[0px] lg:flex-row gap-8 mt-8  m-auto">
       <div className="flex w-[90%] m-auto lg:w-[35%] flex-col gap-2 ">
         <div
           style={{
