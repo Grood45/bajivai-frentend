@@ -187,7 +187,7 @@ export interface BetSlip {
   stake: number;
   rate: number;
   status: string;
-  runner_name: StringLiteralLike;
+  runner_name: string;
 }
 
 export interface BetSlipGroup {

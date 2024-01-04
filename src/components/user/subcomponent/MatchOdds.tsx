@@ -55,7 +55,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
   const [firstTeamPl, setFirstTeamPl] = useState<number>(0);
   const [secondTeamPl, setSecondTeamPl] = useState<number>(0);
   const [bet, setBet] = useState<any>();
-  const [prevCricketDataofOdds, setPrevCricketDataofOdds]=useState<any>([])
+  const [prevCricketDataofOdds, setPrevCricketDataofOdds] = useState<any>([]);
   const userAuth = useSelector((state: RootState) => state);
   const {
     username = "",
@@ -82,12 +82,15 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     });
     socket.on("oddsData", (data) => {
       if (data.t1 && param.sport_id == "4") {
-
         setData((prev) => {
           setPrevCricketDataofOdds(prev);
           return data.t1[0];
         });
       } else if ((data && param.sport_id == "1") || param.sport_id == "2") {
+        let filterData = data[0].section.filter(
+          (ele: any) => ele.nat !== "The Draw"
+        );
+        data[0].section = filterData;
         setData((prev) => {
           setPrevCricketDataofOdds(prev);
           return data;
@@ -188,9 +191,9 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       league_name: singleMatch?.league_name,
       rate,
       bet_category: "odds",
-      parent_admin_id ,
-      parent_admin_username ,
-      parent_admin_role_type ,
+      parent_admin_id,
+      parent_admin_username,
+      parent_admin_role_type,
     };
     setBetLoading(true);
     let oldExposure = Math.min(firstTeamPl, secondTeamPl);
@@ -571,9 +574,13 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                           </p>
                           <p
                             className={`${
-                              secondTeamPl<0&&index==1? "text-red-800" : "text-[#0FBF00]"
+                              secondTeamPl < 0 && index == 1
+                                ? "text-red-800"
+                                : "text-[#0FBF00]"
                             } ${
-                              firstTeamPl<0&&index==0? "text-red-800" : "text-[#0FBF00]"
+                              firstTeamPl < 0 && index == 0
+                                ? "text-red-800"
+                                : "text-[#0FBF00]"
                             } text-xs font-semibold`}
                           >
                             {index == 0 ? firstTeamPl : secondTeamPl}

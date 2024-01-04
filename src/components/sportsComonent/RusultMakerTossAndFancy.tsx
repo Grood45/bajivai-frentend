@@ -39,6 +39,7 @@ const RusultMakerTossAndFancy = () => {
   const [search, setSearch] = useState<any>("");
   const [bets, setBets] = useState<any>([]);
   const [loading, setLoading] = useState<any>(false);
+  const [resultLoading, setResultLoading] = useState<boolean>(false);
   const [selectedMatches, setSelectedMatches] = useState<any>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const totalPages = pagination.totalPages; // Replace with your total number of pages
@@ -71,7 +72,7 @@ const RusultMakerTossAndFancy = () => {
 
   const GetAllBets = async () => {
     setLoading(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?bet_category=${betType}&page=${currentPage}&limit=20`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?bet_category=${betType}&page=${currentPage}&limit=20&status=pending`;
     if (search) {
       url += `&name=${search}`;
     }
@@ -83,13 +84,14 @@ const RusultMakerTossAndFancy = () => {
     } catch (error: any) {
       toast({
         title: "Fetch Data.",
-        description: `${error?.data?.error}`,
+        description: `${error?.data?.error || error?.message}`,
         status: "error",
         duration: 4000,
         position: "top",
         isClosable: true,
       });
       setLoading(false);
+      console.log(error);
     }
   };
 
@@ -123,10 +125,12 @@ const RusultMakerTossAndFancy = () => {
   };
 
   const handleConfirmResult = async () => {
+    console.log(selectedMatches);
+    setResultLoading(true);
     let payload = { user_ids: selectedMatches, answer: result };
     try {
       let response = await sendPatchRequest(
-        `https://power-db-database.onrender.com/api/result/update-fancy-toss-result`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/result/update-fancy-toss-result`,
         payload
       );
       toast({
@@ -136,6 +140,8 @@ const RusultMakerTossAndFancy = () => {
         position: "top",
         isClosable: true,
       });
+      setResultLoading(false);
+      setSelectedMatches([]);
       GetAllBets();
       onClose();
     } catch (error: any) {
@@ -147,6 +153,7 @@ const RusultMakerTossAndFancy = () => {
         position: "top",
         isClosable: true,
       });
+      setResultLoading(false);
     }
   };
 
@@ -335,6 +342,18 @@ const RusultMakerTossAndFancy = () => {
                   fontSize: "10px",
                 }}
               >
+                Team Name
+              </Th>
+              <Th
+                scope="col"
+                color="white"
+                style={{
+                  textTransform: "none",
+                  fontWeight: "600",
+                  whiteSpace: "nowrap",
+                  fontSize: "10px",
+                }}
+              >
                 Rate, Yes/No
               </Th>
               <Th
@@ -472,6 +491,9 @@ const RusultMakerTossAndFancy = () => {
                     {row.question}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
+                    {row.runner_name}
+                  </Td>
+                  <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     Rate:{" "}
                     <button className="text-[lg] text-center cursor-pointer bg-orange-500 rounded-md p-1 w-[70px] text-white text-lg">
                       {" "}
@@ -483,7 +505,7 @@ const RusultMakerTossAndFancy = () => {
                     {row.stake}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.rate * row.stake}
+                    {row.stake * 2}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.stake}
@@ -595,6 +617,7 @@ const RusultMakerTossAndFancy = () => {
         onOpen={onOpen}
         isOpen={isOpen}
         onClose={onClose}
+        resultLoading={resultLoading}
       />
     </>
   );
@@ -607,11 +630,13 @@ function ConfirmModal({
   onOpen,
   isOpen,
   onClose,
+  resultLoading,
 }: {
   handleConfirmResult: any;
   onOpen: any;
   isOpen: any;
   onClose: any;
+  resultLoading: boolean;
 }) {
   const cancelRef = React.useRef<any>();
 
@@ -633,10 +658,19 @@ function ConfirmModal({
             Are you sure you want declaire the result ?
           </AlertDialogBody>
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={handleConfirmResult}>
+            <Button
+              isLoading={resultLoading}
+              ref={cancelRef}
+              onClick={handleConfirmResult}
+            >
               Confirm
             </Button>
-            <Button colorScheme="red" ml={3} onClick={onClose}>
+            <Button
+              colorScheme="red"
+              className="bg-red-800"
+              ml={3}
+              onClick={onClose}
+            >
               Cancel
             </Button>
           </AlertDialogFooter>

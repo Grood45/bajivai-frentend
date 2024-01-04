@@ -40,13 +40,13 @@ const RightSidebar = () => {
       return;
     }
     setLoading1(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?status=all&limit=1000`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?status=pending&limit=1000`;
     try {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: BetSlip[] = response.data;
       if (response) {
-        setTotalBet(response.betsCount.allBet);
+        setTotalBet(response.pagination.totalbet);
       }
       if (receivedData) {
         setBetslipData(receivedData);
@@ -192,38 +192,42 @@ const RightSidebar = () => {
                     {group.items.map((item, itemIndex) => (
                       <div
                         className="flex flex-col gap-[6px] font-semibold text-xs"
-                        key={item._id}
+                        key={item?._id}
                       >
                         <div className="flex justify-between ">
                           <p className="text-gray-300 font-bold">
                             Bet category
                           </p>
                           <p className="text-[#d8b4fe] font-bold">
-                            {item.bet_category}
+                            {item?.bet_category}
                           </p>
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Match Bet</p>
-                          <p className="text-[#3b82f6]">{item.event_name}</p>
+                          <p className="text-[#3b82f6]">{item?.event_name}</p>
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Odd</p>
-                          <p className="text-[#5eead4]">{item.rate}</p>
+                          <p className="text-[#5eead4]">{item?.rate}</p>
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Stack</p>
-                          <p className="text-[#fef08a]">{item.stake}</p>
+                          <p className="text-[#fef08a]">{item?.stake}</p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="text-gray-300 font-bold">Team</p>
+                          <p title={item?.runner_name} className="text-[#fef08a]">{item?.runner_name.slice(0,10)}{item?.runner_name.length>10&&"..."}</p>
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Bet Type</p>
                           <button
                             className={`py-[2px] text-xs px-2 ${
-                              item.bet_type === "back"
+                              item?.bet_type === "back"
                                 ? "bg-[#FF6A8A]"
                                 : "bg-[#0096FE]"
                             }  rounded-[5px]`}
                           >
-                            {item.bet_type}
+                            {item?.bet_type}
                           </button>
                         </div>
 
