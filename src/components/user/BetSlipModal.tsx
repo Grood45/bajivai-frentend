@@ -50,7 +50,7 @@ function BetSlipModal() {
       return;
     }
     setLoading1(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?status=all&limit=1000`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?status=pending&limit=1000`;
     try {
       let response = await fetchGetRequest(url);
       console.log(response, "response");
@@ -256,6 +256,10 @@ function BetSlipModal() {
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Stack</p>
                           <p className="text-[#fef08a]">{item.stake}</p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="text-gray-300 font-bold">Team</p>
+                          <p className="text-[#fef08a]">{item?.runner_name}</p>
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Bet Type</p>
