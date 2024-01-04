@@ -46,7 +46,7 @@ const RightSidebar = () => {
       const data = response.data;
       const receivedData: BetSlip[] = response.data;
       if (response) {
-        setTotalBet(response.pagination.totalBet);
+        setTotalBet(response.pagination.totalbet);
       }
       if (receivedData) {
         setBetslipData(receivedData);
@@ -216,7 +216,7 @@ const RightSidebar = () => {
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Team</p>
-                          <p className="text-[#fef08a]">{item?.runner_name}</p>
+                          <p title={item?.runner_name} className="text-[#fef08a]">{item?.runner_name.slice(0,10)}{item?.runner_name.length>10&&"..."}</p>
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Bet Type</p>

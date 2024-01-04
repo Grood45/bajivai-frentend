@@ -58,7 +58,7 @@ function BetSlipModal() {
       const receivedData: BetSlip[] = response.data;
       console.log(data, "betslip data");
       if (response) {
-        setTotalBet(response.betsCount.allBet);
+        setTotalBet(response.pagination.totalbet);
         console.log(totalBet, "totaljggBet");
       }
       if (receivedData) {
@@ -259,7 +259,7 @@ function BetSlipModal() {
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Team</p>
-                          <p className="text-[#fef08a]">{item?.runner_name}</p>
+                          <p className="text-[#fef08a]">{item?.runner_name.slice(0,10)} {item?.runner_name.length>10&&"..."}</p>
                         </div>
                         <div className="flex justify-between">
                           <p className="text-gray-300 font-bold">Bet Type</p>
