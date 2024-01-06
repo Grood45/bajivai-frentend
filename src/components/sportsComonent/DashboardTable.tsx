@@ -246,6 +246,7 @@ function DashboardTable() {
               justifyContent="space-between"
               position={"relative"}
               mb="1rem"
+              fontWeight={"semibold"}
             >
               <Box
                 bg={item.bg1}
@@ -544,7 +545,7 @@ function DashboardTable() {
                     key={index}
                     className={` ${
                       row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
-                    } hover:bg-[#E99CAD]`}
+                    } hover:bg-[#E99CAD] font-semibold`}
                   >
                     <Td
                       style={{
@@ -687,7 +688,7 @@ function DashboardTable() {
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == 1}
                 onClick={() => setCurrentPage(1)}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {"First"}
               </Button>
@@ -697,7 +698,7 @@ function DashboardTable() {
                 // ref="btPrevious"
                 onClick={() => handlePrevPage()}
                 disabled={currentPage == 1}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white" ,fontSize:'12px'}}
               >
                 {"<"}
               </Button>
@@ -708,7 +709,7 @@ function DashboardTable() {
                 type="button"
                 disabled={currentPage == pagination.totalPages}
                 className="ml-1 disabled:text-gray-400 text-[20px]"
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {">"}
               </Button>
@@ -717,7 +718,7 @@ function DashboardTable() {
                 type="button"
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == pagination.totalPages}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {"Last"}
               </Button>

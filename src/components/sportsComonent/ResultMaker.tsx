@@ -445,7 +445,7 @@ function ResultMaker() {
                         key={index}
                         className={` ${
                           index % 2 === 0 ? "bg-[#ECECEC]" : "bg-[#FFFFFF]"
-                        } hover:bg-[#ECECEC] `}
+                        } hover:bg-[#ECECEC] text-[10px] font-semibold `}
                       >
                         {/* <Td
                         style={{
@@ -594,7 +594,7 @@ function ResultMaker() {
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == 1}
                 onClick={() => setCurrentPage(1)}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {"First"}
               </Button>
@@ -604,7 +604,7 @@ function ResultMaker() {
                 // ref="btPrevious"
                 onClick={() => handlePrevPage()}
                 disabled={currentPage == 1}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {"<"}
               </Button>
@@ -615,7 +615,7 @@ function ResultMaker() {
                 type="button"
                 disabled={currentPage == pagination.totalPages}
                 className="ml-1 disabled:text-gray-400 text-[20px]"
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {">"}
               </Button>
@@ -624,7 +624,7 @@ function ResultMaker() {
                 type="button"
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == pagination.totalPages}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {"Last"}
               </Button>

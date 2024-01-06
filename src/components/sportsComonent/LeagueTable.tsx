@@ -271,6 +271,7 @@ function LeagueTable() {
                     fontWeight: "600",
                     whiteSpace: "nowrap",
                     fontSize: "10px",
+                    minWidth:'60px',
                     borderRight: "1px solid #ccc",
                   }}
                 >
@@ -298,6 +299,7 @@ function LeagueTable() {
                     whiteSpace: "nowrap",
                     fontSize: "10px",
                     borderRight: "1px solid #ccc",
+
                   }}
                 >
                   LEAGUE NAME
@@ -308,8 +310,10 @@ function LeagueTable() {
                   style={{
                     textTransform: "none",
                     fontWeight: "600",
-                    whiteSpace: "nowrap",
                     fontSize: "10px",
+
+                    whiteSpace: "nowrap",
+
                     borderRight: "1px solid #ccc",
                   }}
                 >
@@ -322,7 +326,6 @@ function LeagueTable() {
                   style={{
                     textTransform: "none",
                     fontWeight: "600",
-                    whiteSpace: "nowrap",
                     fontSize: "10px",
                     borderRight: "1px solid #ccc",
                   }}
@@ -363,7 +366,7 @@ function LeagueTable() {
                   key={dex}
                   className={` ${
                     dex % 2 === 0 ? "bg-[#ECECEC]" : "bg-[#FFFFFF]"
-                  } hover:bg-[#ECECEC] `}
+                  } hover:bg-[#ECECEC] text-[12px] font-medium `}
                 >
                   {/* <Td
                     style={{
@@ -385,7 +388,7 @@ function LeagueTable() {
                   </Td> */}
                   <Td
                     style={{
-                      whiteSpace: "nowrap",
+                      // whiteSpace: "nowrap",
                       textTransform: "none",
                       borderRight: "1px solid #ccc",
                     }}
@@ -394,7 +397,7 @@ function LeagueTable() {
                   </Td>
                   <Td
                     style={{
-                      whiteSpace: "nowrap",
+                      // whiteSpace: "nowrap",
                       textTransform: "none",
                       borderRight: "1px solid #ccc",
                     }}
@@ -407,7 +410,7 @@ function LeagueTable() {
                   </Td>
                   <Td
                     style={{
-                      whiteSpace: "nowrap",
+                      // whiteSpace: "nowrap",
                       textTransform: "none",
                       borderRight: "1px solid #ccc",
                     }}
@@ -416,9 +419,9 @@ function LeagueTable() {
                   </Td>
                   <Td
                     style={{
-                      whiteSpace: "nowrap",
                       textTransform: "none",
                       borderRight: "1px solid #ccc",
+                      width:'80px'
                     }}
                   >
                     {row.market_count}
@@ -426,9 +429,10 @@ function LeagueTable() {
 
                   <Td
                     style={{
-                      whiteSpace: "nowrap",
+                      // whiteSpace: "nowrap",
                       textTransform: "none",
                       borderRight: "1px solid #ccc",
+
                     }}
                   >
                     <div>
@@ -503,7 +507,7 @@ function LeagueTable() {
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == 1}
                 onClick={() => setCurrentPage(1)}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {"First"}
               </Button>
@@ -513,7 +517,7 @@ function LeagueTable() {
                 // ref="btPrevious"
                 onClick={() => handlePrevPage()}
                 disabled={currentPage == 1}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {"<"}
               </Button>
@@ -524,7 +528,7 @@ function LeagueTable() {
                 type="button"
                 disabled={currentPage == pagination.totalPages}
                 className="ml-1 disabled:text-gray-400 text-[20px]"
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
               >
                 {">"}
               </Button>
@@ -533,7 +537,7 @@ function LeagueTable() {
                 type="button"
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == pagination.totalPages}
-                style={{ backgroundColor: "#e91e63", color: "white" }}
+                style={{ backgroundColor: "#e91e63", color: "white" ,fontSize:'12px'}}
               >
                 {"Last"}
               </Button>
