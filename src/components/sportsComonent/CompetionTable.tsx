@@ -306,9 +306,10 @@ function CompetitionTable() {
                   style={{
                     textTransform: "none",
                     fontWeight: "600",
-                    whiteSpace: "nowrap",
                     fontSize: "10px",
                     borderRight: "1px solid #ccc",
+                    width:'100px'
+
                   }}
                 >
                   Team A Logo
@@ -319,9 +320,9 @@ function CompetitionTable() {
                   style={{
                     textTransform: "none",
                     fontWeight: "600",
-                    whiteSpace: "nowrap",
                     fontSize: "10px",
                     borderRight: "1px solid #ccc",
+                    width:'100px'
                   }}
                 >
                   Team B Logo
@@ -374,7 +375,7 @@ function CompetitionTable() {
                     key={dex}
                     className={` ${
                       dex % 2 === 0 ? "bg-[#ECECEC]" : "bg-[#FFFFFF]"
-                    } hover:bg-[#ECECEC] `}
+                    } hover:bg-[#ECECEC] text-[10px]  font-semibold`}
                   >
                     <Td
                       style={{
@@ -400,7 +401,7 @@ function CompetitionTable() {
                     </Td>
                     <Td
                       style={{
-                        whiteSpace: "nowrap",
+                        // whiteSpace: "nowrap",
                         textTransform: "none",
                         borderRight: "1px solid #ccc",
                       }}
@@ -410,18 +411,18 @@ function CompetitionTable() {
 
                     <Td
                       style={{
-                        whiteSpace: "nowrap",
+                        // whiteSpace: "nowrap",
                         textTransform: "none",
                         borderRight: "1px solid #ccc",
                       }}
                     >
-                      <div>
+                      <div className="w-[150px]">
                         <input
                           type="file"
                           onChange={(e) => handleImageUrlChange(e, row,"0")}
                         />
                         {row?.first_team_logo !== "" && (
-                          <div>
+                          <div >
                             <img
                               src={row?.first_team_logo || ""}
                               alt=""
@@ -433,12 +434,12 @@ function CompetitionTable() {
                     </Td>
                     <Td
                       style={{
-                        whiteSpace: "nowrap",
+                        // whiteSpace: "nowrap",
                         textTransform: "none",
                         borderRight: "1px solid #ccc",
                       }}
                     >
-                      <div>
+                      <div className="w-[150px]">
                    <input type="file"  onChange={(e)=>handleImageUrlChange(e,row,"1")} />
       {row?.second_team_logo!=="" && (
         <div>
@@ -449,7 +450,7 @@ function CompetitionTable() {
                     </Td>
                     <Td
                       style={{
-                        whiteSpace: "nowrap",
+                        // whiteSpace: "nowrap",
                         textTransform: "none",
                         borderRight: "1px solid #ccc",
                       }}
@@ -458,7 +459,7 @@ function CompetitionTable() {
                     </Td>
                     <Td
                       style={{
-                        whiteSpace: "nowrap",
+                        // whiteSpace: "nowrap",
                         textTransform: "none",
                         borderRight: "1px solid #ccc",
                       }}
@@ -468,7 +469,7 @@ function CompetitionTable() {
 
                     <Td
                       style={{
-                        whiteSpace: "nowrap",
+                        // whiteSpace: "nowrap",
                         textTransform: "none",
                         borderRight: "1px solid #ccc",
                       }}
@@ -511,7 +512,7 @@ function CompetitionTable() {
               className="ml-1 disabled:text-gray-400 text-[20px]"
               disabled={currentPage == 1}
               onClick={() => setCurrentPage(1)}
-              style={{ backgroundColor: "#e91e63", color: "white" }}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
             >
               {"First"}
             </Button>
@@ -521,7 +522,7 @@ function CompetitionTable() {
               // ref="btPrevious"
               onClick={() => handlePrevPage()}
               disabled={currentPage == 1}
-              style={{ backgroundColor: "#e91e63", color: "white" }}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
             >
               {"<"}
             </Button>
@@ -532,7 +533,7 @@ function CompetitionTable() {
               type="button"
               disabled={currentPage == pagination.totalPages}
               className="ml-1 disabled:text-gray-400 text-[20px]"
-              style={{ backgroundColor: "#e91e63", color: "white" }}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
             >
               {">"}
             </Button>
@@ -541,7 +542,7 @@ function CompetitionTable() {
               type="button"
               className="ml-1 disabled:text-gray-400 text-[20px]"
               disabled={currentPage == pagination.totalPages}
-              style={{ backgroundColor: "#e91e63", color: "white" }}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
             >
               {"Last"}
             </Button>

@@ -129,7 +129,7 @@ export const SportsSideBar = () => {
         color="white"
         boxShadow="lg"
         rounded={"lg"}
-        className={` fixed z-[100] min-h-[95vh] max-h-[95vh]  w-[50%] lg:w-[18%] bg-[#429CF0]    `}
+        className={` fixed z-[100] min-h-[95vh] max-h-[95vh]  w-[50%] lg:w-[14%] bg-[#429CF0]    `}
       >
         <Box mb={4} textAlign="center">
           <Text
@@ -178,7 +178,7 @@ export const SportsSideBar = () => {
                         flex="1"
                         textAlign="left"
                         fontWeight="200"
-                        className="flex items-center gap-2 text-[14px] "
+                        className="flex items-center gap-2 text-[11px] font-semibold "
                       >
                         {item.icon}
 
@@ -208,7 +208,7 @@ export const SportsSideBar = () => {
                             key={subItem.id}
                           >
                             {" "}
-                            <span className="text-[0.87rem]">
+                            <span className="text-[13px]">
                               {" "}
                               {subItem.title}
                             </span>

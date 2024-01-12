@@ -20,7 +20,7 @@ export default function Layout({
         <div  className=" flex  w-[100%] bg-[white]">
             <div className="sticky left-0"><SportsSideBar /></div>
         
-              <div className=" ml-[16%] w-[80%]">{children}</div>
+              <div className=" ml-[13%] w-[84%]">{children}</div>
 
           
         </div>

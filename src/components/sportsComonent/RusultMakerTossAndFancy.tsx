@@ -451,7 +451,7 @@ const RusultMakerTossAndFancy = () => {
                   key={index}
                   className={` ${
                     row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
-                  } hover:bg-[#E99CAD]`}
+                  } hover:bg-[#E99CAD] text-[12px] font-semibold`}
                 >
                   <Td
                     style={{
@@ -495,7 +495,7 @@ const RusultMakerTossAndFancy = () => {
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     Rate:{" "}
-                    <button className="text-[lg] text-center cursor-pointer bg-orange-500 rounded-md p-1 w-[70px] text-white text-lg">
+                    <button className="text-[md] text-center cursor-pointer bg-orange-500 rounded-md p-1 w-[70px] text-white ">
                       {" "}
                       {row.rate}
                     </button>
@@ -575,7 +575,7 @@ const RusultMakerTossAndFancy = () => {
               className="ml-1 disabled:text-gray-400 text-[20px]"
               disabled={currentPage == 1}
               onClick={() => setCurrentPage(1)}
-              style={{ backgroundColor: "#e91e63", color: "white" }}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
             >
               {"First"}
             </Button>
@@ -585,7 +585,7 @@ const RusultMakerTossAndFancy = () => {
               // ref="btPrevious"
               onClick={() => handlePrevPage()}
               disabled={currentPage == 1}
-              style={{ backgroundColor: "#e91e63", color: "white" }}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
             >
               {"<"}
             </Button>
@@ -596,7 +596,7 @@ const RusultMakerTossAndFancy = () => {
               type="button"
               disabled={currentPage == pagination.totalPages}
               className="ml-1 disabled:text-gray-400 text-[20px]"
-              style={{ backgroundColor: "#e91e63", color: "white" }}
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
             >
               {">"}
             </Button>
@@ -605,7 +605,7 @@ const RusultMakerTossAndFancy = () => {
               type="button"
               className="ml-1 disabled:text-gray-400 text-[20px]"
               disabled={currentPage == pagination.totalPages}
-              style={{ backgroundColor: "#e91e63", color: "white" }}
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px'}}
             >
               {"Last"}
             </Button>
