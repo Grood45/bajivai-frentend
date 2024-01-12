@@ -41,6 +41,13 @@ import { GameCard } from "../casino/MainComponent";
 import { AllGameType, SportsGameType } from "../../../utils/providerData";
 import { useRouter } from "next/navigation";
 import sportBook from "../../assetuser/other/sportsbook.png";
+import image1 from '../../assetuser/payment/aviator.png'
+import image2 from '../../assetuser/payment/bottom-sports.png'
+import image3 from '../../assetuser/payment/casino.png'
+import image4 from '../../assetuser/payment/promotions.png'
+import image5 from '../../assetuser/payment/sports.png'
+
+
 type SportsCounts = {
   cricketLiveCount: number;
   cricketUpcomingCount: number;
@@ -92,7 +99,8 @@ const MainComponent = () => {
         gameCounts.cricketUpcomingCount +
         gameCounts.soccerUpcomingCount +
         gameCounts.tennisUpcomingCount,
-    },
+    img:image1
+      },
     {
       id: 2,
       title: "Upcoming",
@@ -104,24 +112,28 @@ const MainComponent = () => {
         gameCounts.cricketUpcomingCount +
         gameCounts.soccerUpcomingCount +
         gameCounts.tennisUpcomingCount,
+    img:image2
     },
     {
       id: 3,
       title: "Cricket",
       count2: gameCounts.cricketLiveCount,
       count1: gameCounts.cricketUpcomingCount,
+      img:image5
     },
     {
       id: 4,
       title: "Soccer",
       count2: gameCounts.soccerLiveCount,
       count1: gameCounts.soccerUpcomingCount,
+      img:image4
     },
     {
       id: 5,
       title: "Tennis",
       count2: gameCounts.tennisLiveCount,
       count1: gameCounts.tennisUpcomingCount,
+      img:image3
     },
   ];
   useEffect(() => {
@@ -281,8 +293,9 @@ const MainComponent = () => {
                     : theme
                     ? "bg-[gray]"
                     : "bg-[#212632]"
-                }  text-[10px] md:text-sm w-[100px] sm:w-[100%] p-1 md:p-2 rounded-[16px] `}
+                }  text-[10px] md:text-sm flex items-center justify-center gap-1 sm:gap-3  w-[100px] sm:w-[100%] p-1  rounded-[16px] `}
               >
+                <Image className="h-[25px] w-[25px] sm:h-[30px] sm:w-[30px]" src={item.img} alt=""/>
                 {item.title}
               </button>
             </span>
