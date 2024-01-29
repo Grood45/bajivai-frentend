@@ -537,14 +537,14 @@ function ResultMaker() {
                               >
                                 WIN
                               </button>
-                              {/* <button
+                              <button
                             className="p-[6px] rounded-lg w-[70px] text-[#F44335] border border-[#F44335] font-bold text-[12px] bg-[white] "
                             onClick={() =>
                               handleWinner(row.name, "loose", row.match_id)
                             }
                           >
-                            LOSS
-                          </button> */}
+                            DRAW
+                          </button>
                               <button
                                 className="p-2 curser-pointer rounded-lg w-[90px] text-[#FB8C00] border border-[#FB8C00] font-bold text-[12px] bg-[white] "
                                 onClick={() =>

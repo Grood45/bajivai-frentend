@@ -30,51 +30,26 @@ import {
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { fetchGetRequest, sendPatchRequest } from "@/api/api";
 
-const RusultMakerTossAndFancy = () => {
-  const [currentPage, setCurrentPage] = useState<any>(1);
-  const [pagination, setPagination] = useState<any>({});
-  const [betType, setBetType] = useState<any>("toss");
-  const [result, setResult] = useState<any>("");
-  const [matchIds, setMatchIds] = useState<any>("");
-  const [search, setSearch] = useState<any>("");
-  const [search2, setSearch2] = useState<any>("");
+const TossFancyResult = () => {
+    const [currentPage, setCurrentPage] = useState<any>(1);
+    const [pagination, setPagination] = useState<any>({});
+    const [betType, setBetType] = useState<any>("toss");
+    const [result, setResult] = useState<any>("");
+    const [matchIds, setMatchIds] = useState<any>("");
+    const [search, setSearch] = useState<any>("");
+    const [search2, setSearch2] = useState<any>("");
+  
+    const [bets, setBets] = useState<any>([]);
+    const [loading, setLoading] = useState<any>(false);
+    const [resultLoading, setResultLoading] = useState<boolean>(false);
+    const [selectedMatches, setSelectedMatches] = useState<any>([]);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const totalPages = pagination.totalPages; // Replace with your total number of pages
+    const toast = useToast();
 
-  const [bets, setBets] = useState<any>([]);
-  const [loading, setLoading] = useState<any>(false);
-  const [resultLoading, setResultLoading] = useState<boolean>(false);
-  const [selectedMatches, setSelectedMatches] = useState<any>([]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const totalPages = pagination.totalPages; // Replace with your total number of pages
-  const toast = useToast();
-  const handleSelect = (e: any, _id: any) => {
-    const value = e.target.checked;
-
-    // Check if the checkbox is checked or unchecked
-    if (value) {
-      // If checked, add the _id to the selectedMatches array
-      setSelectedMatches((prev: any) => [...prev, _id]);
-    } else {
-      // If unchecked, remove the _id from the selectedMatches array
-      setSelectedMatches((prev: any) => prev.filter((id: any) => id !== _id));
-    }
-  };
-  const handleSelectAll = () => {
-    // Check if all checkboxes are currently selected
-    const allSelected = selectedMatches.length === bets.length;
-
-    if (allSelected) {
-      // Deselect all checkboxes
-      setSelectedMatches([]);
-    } else {
-      // Select all checkboxes by creating an array of all _ids
-      const allMatchIds = bets.map((row: any) => row._id);
-      setSelectedMatches(allMatchIds);
-    }
-  };
-
-  const GetAllBets = async () => {
+const GetAllBets = async () => {
     setLoading(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?bet_category=${betType}&page=${currentPage}&limit=20&status=pending&question=${search2}`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?bet_category=${betType}&page=${currentPage}&limit=20&status=declaired`;
     if (search) {
       url += `&name=${search}`;
     }
@@ -98,16 +73,8 @@ const RusultMakerTossAndFancy = () => {
     }
   };
 
-  useEffect(() => {
-    let id: any;
-    id = setTimeout(() => {
-      GetAllBets();
-    }, 1000);
 
-    return () => clearTimeout(id);
-  }, [currentPage, betType, search,search2]);
-
-  const handlePrevPage = () => {
+const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
@@ -118,47 +85,34 @@ const RusultMakerTossAndFancy = () => {
       setCurrentPage(currentPage + 1);
     }
   };
-  const handleResult = (_id: any, res: any) => {
-    if (_id) {
-      setSelectedMatches((prev: any) => [_id]);
-    }
 
-    setResult(res);
-    onOpen();
-  };
+const handleAll=()=>{
+    setBetType("")
 
-  const handleConfirmResult = async () => {
-    console.log(selectedMatches);
-    setResultLoading(true);
-    let payload = { user_ids: selectedMatches, answer: result };
-    try {
-      let response = await sendPatchRequest(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/result/update-fancy-toss-result`,
-        payload
-      );
-      toast({
-        description: response.message,
-        status: "success",
-        duration: 4000,
-        position: "top",
-        isClosable: true,
-      });
-      setResultLoading(false);
-      setSelectedMatches([]);
+}
+
+const handleToss=()=>{
+    setBetType("toss")
+    
+}
+
+
+const handleFancy=()=>{
+    setBetType("fancy")
+}
+
+
+const handleOdds=()=>{
+    
+}
+
+useEffect(() => {
+    let id: any;
+    id = setTimeout(() => {
       GetAllBets();
-      onClose();
-    } catch (error: any) {
-      toast({
-        title: "Update Status.",
-        description: `${error.data.error}`,
-        status: "error",
-        duration: 4000,
-        position: "top",
-        isClosable: true,
-      });
-      setResultLoading(false);
-    }
-  };
+    }, 1000);
+    return () => clearTimeout(id);
+}, [currentPage, betType, search,search2]);
 
   return (
     <>
@@ -180,7 +134,7 @@ const RusultMakerTossAndFancy = () => {
             <Text
               className={`font-bold text-[#344767] text-left text-lg sm:text-lg `}
             >
-              Toss/Fancy
+              Toss/Fancy Results
             </Text>
           </Box>
         </Flex>
@@ -194,68 +148,23 @@ const RusultMakerTossAndFancy = () => {
         rounded={"lg"}
         width={"100%"}
       >
-        <Box className="flex  justify-between mb-6">
-          <Box className="flex gap-2">
-          <Input
+        <Box className="flex justify-between mb-6">
+            <Box className="flex gap-6">
+            <Button colorScheme="gray" style={{backgroundColor:'pink'}} color={"white"} onClick={handleAll}>All</Button>
+           {/* <Button style={{backgroundColor:'blue'}} color={"white"} onClick={handleOdds} >Odds/Bookmaker</Button> */}
+           <Button style={{backgroundColor:'green'}} color={"white"} onClick={handleToss}>Toss</Button>
+           <Button  style={{backgroundColor:'purple'}} color={"white"} onClick={handleFancy}>Fancy</Button>
+
+            </Box>
+
+           <Input
             width="20%"
-            placeholder={"search by match name"}
+            placeholder={"search...."}
             className="w-[200px] text-sm p-2"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-           <Input
-            width="20%"
-            placeholder={"search by  question"}
-            className="w-[200px] text-sm p-2"
-            value={search2}
-            onChange={(e) => setSearch2(e.target.value)}
-          />
-          </Box>
          
-          {selectedMatches.length > 0 && (
-            <Box className="flex gap-2">
-              <button
-                onClick={() => handleResult("", "win")}
-                disabled={selectedMatches.length == 0}
-                className="px-2 rounded-lg w-[70px] text-white font-semibold text-[12px] bg-[#4CAF50] "
-              >
-                WIN
-              </button>
-              <button
-                onClick={() => handleResult("", "lose")}
-                disabled={selectedMatches.length == 0}
-                className="px-2 rounded-lg w-[70px] text-white font-semibold text-[12px] bg-[#F44335] "
-              >
-                LOSS
-              </button>
-              <button
-                onClick={() => handleResult("", "refund")}
-                disabled={selectedMatches.length == 0}
-                className="px-2 rounded-lg w-[90px] text-white font-semibold text-[12px] bg-[#FB8C00] "
-              >
-                REFUND
-              </button>
-            </Box>
-          )}
-          
-          <Box className="flex gap-2 mr-[100px]">
-          <Select
-              value={""}
-              // onChange={(e) => setBetType(e.target.value)}
-            >
-              <option value={""}>Select Filter</option>
-              <option value={"Yes"}>Yes</option>
-              <option value={"No"}>No</option>
-            </Select>
-            <Select
-              value={betType}
-              onChange={(e) => setBetType(e.target.value)}
-            >
-              <option value={""}>Select Filter</option>
-              <option value={"toss"}>Toss</option>
-              <option value={"fancy"}>Fancy</option>
-            </Select>
-          </Box>
         </Box>
       </Box>
 
@@ -271,17 +180,7 @@ const RusultMakerTossAndFancy = () => {
         >
           <Thead bg="primary" className=" bg-[#E91E63]">
             <Tr>
-              <Td>
-                <Checkbox
-                  size={"lg"}
-                  style={{
-                    "--chakra-colors-blue-500": "blue-500",
-                    // border: "1px solid green",
-                  }}
-                  isChecked={selectedMatches.length === bets.length}
-                  onChange={handleSelectAll}
-                />
-              </Td>
+            
               <Th
                 scope="col"
                 color="white"
@@ -451,18 +350,7 @@ const RusultMakerTossAndFancy = () => {
               >
                 RESULT
               </Th>
-              <Th
-                scope="col"
-                color="white"
-                style={{
-                  textTransform: "none",
-                  fontWeight: "600",
-                  whiteSpace: "nowrap",
-                  fontSize: "10px",
-                }}
-              >
-                STATELMENT
-              </Th>
+             
             </Tr>
           </Thead>
           <Tbody>
@@ -475,27 +363,7 @@ const RusultMakerTossAndFancy = () => {
                     row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
                   } hover:bg-[#E99CAD] text-[12px] font-semibold`}
                 >
-                  <Td
-                    style={{
-                      whiteSpace: "nowrap",
-                      textTransform: "none",
-                      borderRight: "1px solid #ccc",
-                    }}
-                  >
-                    <div className="flex gap-6">
-                      <Checkbox
-                        size={"lg"}
-                        // defaultChecked
-                        style={{
-                          "--chakra-colors-blue-500": "#e91e63",
-                          border: "1px solid #e91e63",
-                        }}
-                        onChange={(e) => handleSelect(e, row._id)}
-                        isChecked={selectedMatches.includes(row._id)}
-                        disabled={row.status !== "pending"}
-                      />
-                    </div>
-                  </Td>
+               
                   <Td>{row.match_date.split(" ")[0]}</Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.username}
@@ -539,46 +407,9 @@ const RusultMakerTossAndFancy = () => {
                     {row.bet_category}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.result}
+                    <Badge className={`${row.result=="win"?"text-green-400":row.result=="lose"?"text-red-400":'text-orange-400'}`}>{row.result}</Badge>
                   </Td>
-                  <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.status == "pending" ? (
-                      <Box className="flex gap-2">
-                        <button
-                          onClick={() => handleResult(row._id, "win")}
-                          className="p-[6px] rounded-lg w-[70px] text-[#4CAF50] border border-[#4CAF50] font-bold text-[12px] bg-[white] "
-                        >
-                          WIN
-                        </button>
-                        <button
-                          onClick={() => handleResult(row._id, "lose")}
-                          className="p-[6px] rounded-lg w-[70px] text-[#F44335] border border-[#F44335] font-bold text-[12px] bg-[white] "
-                        >
-                          LOSS
-                        </button>
-                        <button
-                          onClick={() => handleResult(row._id, "refund")}
-                          className="p-2 rounded-lg w-[90px] text-[#FB8C00] border border-[#FB8C00] font-bold text-[12px] bg-[white] "
-                        >
-                          REFUND
-                        </button>
-                      </Box>
-                    ) : (
-                      <Badge
-                        fontWeight={"bold"}
-                        margin={"auto"}
-                        color="white"
-                        colorScheme="green"
-                        bg={"green"}
-                        width={"72px"}
-                        alignItems={"center"}
-                        textAlign={"center"}
-                        display={"flex"}
-                      >
-                        DECLAIRED
-                      </Badge>
-                    )}
-                  </Td>
+                 
                 </Tr>
               ))}
           </Tbody>
@@ -634,70 +465,10 @@ const RusultMakerTossAndFancy = () => {
           </span>
         </div>
       )}
-      <ConfirmModal
-        handleConfirmResult={handleConfirmResult}
-        onOpen={onOpen}
-        isOpen={isOpen}
-        onClose={onClose}
-        resultLoading={resultLoading}
-      />
+   
     </>
   );
 };
 
-export default RusultMakerTossAndFancy;
+export default TossFancyResult;
 
-function ConfirmModal({
-  handleConfirmResult,
-  onOpen,
-  isOpen,
-  onClose,
-  resultLoading,
-}: {
-  handleConfirmResult: any;
-  onOpen: any;
-  isOpen: any;
-  onClose: any;
-  resultLoading: boolean;
-}) {
-  const cancelRef = React.useRef<any>();
-
-  return (
-    <>
-      <AlertDialog
-        motionPreset="slideInBottom"
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-        isOpen={isOpen}
-        isCentered
-      >
-        <AlertDialogOverlay />
-
-        <AlertDialogContent>
-          <AlertDialogHeader>Result Declaire?</AlertDialogHeader>
-          <AlertDialogCloseButton />
-          <AlertDialogBody>
-            Are you sure you want declaire the result ?
-          </AlertDialogBody>
-          <AlertDialogFooter>
-            <Button
-              isLoading={resultLoading}
-              ref={cancelRef}
-              onClick={handleConfirmResult}
-            >
-              Confirm
-            </Button>
-            <Button
-              colorScheme="red"
-              className="bg-red-800"
-              ml={3}
-              onClick={onClose}
-            >
-              Cancel
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
-  );
-}

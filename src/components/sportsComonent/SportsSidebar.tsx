@@ -92,6 +92,12 @@ export const SportsSideBar = () => {
           icon: <PiFlagPennantBold fontSize={"20px"} />,
           path: "/sportsAdmin/matchtossfancy",
         },
+        {
+          id: 8,
+          title: "Toss/Fancy Results",
+          icon: <PiFlagPennantBold fontSize={"20px"} />,
+          path: "/sportsAdmin/matchtossfancyresult",
+        },
       ],
     },
     // {
