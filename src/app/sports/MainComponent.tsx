@@ -46,6 +46,7 @@ import image2 from '../../assetuser/payment/bottom-sports.png'
 import image3 from '../../assetuser/payment/casino.png'
 import image4 from '../../assetuser/payment/promotions.png'
 import image5 from '../../assetuser/payment/sports.png'
+import TvModal from "@/components/user/subcomponent/TvModal";
 
 
 type SportsCounts = {
@@ -352,6 +353,7 @@ const MainComponent = () => {
           <TennisData setgameCounts={setgameCounts} matchFilter={matchFilter} />
         </div>
       )}
+      <TvModal/>
     </div>
   );
 };

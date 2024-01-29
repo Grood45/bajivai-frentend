@@ -183,7 +183,7 @@ const MainComponent = () => {
       );
       const data = response.data;
       // setData(response.data);
-      let url = `https:${data.url}`;
+      let url = `https:${data.url}&device=m`;
       router.push(url);
     } catch (error: any) {
       toast({
@@ -194,6 +194,22 @@ const MainComponent = () => {
       });
     }
   };
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      // Adjust the threshold as needed for your specific case
+      const isMobile = width <= 768;
+      console.log(isMobile ? 'Mobile' : 'Desktop');
+    };
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+    // Call handleResize initially to log the initial state
+    handleResize();
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <div

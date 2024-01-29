@@ -80,12 +80,13 @@ const CricketData = ({
     socket.on("connect", () => {});
 
     socket.on("Data", (data: any) => {
+      // console.log(data, "datatyatatatattf")
       if (data) {
-        setMatchData(data?.data?.t1 || []);
+        setMatchData(data?.t1 || []);
       }
     });
     socket.on("disconnect", () => {});
-    socket.emit("startDataFetching", "cricket");
+    socket.emit("startDataFetching", 4);
     return () => {
       socket.disconnect();
     };

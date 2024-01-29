@@ -207,18 +207,20 @@ export interface Rules {
   currency_symbol: string;
   email_notification: boolean;
   email_verification: boolean;
+  
   force_secure_password: boolean;
   force_ssl: boolean;
-  max_profit: boolean;
-  min_profit: boolean;
+  max_profit: number;
+  min_profit: number; // Adjust the type based on your actual requirements
   sms_notification: boolean;
-  sms_verfication: boolean;
+  sms_verification: boolean;
   strong_password: boolean;
   timezone: string;
   user_registration: boolean;
-  user_resistration: boolean;
+  user_resistration: boolean; // Typo in the property name, assuming you meant 'user_registration'
   withdraw_max: number;
   withdraw_min: number;
+  bet_timing: number;
 }
 
 export interface RulesRegulation {

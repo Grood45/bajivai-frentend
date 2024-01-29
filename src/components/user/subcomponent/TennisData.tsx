@@ -105,12 +105,12 @@ const TennisData = ({
 
     socket.on("Data", (data) => {
       if (data) {
-        setMatchData(data?.data?.t1 || []);
+        setMatchData(data?.t1 || []);
       }
     });
     socket.on("disconnect", () => {
     });
-    socket.emit("startDataFetching", "tennis");
+    socket.emit("startDataFetching", 2);
     return () => {
       // Clean up the socket connection when the component unmounts
       socket.disconnect();
