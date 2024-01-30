@@ -379,62 +379,83 @@ body{
 
 /* loader css */
 
-
-main-loader{
-  /* background-color: rgba(0, 0, 0, 0.75); */
+.loader {
+  animation: rotate 1s infinite;
+  height: 50px;
+  width: 50px;
 }
 
-.main-fader{
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 20px;
+  width: 20px;
+}
 
-  position: absolute;
-  .loader {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    svg {
-      height: 100px;
-      display: block;
-      margin: 0 auto;
-      path {
-        animation-duration: 1s;
-        animation-name: pulse;
-        animation-iteration-count: infinite;
-        color: #b8a81d;
+.loader:before {
+  animation: ball1 1s infinite;
+  background-color: #cb2025;
+  box-shadow: 30px 0 0 #f8b334;
+  margin-bottom: 10px;
+}
 
-        &.path-7 {
-          animation-delay: -1s
-        }
-        &.path-6 {
-          animation-delay: -.875s
-        }
-        &.path-5 {
-          animation-delay: -.75s
-        }
-        &.path-4 {
-          animation-delay: -.625s
-        }
-        &.path-3 {
-          animation-delay: -.5s
-        }
-        &.path-2 {
-          animation-delay: -.375s
-        }
-        &.path-1 {
-          animation-delay: -.25s
-        }
-        &.path-0 {
-          animation-delay: -.125s
-        }
-      }
-    }
+.loader:after {
+  animation: ball2 1s infinite;
+  background-color: #00a096;
+  box-shadow: 30px 0 0 #97bf0d;
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg) scale(0.8);
+    -moz-transform: rotate(0deg) scale(0.8);
+  }
+
+  50% {
+    -webkit-transform: rotate(360deg) scale(1.2);
+    -moz-transform: rotate(360deg) scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: rotate(720deg) scale(0.8);
+    -moz-transform: rotate(720deg) scale(0.8);
   }
 }
 
+@keyframes ball1 {
+  0% {
+    box-shadow: 30px 0 0 #f8b334;
+  }
 
-@keyframes pulse {
-  0%     { opacity: .1; }
-  30%    { opacity: .8; }
-  100%   { opacity: .1; }
+  50% {
+    box-shadow: 0 0 0 #f8b334;
+    margin-bottom: 0;
+    -webkit-transform: translate(15px,15px);
+    -moz-transform: translate(15px, 15px);
+  }
+
+  100% {
+    box-shadow: 30px 0 0 #f8b334;
+    margin-bottom: 10px;
+  }
 }
 
+@keyframes ball2 {
+  0% {
+    box-shadow: 30px 0 0 #97bf0d;
+  }
+
+  50% {
+    box-shadow: 0 0 0 #97bf0d;
+    margin-top: -20px;
+    -webkit-transform: translate(15px,15px);
+    -moz-transform: translate(15px, 15px);
+  }
+
+  100% {
+    box-shadow: 30px 0 0 #97bf0d;
+    margin-top: 0;
+  }
+}

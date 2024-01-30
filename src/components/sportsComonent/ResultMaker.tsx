@@ -55,7 +55,7 @@ function ResultMaker() {
   const [resultTeam, setResultTeam] = useState<any>("");
   const [resultMatchId, setResultMatchId] = useState<any>("");
   const [requestResultType, setRequestResultType] = useState<any>("");
-  const [betType,setBetType]=useState("")
+  const [sportType,setSportType]=useState("")
   const totalPages = pagination.totalPages; // Replace with your total number of pages
   const UpdateStatus: any = async (name: any, match_id: any) => {
     let payload = { name };
@@ -71,7 +71,7 @@ function ResultMaker() {
     setLoading(true);
     let url = `${
       process.env.NEXT_PUBLIC_BASE_URL
-    }/api/match/get-all-match?page=${currentPage}&limit=${20}&sport=${betType}`;
+    }/api/match/get-all-match?page=${currentPage}&limit=${20}&sport=${sportType}`;
     if (search) {
       url += `&name=${search}`;
     }
@@ -95,14 +95,14 @@ function ResultMaker() {
   };
 
   const hanldeCricket=()=>{
-    setBetType("Cricket")
+    setSportType("Cricket")
       }
       const handleSoccer=()=>{
-    setBetType("Soccer")
+        setSportType("Soccer")
         
       }
       const hanldeTennis=()=>{
-    setBetType("Tennis")
+        setSportType("Tennis")
         
       }
   // const handleStatus = async (name:any) => {
@@ -147,7 +147,7 @@ function ResultMaker() {
     }, 1000);
 
     return () => clearTimeout(id);
-  }, [currentPage, search,betType]);
+  }, [currentPage, search,sportType]);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {

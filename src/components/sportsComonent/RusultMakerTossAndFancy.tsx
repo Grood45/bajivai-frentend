@@ -33,7 +33,9 @@ import { fetchGetRequest, sendPatchRequest } from "@/api/api";
 const RusultMakerTossAndFancy = () => {
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [pagination, setPagination] = useState<any>({});
-  const [betType, setBetType] = useState<any>("toss");
+  const [betType, setBetType] = useState<any>("");
+  const [betCategory, setBetCategory] = useState<any>("toss");
+
   const [result, setResult] = useState<any>("");
   const [matchIds, setMatchIds] = useState<any>("");
   const [search, setSearch] = useState<any>("");
@@ -78,6 +80,9 @@ const RusultMakerTossAndFancy = () => {
     if (search) {
       url += `&name=${search}`;
     }
+    if(betCategory){
+      url+=`&bet_category=${betCategory}`
+    }
     if (betType) {
       url += `&bet_type=${betType}`;
     }
@@ -111,7 +116,7 @@ const RusultMakerTossAndFancy = () => {
     }, 1000);
 
     return () => clearTimeout(id);
-  }, [currentPage, betType, search, search2]);
+  }, [currentPage, betType, search, search2,betCategory]);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -245,14 +250,15 @@ const RusultMakerTossAndFancy = () => {
           )}
 
           <Box className="flex gap-2 mr-[100px]">
-            <Select value={""} onChange={(e) => setBetType(e.target.value)}>
+            <Select value={betType} onChange={(e) => setBetType(e.target.value)}>
               <option value={""}>Select Filter</option>
               <option value={"back"}>Yes</option>
               <option value={"lay"}>No</option>
             </Select>
+
             <Select
-              value={betType}
-              onChange={(e) => setBetType(e.target.value)}
+              value={betCategory}
+              onChange={(e) => setBetCategory(e.target.value)}
             >
               <option value={""}>Select Filter</option>
               <option value={"toss"}>Toss</option>
@@ -262,7 +268,7 @@ const RusultMakerTossAndFancy = () => {
         </Box>
       </Box>
 
-      <div className="container overflow-scroll w-[100%]">
+      <div className="container overflow-scroll w-[98%] m-auto">
         {loading && (
           <Progress size="xs" isIndeterminate colorScheme="#e91e63" />
         )}
