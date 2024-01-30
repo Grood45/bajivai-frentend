@@ -82,17 +82,17 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     });
     socket.on("oddsData", (data) => {
       if (data.t1 && param.sport_id == "4") {
-        console.log(data, "odds data for cricket")
+        console.log(data, "odds data for cricket");
         setData((prev) => {
           setPrevCricketDataofOdds(prev);
           return data.t1[0];
         });
       } else if ((data && param.sport_id == "1") || param.sport_id == "2") {
-        console.log(data, "odds data for cricket")
-        let filterData = data[0].section.filter(
-          (ele: any) => ele.nat !== "The Draw"
-        );
-        data[0].section = filterData;
+        console.log(data, "odds data for cricket");
+        // let filterData = data[0].section.filter(
+        //   (ele: any) => ele.nat !== "The Draw"
+        // );
+        // data[0].section = filterData;
         setData((prev) => {
           setPrevCricketDataofOdds(prev);
           return data;

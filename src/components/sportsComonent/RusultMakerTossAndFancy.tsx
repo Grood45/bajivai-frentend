@@ -74,14 +74,20 @@ const RusultMakerTossAndFancy = () => {
 
   const GetAllBets = async () => {
     setLoading(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?bet_category=${betType}&page=${currentPage}&limit=20&status=pending&question=${search2}`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?&page=${currentPage}&limit=20&status=pending`;
     if (search) {
       url += `&name=${search}`;
+    }
+    if (betType) {
+      url += `&bet_type=${betType}`;
+    }
+    if (search2) {
+      url += `&question=${search2}`;
     }
     try {
       const response = await fetchGetRequest(url);
       setBets(response.data);
-      console.log(response.data,"hffhg")
+      console.log(response.data, "hffhg");
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -105,7 +111,7 @@ const RusultMakerTossAndFancy = () => {
     }, 1000);
 
     return () => clearTimeout(id);
-  }, [currentPage, betType, search,search2]);
+  }, [currentPage, betType, search, search2]);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -196,22 +202,22 @@ const RusultMakerTossAndFancy = () => {
       >
         <Box className="flex  justify-between mb-6">
           <Box className="flex gap-2">
-          <Input
-            width="20%"
-            placeholder={"search by match name"}
-            className="w-[200px] text-sm p-2"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-           <Input
-            width="20%"
-            placeholder={"search by  question"}
-            className="w-[200px] text-sm p-2"
-            value={search2}
-            onChange={(e) => setSearch2(e.target.value)}
-          />
+            <Input
+              width="20%"
+              placeholder={"search by match name"}
+              className="w-[200px] text-sm p-2"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Input
+              width="20%"
+              placeholder={"search by  question"}
+              className="w-[200px] text-sm p-2"
+              value={search2}
+              onChange={(e) => setSearch2(e.target.value)}
+            />
           </Box>
-         
+
           {selectedMatches.length > 0 && (
             <Box className="flex gap-2">
               <button
@@ -237,15 +243,12 @@ const RusultMakerTossAndFancy = () => {
               </button>
             </Box>
           )}
-          
+
           <Box className="flex gap-2 mr-[100px]">
-          <Select
-              value={""}
-              // onChange={(e) => setBetType(e.target.value)}
-            >
+            <Select value={""} onChange={(e) => setBetType(e.target.value)}>
               <option value={""}>Select Filter</option>
-              <option value={"Yes"}>Yes</option>
-              <option value={"No"}>No</option>
+              <option value={"back"}>Yes</option>
+              <option value={"lay"}>No</option>
             </Select>
             <Select
               value={betType}
@@ -342,30 +345,34 @@ const RusultMakerTossAndFancy = () => {
               >
                 MATCH
               </Th>
-             {betType=="fancy"&& <Th
-                scope="col"
-                color="white"
-                style={{
-                  textTransform: "none",
-                  fontWeight: "600",
-                  whiteSpace: "nowrap",
-                  fontSize: "10px",
-                }}
-              >
-                Questions
-              </Th>}
-              {betType=="toss"&&<Th
-                scope="col"
-                color="white"
-                style={{
-                  textTransform: "none",
-                  fontWeight: "600",
-                  whiteSpace: "nowrap",
-                  fontSize: "10px",
-                }}
-              >
-                Team Name
-              </Th>}
+              {betType == "fancy" && (
+                <Th
+                  scope="col"
+                  color="white"
+                  style={{
+                    textTransform: "none",
+                    fontWeight: "600",
+                    whiteSpace: "nowrap",
+                    fontSize: "10px",
+                  }}
+                >
+                  Questions
+                </Th>
+              )}
+              {betType == "toss" && (
+                <Th
+                  scope="col"
+                  color="white"
+                  style={{
+                    textTransform: "none",
+                    fontWeight: "600",
+                    whiteSpace: "nowrap",
+                    fontSize: "10px",
+                  }}
+                >
+                  Team Name
+                </Th>
+              )}
               <Th
                 scope="col"
                 color="white"
@@ -509,12 +516,16 @@ const RusultMakerTossAndFancy = () => {
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.match_name}
                   </Td>
-                 {betType=="fancy"&& <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.question}
-                  </Td>}
-                  {betType=="toss"&& <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.runner_name}
-                  </Td>}
+                  {betType == "fancy" && (
+                    <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
+                      {row.question}
+                    </Td>
+                  )}
+                  {betType == "toss" && (
+                    <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
+                      {row.runner_name}
+                    </Td>
+                  )}
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     Rate:{" "}
                     <button className="text-[md] text-center cursor-pointer bg-orange-500 rounded-md p-1 w-[70px] text-white ">
@@ -539,7 +550,13 @@ const RusultMakerTossAndFancy = () => {
                     {row.bet_category}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.result}
+                    <Badge
+                      style={{
+                        color: row.status == "pending" ? "#ED8936" : "#48BB78",
+                      }}
+                    >
+                      {row.status}
+                    </Badge>
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.status == "pending" ? (
@@ -597,7 +614,11 @@ const RusultMakerTossAndFancy = () => {
               className="ml-1 disabled:text-gray-400 text-[20px]"
               disabled={currentPage == 1}
               onClick={() => setCurrentPage(1)}
-              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+              style={{
+                backgroundColor: "#e91e63",
+                color: "white",
+                fontSize: "12px",
+              }}
             >
               {"First"}
             </Button>
@@ -607,7 +628,11 @@ const RusultMakerTossAndFancy = () => {
               // ref="btPrevious"
               onClick={() => handlePrevPage()}
               disabled={currentPage == 1}
-              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+              style={{
+                backgroundColor: "#e91e63",
+                color: "white",
+                fontSize: "12px",
+              }}
             >
               {"<"}
             </Button>
@@ -618,7 +643,11 @@ const RusultMakerTossAndFancy = () => {
               type="button"
               disabled={currentPage == pagination.totalPages}
               className="ml-1 disabled:text-gray-400 text-[20px]"
-              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
+              style={{
+                backgroundColor: "#e91e63",
+                color: "white",
+                fontSize: "12px",
+              }}
             >
               {">"}
             </Button>
@@ -627,7 +656,11 @@ const RusultMakerTossAndFancy = () => {
               type="button"
               className="ml-1 disabled:text-gray-400 text-[20px]"
               disabled={currentPage == pagination.totalPages}
-              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px'}}
+              style={{
+                backgroundColor: "#e91e63",
+                color: "white",
+                fontSize: "12px",
+              }}
             >
               {"Last"}
             </Button>

@@ -63,9 +63,7 @@ function ResultMaker() {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/sport/toggle-match/${match_id}`,
         payload
       );
-
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const GetAllMatches = async () => {
@@ -186,7 +184,6 @@ function ResultMaker() {
     setOpenResultModal(true);
     // alert(type);
   };
-
 
   const handleWinnerDeclaire = async () => {
     if (!selectedTeam) {
@@ -538,13 +535,13 @@ function ResultMaker() {
                                 WIN
                               </button>
                               <button
-                            className="p-[6px] rounded-lg w-[70px] text-[#F44335] border border-[#F44335] font-bold text-[12px] bg-[white] "
-                            onClick={() =>
-                              handleWinner(row.name, "loose", row.match_id)
-                            }
-                          >
-                            DRAW
-                          </button>
+                                className="p-[6px] rounded-lg w-[70px] text-[#F44335] border border-[#F44335] font-bold text-[12px] bg-[white] "
+                                onClick={() =>
+                                  handleWinner(row.name, "loose", row.match_id)
+                                }
+                              >
+                                DRAW
+                              </button>
                               <button
                                 className="p-2 curser-pointer rounded-lg w-[90px] text-[#FB8C00] border border-[#FB8C00] font-bold text-[12px] bg-[white] "
                                 onClick={() =>
@@ -594,7 +591,11 @@ function ResultMaker() {
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == 1}
                 onClick={() => setCurrentPage(1)}
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"First"}
               </Button>
@@ -604,7 +605,11 @@ function ResultMaker() {
                 // ref="btPrevious"
                 onClick={() => handlePrevPage()}
                 disabled={currentPage == 1}
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"<"}
               </Button>
@@ -615,7 +620,11 @@ function ResultMaker() {
                 type="button"
                 disabled={currentPage == pagination.totalPages}
                 className="ml-1 disabled:text-gray-400 text-[20px]"
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {">"}
               </Button>
@@ -624,7 +633,11 @@ function ResultMaker() {
                 type="button"
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == pagination.totalPages}
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"Last"}
               </Button>
@@ -650,6 +663,7 @@ function ResultMaker() {
               <option value={resultTeam.split("v")[1]}>
                 {resultTeam.split("v")[1]}
               </option>
+              <option value={resultTeam.split("v")[1]}>The Draw</option>
             </Select>
           </ModalBody>
 

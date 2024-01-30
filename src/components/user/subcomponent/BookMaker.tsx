@@ -88,7 +88,7 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     if (odd < 1) {
       return;
     }
-    if(odd>10){
+    if (odd > 10) {
       toast({
         description: "odd value should be less than 10",
         status: "warning",
@@ -96,8 +96,7 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
         position: "bottom",
         isClosable: true,
       });
-      return
-
+      return;
     }
     setBetShow(false);
     setRate(odd);
@@ -116,14 +115,14 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
       });
       return;
     }
-      toast({
-        description: "Coming soon.",
-        status: "warning",
-        duration: 4000,
-        position: "bottom",
-        isClosable: true,
-      });
-      return;    
+    toast({
+      description: "Coming soon.",
+      status: "warning",
+      duration: 4000,
+      position: "bottom",
+      isClosable: true,
+    });
+    return;
     if (stake < min_limit) {
       toast({
         description: `Minimun amount to place a bet is ${min_limit}.`,
@@ -169,7 +168,7 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
       bet_category: "bookmaker",
       parent_admin_id,
       parent_admin_username,
-      parent_admin_role_type ,
+      parent_admin_role_type,
     };
     setBetLoading(true);
     let oldExposure = Math.min(firstTeamPl, secondTeamPl);
@@ -236,10 +235,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
       if (data.t2) {
         setData((prev: any) => {
           setPrevCricketDataofOdds(prev);
-          return data?.t2[0]?.bm1 || [];
+          const filteredData = data.t2.filter((item:any) => item.bm1.some((bm:any) => bm.nat !== "NO" && bm.nat !== "YES"));
+
+          
+
+          console.log(filteredData, "filteredDaata")
+
+          return filteredData[0]?.bm1 || [];
         });
       }
-      
     });
     socket.on("disconnect", () => {
       //console.log("Disconnected from the server");
@@ -260,7 +264,7 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
   const fetchBetData = async () => {
     const category = "bookmaker";
     const match_id = param.id;
-    if(!user_id){
+    if (!user_id) {
       return;
     }
     try {
@@ -379,14 +383,18 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                               {item?.nat}
                             </p>
                             <p
-                            className={`${
-                              secondTeamPl<0&&index==1? "text-red-800" : "text-[#0FBF00]"
-                            } ${
-                              firstTeamPl<0&&index==0? "text-red-800" : "text-[#0FBF00]"
-                            } text-xs font-semibold`}
-                          >
-                            {index == 0 ? firstTeamPl : secondTeamPl}
-                          </p>
+                              className={`${
+                                secondTeamPl < 0 && index == 1
+                                  ? "text-red-800"
+                                  : "text-[#0FBF00]"
+                              } ${
+                                firstTeamPl < 0 && index == 0
+                                  ? "text-red-800"
+                                  : "text-[#0FBF00]"
+                              } text-xs font-semibold`}
+                            >
+                              {index == 0 ? firstTeamPl : secondTeamPl}
+                            </p>
                           </div>
                         </div>
                         <div className="flex items-center gap-1 lg:gap-3">
@@ -437,20 +445,16 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                               <button
                                 onClick={() =>
                                   handleBet(Number(item.b1), item.nat, "back")
-                                
                                 }
                                 className={`${
                                   (prevCricketDataofOdds &&
                                     prevCricketDataofOdds[index]?.b1 !==
                                       item.b1) ||
-                                  prevCricketDataofOdds[index]?.bs1 !==
-                                    item.bs1
+                                  prevCricketDataofOdds[index]?.bs1 !== item.bs1
                                     ? "animate-pulse  bg-blue-600 opacity-4 w-[90px] items-center justify-center text-white flex flex-col rounded-[8px] py-1 px-6"
                                     : "bg-[#41ADFA] w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6"
                                 }`}
-                                
-                             
-                             >
+                              >
                                 <span className="text-xs">{item.b1}</span>
                                 <span className="text-[10px]">
                                   {Math.round(+item.bs1)}
@@ -473,7 +477,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                     ? "animate-pulse opacity-3 bg-red-600 w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
                                     : "bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
                                 }`}
-                              
                               >
                                 <span className="text-xs">{item?.l1}</span>
                                 <span className="text-[10px]">
@@ -490,12 +493,10 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                   (prevCricketDataofOdds &&
                                     prevCricketDataofOdds[index]?.l2 !==
                                       item.l2) ||
-                                  prevCricketDataofOdds[index]?.ls2 !==
-                                    item.ls2
+                                  prevCricketDataofOdds[index]?.ls2 !== item.ls2
                                     ? "animate-pulse opacity-3 bg-red-600 w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
                                     : "bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
                                 }`}
-                              
                               >
                                 <span className="text-xs">{item?.l2}</span>
                                 <span className="text-[10px]">
@@ -517,7 +518,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
                                     ? "animate-pulse opacity-3 bg-red-600 w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
                                     : "bg-[#FD5FA1] w-[90px] items-center justify-center  text-white flex flex-col  rounded-[8px] py-1 px-6"
                                 }`}
-                              
                               >
                                 <span className="text-xs">{item?.l3}</span>
                                 <span className="text-[10px]">
