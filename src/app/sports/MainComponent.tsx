@@ -41,14 +41,14 @@ import { GameCard } from "../casino/MainComponent";
 import { AllGameType, SportsGameType } from "../../../utils/providerData";
 import { useRouter } from "next/navigation";
 import sportBook from "../../assetuser/other/sportsbook.png";
-import image1 from '../../assetuser/payment/aviator.png'
-import image2 from '../../assetuser/payment/bottom-sports.png'
-import image3 from '../../assetuser/payment/casino.png'
-import image4 from '../../assetuser/payment/promotions.png'
-import image5 from '../../assetuser/payment/sports.png'
+import image1 from '../../assetuser/other/play.png'
+import image2 from '../../assetuser/other/upcoming.png'
+import image5 from '../../assetuser/other/ball.png'
+import image4 from '../../assetuser/other/football.png'
+import image3 from '../../assetuser/other/tennis.png'
 import TvModal from "@/components/user/subcomponent/TvModal";
 
-
+import loader from '../../assetuser/other/loading1.gif'
 type SportsCounts = {
   cricketLiveCount: number;
   cricketUpcomingCount: number;
@@ -316,8 +316,6 @@ const MainComponent = () => {
                 <BsSearch />
               </div> */}
       </div>
-
-      {/* cricket */}
 
       {gameType == "Cricket" ? (
         <div>

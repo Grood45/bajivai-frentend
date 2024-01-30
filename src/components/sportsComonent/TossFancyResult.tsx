@@ -150,8 +150,7 @@ useEffect(() => {
       >
         <Box className="flex justify-between mb-6">
             <Box className="flex gap-6">
-            <Button colorScheme="gray" style={{backgroundColor:'pink'}} color={"white"} onClick={handleAll}>All</Button>
-           {/* <Button style={{backgroundColor:'blue'}} color={"white"} onClick={handleOdds} >Odds/Bookmaker</Button> */}
+            <Button colorScheme="gray" style={{backgroundColor:'red'}} color={"white"} onClick={handleAll}>All</Button>
            <Button style={{backgroundColor:'green'}} color={"white"} onClick={handleToss}>Toss</Button>
            <Button  style={{backgroundColor:'purple'}} color={"white"} onClick={handleFancy}>Fancy</Button>
 
@@ -168,7 +167,7 @@ useEffect(() => {
         </Box>
       </Box>
 
-      <div className="container overflow-scroll w-[100%]">
+      <div className="container p-2 overflow-scroll w-[99%] m-auto">
         {loading && (
           <Progress size="xs" isIndeterminate colorScheme="#e91e63" />
         )}
@@ -401,13 +400,14 @@ useEffect(() => {
                     {row.stake}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.bet_type}
+                    {/* {row.bet_type} */}
+                    {betType=="fancy"?row.bet_type=="lay"?<Badge colorScheme="red">No</Badge>:<Badge colorScheme="green">Yes</Badge>:row.bet_type}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.bet_category}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    <Badge className={`${row.result=="win"?"text-green-400":row.result=="lose"?"text-red-400":'text-orange-400'}`}>{row.result}</Badge>
+                    <Badge className={`${row.result=="win"?"text-black":row.result=="lose"?"text-red-400":'text-orange-400'}`}>{row.result}</Badge>
                   </Td>
                  
                 </Tr>

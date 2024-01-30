@@ -69,7 +69,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="text-sm ">
-            <span className="text-[15px] font-bold"> bajilive</span> is the best
+            <span className="text-[15px] font-bold"> bajivai</span> is the best
             platform for live and uninterrupted online betting for sports, Live
             24hr betting with a wide spectrum of sports such as Cricket, Soccer,
             Horse Racing, Kabaddi,{" "}
@@ -77,7 +77,7 @@ const Footer = () => {
             Hockey, Basketball,{" "}
             <span className="text-[15px] font-bold">Andar Bahar Game</span> and
             many more.{" "}
-            <span className="text-[15px] font-bold"> webiste name</span> is a
+            <span className="text-[15px] font-bold"> bajivai</span> is a
             resourceful online betting provider with competitive odds on in -
             play and upcoming matches. Popular casino games like Blackjack,
             Poker or READ MORE

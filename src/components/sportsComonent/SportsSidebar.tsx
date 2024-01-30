@@ -94,7 +94,7 @@ export const SportsSideBar = () => {
         },
         {
           id: 8,
-          title: "Toss/Fancy Results",
+          title: "Result History",
           icon: <PiFlagPennantBold fontSize={"20px"} />,
           path: "/sportsAdmin/matchtossfancyresult",
         },

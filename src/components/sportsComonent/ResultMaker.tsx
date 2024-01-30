@@ -55,6 +55,7 @@ function ResultMaker() {
   const [resultTeam, setResultTeam] = useState<any>("");
   const [resultMatchId, setResultMatchId] = useState<any>("");
   const [requestResultType, setRequestResultType] = useState<any>("");
+  const [betType,setBetType]=useState("")
   const totalPages = pagination.totalPages; // Replace with your total number of pages
   const UpdateStatus: any = async (name: any, match_id: any) => {
     let payload = { name };
@@ -70,7 +71,7 @@ function ResultMaker() {
     setLoading(true);
     let url = `${
       process.env.NEXT_PUBLIC_BASE_URL
-    }/api/match/get-all-match?page=${currentPage}&limit=${20}`;
+    }/api/match/get-all-match?page=${currentPage}&limit=${20}&sport=${betType}`;
     if (search) {
       url += `&name=${search}`;
     }
@@ -93,6 +94,17 @@ function ResultMaker() {
     }
   };
 
+  const hanldeCricket=()=>{
+    setBetType("Cricket")
+      }
+      const handleSoccer=()=>{
+    setBetType("Soccer")
+        
+      }
+      const hanldeTennis=()=>{
+    setBetType("Tennis")
+        
+      }
   // const handleStatus = async (name:any) => {
   //   setIndex(index);
   //   let status = sport.status == "active" ? "inactive" : "active";
@@ -135,7 +147,7 @@ function ResultMaker() {
     }, 1000);
 
     return () => clearTimeout(id);
-  }, [currentPage, search]);
+  }, [currentPage, search,betType]);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -261,6 +273,7 @@ function ResultMaker() {
   //   GetAllMatchesIds();
   // }, []);
 
+
   return (
     <ChakraProvider theme={theme}>
       <Box>
@@ -302,6 +315,12 @@ function ResultMaker() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+           <Box className="flex gap-6">
+            <Button colorScheme="gray" style={{backgroundColor:'red'}} onClick={hanldeCricket} color={"white"} >Cricket</Button>
+           <Button style={{backgroundColor:'green'}} color={"white"} onClick={handleSoccer}>Soccer</Button>
+           <Button  style={{backgroundColor:'purple'}} color={"white"} onClick={hanldeTennis} >Tennis</Button>
+
+            </Box>
           {/* <Box className="flex gap-2">
             <button className="px-2 rounded-lg w-[70px] text-white font-semibold text-[12px] bg-[#4CAF50] ">
               WIN

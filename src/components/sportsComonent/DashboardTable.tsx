@@ -36,6 +36,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -57,12 +58,14 @@ function DashboardTable() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setquery] = useState<any>("");
   const [result, setResult] = useState<any>("");
+  const [betType, setBetType] = useState<any>("toss");
+const [status,setStatus]=useState("pending")
   const [pagination, setPagination] = useState<any>({});
   const totalPages = allData?.pagination?.totalPages || 0; // Replace with your total number of pages
   const toast = useToast();
   const getAlldashboardDetails = async () => {
     setLoading(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?page=${currentPage}&limit=20`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?bet_category=${betType}&page=${currentPage}&limit=20&status=${status}`;
     if (search) {
       url += `&search=${search}`;
     }
@@ -94,7 +97,7 @@ function DashboardTable() {
     }, 700);
 
     return () => clearTimeout(id);
-  }, [currentPage, search, betCategory]);
+  }, [currentPage, search, betCategory,betType,status]);
 
 
   const data = [
@@ -308,7 +311,7 @@ function DashboardTable() {
             onChange={(e) => setquery(e.target.value)}
             className="w-[400px] p-2"
           />
-          <Box className="flex gap-2">
+          {/* <Box className="flex gap-2">
             <button
               onClick={() => handleResult("", "win")}
               disabled={selectedMatches.length == 0}
@@ -330,7 +333,28 @@ function DashboardTable() {
             >
               REFUND
             </button>
-          </Box>
+          </Box> */}
+            <Box className="flex gap-2 mr-[100px]">
+            <Select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value={""}>Select Filter</option>
+              <option value={"pending"}>Pending</option>
+
+              <option value={"declaired"}>Declaired</option>
+            </Select>
+           <Select
+              value={betType}
+              onChange={(e) => setBetType(e.target.value)}
+            >
+              <option value={""}>Select Filter</option>
+              <option value={"odds"}>Odds</option>
+
+              <option value={"toss"}>Toss</option>
+              <option value={"fancy"}>Fancy</option>
+            </Select>
+            </Box>
         </Box>
         <div className="container overflow-scroll w-[100%]">
           {loading && (
@@ -343,17 +367,16 @@ function DashboardTable() {
           >
             <Thead bg="primary" className=" bg-[#E91E63]">
               <Tr>
-                <Td>
+                {/* <Td>
                   <Checkbox
                     size={"lg"}
                     style={{
                       "--chakra-colors-blue-500": "blue-500",
-                      // border: "1px solid green",
                     }}
                     isChecked={selectedMatches.length === allData?.data?.length}
                     onChange={handleSelectAll}
                   />
-                </Td>
+                </Td> */}
                 <Th
                   scope="col"
                   color="white"
@@ -424,6 +447,18 @@ function DashboardTable() {
                     fontSize: "10px",
                   }}
                 >
+                  TEAM
+                </Th>
+                <Th
+                  scope="col"
+                  color="white"
+                  style={{
+                    textTransform: "none",
+                    fontWeight: "600",
+                    whiteSpace: "nowrap",
+                    fontSize: "10px",
+                  }}
+                >
                   Questions
                 </Th>
                 <Th
@@ -436,7 +471,7 @@ function DashboardTable() {
                     fontSize: "10px",
                   }}
                 >
-                  Rate, Yes/No
+                  Rate, Odds
                 </Th>
                 <Th
                   scope="col"
@@ -511,18 +546,7 @@ function DashboardTable() {
                 >
                   RESULT
                 </Th>
-                <Th
-                  scope="col"
-                  color="white"
-                  style={{
-                    textTransform: "none",
-                    fontWeight: "600",
-                    whiteSpace: "nowrap",
-                    fontSize: "10px",
-                  }}
-                >
-                  TEAM
-                </Th>
+               
                 <Th
                   scope="col"
                   color="white"
@@ -547,7 +571,7 @@ function DashboardTable() {
                       row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
                     } hover:bg-[#E99CAD] font-semibold`}
                   >
-                    <Td
+                    {/* <Td
                       style={{
                         whiteSpace: "nowrap",
                         textTransform: "none",
@@ -559,7 +583,6 @@ function DashboardTable() {
                           row.bet_category !== "bookmaker" && (
                             <Checkbox
                               size={"lg"}
-                              // defaultChecked
                               style={{
                                 "--chakra-colors-blue-500": "#e91e63",
                                 border: "1px solid #e91e63",
@@ -570,13 +593,17 @@ function DashboardTable() {
                             />
                           )}
                       </div>
-                    </Td>
-                    <Td>{row.updated_at}</Td>
+                    </Td> */}
+                    <Td>{row.match_date}</Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.username}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.sport}
+                    {row.sport_id == 1
+                            ? "Tennis"
+                            : row.sport_id === 2
+                            ? "Scoccer"
+                            : "Cricket"}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.league_name}
@@ -584,34 +611,42 @@ function DashboardTable() {
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.match_name}
                     </Td>
+                  
+                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
+                     {betType=="fancy"?"N/A":row.runner_name}
+                  </Td>
+                   {/* } */}
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {!row.question?"N/A":row.question}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      rate Yes/no
+                    Rate:{" "}
+                    <button className="text-[md] text-center cursor-pointer bg-orange-500 rounded-md p-1 w-[70px] text-white ">
+                      {" "}
+                      {row.rate}
+                    </button>
                     </Td>
 
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.stake}
+                      {row.stake.toFixed(2)}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.rate * row.stake}
+                      {(row.rate * row.stake).toFixed(2)}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.stake}
+                      {row.stake.toFixed(2)}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.bet_type}
-                    </Td>
+                    {/* {row.bet_type} */}
+                    {betType=="fancy"?row.bet_type=="lay"?<Badge colorScheme="red">No</Badge>:<Badge colorScheme="green">Yes</Badge>:row.bet_type}
+                  </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.bet_category}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.status}
                     </Td>
-                    <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.team}
-                    </Td>
+                   
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.status === "pending" &&
                       (row.bet_category === "toss" ||
