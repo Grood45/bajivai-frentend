@@ -37,11 +37,11 @@ import themeChange from "@/theme";
 import announ from "../../assetuser/other/dazzle-loudspeaker.gif";
 import { SeamlessGame } from "../casino/MainComponent";
 import { useRouter } from "next/navigation";
-import image1 from '../../assetuser/payment/aviator.png'
-import image2 from '../../assetuser/payment/bottom-sports.png'
-import image3 from '../../assetuser/payment/casino.png'
-import image4 from '../../assetuser/payment/promotions.png'
-import image5 from '../../assetuser/payment/sports.png'
+import image1 from '../../assetuser/other/play.png'
+import image2 from '../../assetuser/other/upcoming.png'
+import image5 from '../../assetuser/other/ball.png'
+import image4 from '../../assetuser/other/football.png'
+import image3 from '../../assetuser/other/tennis.png'
 const MainComponent = () => {
   const [active, setCategoryActive] = useState<number>(1);
   const [matchFilter, setMatchFilter] = useState<String>("all");
@@ -298,6 +298,7 @@ const MainComponent = () => {
         theme ? `bg-[${themeChange.light.bg2}]` : `bg-[${themeChange.dark.bg2}]`
       }`}
     >
+    
       {/* announcement */}
       <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... -mt-3  p-[2px] rounded-l-[8px] rounded-r-[8px]">
         <div className="flex w-[100%] items-center rounded-l-[8px] rounded-r-[8px] justify-between text-sm bg-[#D79C27]">

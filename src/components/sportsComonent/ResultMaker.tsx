@@ -55,6 +55,7 @@ function ResultMaker() {
   const [resultTeam, setResultTeam] = useState<any>("");
   const [resultMatchId, setResultMatchId] = useState<any>("");
   const [requestResultType, setRequestResultType] = useState<any>("");
+  const [sportType,setSportType]=useState("")
   const totalPages = pagination.totalPages; // Replace with your total number of pages
   const UpdateStatus: any = async (name: any, match_id: any) => {
     let payload = { name };
@@ -63,16 +64,14 @@ function ResultMaker() {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/sport/toggle-match/${match_id}`,
         payload
       );
-
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const GetAllMatches = async () => {
     setLoading(true);
     let url = `${
       process.env.NEXT_PUBLIC_BASE_URL
-    }/api/match/get-all-match?page=${currentPage}&limit=${20}`;
+    }/api/match/get-all-match?page=${currentPage}&limit=${20}&sport=${sportType}`;
     if (search) {
       url += `&name=${search}`;
     }
@@ -95,6 +94,17 @@ function ResultMaker() {
     }
   };
 
+  const hanldeCricket=()=>{
+    setSportType("Cricket")
+      }
+      const handleSoccer=()=>{
+        setSportType("Soccer")
+        
+      }
+      const hanldeTennis=()=>{
+        setSportType("Tennis")
+        
+      }
   // const handleStatus = async (name:any) => {
   //   setIndex(index);
   //   let status = sport.status == "active" ? "inactive" : "active";
@@ -137,7 +147,7 @@ function ResultMaker() {
     }, 1000);
 
     return () => clearTimeout(id);
-  }, [currentPage, search]);
+  }, [currentPage, search,sportType]);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -186,7 +196,6 @@ function ResultMaker() {
     setOpenResultModal(true);
     // alert(type);
   };
-
 
   const handleWinnerDeclaire = async () => {
     if (!selectedTeam) {
@@ -264,6 +273,7 @@ function ResultMaker() {
   //   GetAllMatchesIds();
   // }, []);
 
+
   return (
     <ChakraProvider theme={theme}>
       <Box>
@@ -305,6 +315,12 @@ function ResultMaker() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+           <Box className="flex gap-6">
+            <Button colorScheme="gray" style={{backgroundColor:'red'}} onClick={hanldeCricket} color={"white"} >Cricket</Button>
+           <Button style={{backgroundColor:'green'}} color={"white"} onClick={handleSoccer}>Soccer</Button>
+           <Button  style={{backgroundColor:'purple'}} color={"white"} onClick={hanldeTennis} >Tennis</Button>
+
+            </Box>
           {/* <Box className="flex gap-2">
             <button className="px-2 rounded-lg w-[70px] text-white font-semibold text-[12px] bg-[#4CAF50] ">
               WIN
@@ -537,14 +553,14 @@ function ResultMaker() {
                               >
                                 WIN
                               </button>
-                              {/* <button
-                            className="p-[6px] rounded-lg w-[70px] text-[#F44335] border border-[#F44335] font-bold text-[12px] bg-[white] "
-                            onClick={() =>
-                              handleWinner(row.name, "loose", row.match_id)
-                            }
-                          >
-                            LOSS
-                          </button> */}
+                              <button
+                                className="p-[6px] rounded-lg w-[70px] text-[#F44335] border border-[#F44335] font-bold text-[12px] bg-[white] "
+                                onClick={() =>
+                                  handleWinner(row.name, "loose", row.match_id)
+                                }
+                              >
+                                DRAW
+                              </button>
                               <button
                                 className="p-2 curser-pointer rounded-lg w-[90px] text-[#FB8C00] border border-[#FB8C00] font-bold text-[12px] bg-[white] "
                                 onClick={() =>
@@ -594,7 +610,11 @@ function ResultMaker() {
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == 1}
                 onClick={() => setCurrentPage(1)}
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"First"}
               </Button>
@@ -604,7 +624,11 @@ function ResultMaker() {
                 // ref="btPrevious"
                 onClick={() => handlePrevPage()}
                 disabled={currentPage == 1}
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"<"}
               </Button>
@@ -615,7 +639,11 @@ function ResultMaker() {
                 type="button"
                 disabled={currentPage == pagination.totalPages}
                 className="ml-1 disabled:text-gray-400 text-[20px]"
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {">"}
               </Button>
@@ -624,7 +652,11 @@ function ResultMaker() {
                 type="button"
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == pagination.totalPages}
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"Last"}
               </Button>
@@ -650,6 +682,7 @@ function ResultMaker() {
               <option value={resultTeam.split("v")[1]}>
                 {resultTeam.split("v")[1]}
               </option>
+              <option value={resultTeam.split("v")[1]}>The Draw</option>
             </Select>
           </ModalBody>
 

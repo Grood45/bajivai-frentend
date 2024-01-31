@@ -54,7 +54,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
   const [betLoading, setBetLoading] = useState<boolean>();
   const [firstTeamPl, setFirstTeamPl] = useState<number>(0);
   const [secondTeamPl, setSecondTeamPl] = useState<number>(0);
-  const [bet, setBet] = useState<any>();
+  const [bet, setBet] = useState<any>([]);
   const [prevCricketDataofOdds, setPrevCricketDataofOdds] = useState<any>([]);
   const userAuth = useSelector((state: RootState) => state);
   const {
@@ -82,15 +82,17 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     });
     socket.on("oddsData", (data) => {
       if (data.t1 && param.sport_id == "4") {
+        console.log(data, "odds data for cricket");
         setData((prev) => {
           setPrevCricketDataofOdds(prev);
           return data.t1[0];
         });
       } else if ((data && param.sport_id == "1") || param.sport_id == "2") {
-        let filterData = data[0].section.filter(
-          (ele: any) => ele.nat !== "The Draw"
-        );
-        data[0].section = filterData;
+        console.log(data, "odds data for cricket");
+        // let filterData = data[0].section.filter(
+        //   (ele: any) => ele.nat !== "The Draw"
+        // );
+        // data[0].section = filterData;
         setData((prev) => {
           setPrevCricketDataofOdds(prev);
           return data;

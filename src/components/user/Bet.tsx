@@ -258,7 +258,13 @@ const Bet: React.FC<BetProps> = ({
             )}
           </button>
         </div>
+        {betLoading ? 
+        <div style={{backgroundColor:'rgba(0.5,0.5,0.5,0.6'}} className="rounded-[20px] absolute  h-[100%] z-10 w-[99.5%] bg-red-500   flex justify-center items-center">
+<div className="loader"></div>
+</div>:""
+}
       </div>
+    
     </div>
   );
 };

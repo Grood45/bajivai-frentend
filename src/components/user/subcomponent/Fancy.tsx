@@ -57,6 +57,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
   const [question, setQuestion] = useState<string>("");
 
   const [sId, setSId] = useState<any>();
+  const [marketId, setMarketId] = useState<string>();
   const [bet, setBet] = useState<any>();
   const [betLoading, setBetLoading] = useState<boolean>();
   const toast = useToast();
@@ -115,7 +116,9 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     betType: BetType,
     size: string,
     sid: string,
-    nat: string
+    nat: string,
+    mid: string
+
     // matchName: string
   ) => {
     if (odd < 1) {
@@ -129,6 +132,8 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     setSize(size);
     setSId(sid);
     setQuestion(nat);
+    setMarketId(mid);
+    // alert(mid+sid)
   };
   const handlePlaceBet = async () => {
     if (!token || !otpless_token) {
@@ -201,10 +206,11 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       rate,
       bet_category: "fancy",
       size: size,
-      parent_admin_id ,
-      parent_admin_username ,
-      parent_admin_role_type ,
-      // sid:sid,
+      parent_admin_id,
+      parent_admin_username,
+      parent_admin_role_type,
+      question_id: sId,
+      market_id: marketId,
     };
     let oldExposure = stake + exposure_limit;
     let allBet = [...bet, payload];
@@ -368,7 +374,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
                           </div>
                         ) : (
                           <div className="flex  gap-1">
-                             <button
+                            <button
                               onClick={() =>
                                 handleBet(
                                   Number(item.l1),
@@ -376,7 +382,8 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
                                   "lay",
                                   item.bs1,
                                   item.sid,
-                                  item.nat
+                                  item.nat,
+                                  item.mid
                                 )
                               }
                               className="bg-[#FD5FA1] w-[70px]  flex items-center justify-center   text-white  flex-col  rounded-[8px]  py-1 px-6"
@@ -392,7 +399,8 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
                                   "back",
                                   item.bs1,
                                   item.sid,
-                                  item.nat
+                                  item.nat,
+                                  item.mid
                                 )
                               }
                               className="bg-[#41ADFA] w-[70px]  flex items-center justify-center text-white  flex-col  rounded-[8px] py-1 px-6 "
@@ -404,7 +412,6 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
                                 {item.bs1}
                               </span>
                             </button>
-                           
                           </div>
                         )}
                       </div>

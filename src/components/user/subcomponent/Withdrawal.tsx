@@ -38,23 +38,20 @@ const Withdrawal = ({
 
   const {
     username = "",
+    user_id = "",
     max_limit = 0,
     min_limit = 0,
-    user_id = "",
     full_name = "",
     exposure_limit = 0,
     amount = 0,
   } = userAuth?.combineR?.userAuth?.data?.user || {};
 
-
-
-  
   const [userfilldetails, setUserFillDetails] = useState<any>([]);
   const [copiedItem, setCopiedItem] = useState(null);
   const [minutes, setMinutes] = useState(Number(10));
   const [seconds, setSeconds] = useState(0);
   const [timerStarted, setTimerStarted] = useState(false);
-
+  const [wagerData, setWagerData] = useState<any>({});
   const handleUserFillDetails = (event: any) => {
     const { name, value } = event.target;
     setUserFillDetails({ ...userfilldetails, [name]: value });
@@ -67,7 +64,25 @@ const Withdrawal = ({
       );
       setWithdrawData(response.data);
     } catch (error: any) {
-      console.error("Error uploading image:", error.message);
+      toast({
+        title: error.message,
+        status: "error",
+        duration: 2000,
+        position: "top",
+        isClosable: true,
+      });
+    }
+  };
+
+  const getWager = async () => {
+    const payload = { username, user_id };
+    try {
+      const response = await sendPostRequest(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-total-deposit-and-wager`,
+        payload
+      );
+      setWagerData(response.data);
+    } catch (error: any) {
       toast({
         title: error.message,
         status: "error",
@@ -79,8 +94,10 @@ const Withdrawal = ({
   };
 
   useEffect(() => {
-    getPaymentGateway();
+    Promise.all([getPaymentGateway(), getWager()]);
   }, []);
+
+  //localhost:8094/api/transaction/get-total-deposit-and-wager
 
   const createWithdrawDetails = async (cardIndex: any) => {
     const payload = {
@@ -141,24 +158,18 @@ const Withdrawal = ({
     e.preventDefault();
     if (cardIndex === 2) {
       if (radio) {
-       
-        if (
-          value >= withdrawDetails.min_limit &&
-          value <= withdrawDetails.max_limit && value<=amount-exposure_limit
-        ) {
-          setActiveCard(cardIndex);
-        } 
-        else if(value>amount-exposure_limit){
+        if (value > amount - exposure_limit) {
           toast({
-            title: `insufficent balance is ${amount-exposure_limit}`,
+            title: `insufficent balance is ${amount - exposure_limit}`,
             status: "error",
             duration: 2000,
             position: "top",
             isClosable: true,
           });
-
-        }
-        else {
+        } else if (
+          withdrawDetails.min_limit > value ||
+          withdrawDetails.max_limit < value
+        ) {
           toast({
             title: `balance should be between ${withdrawDetails.min_limit}-${withdrawDetails.max_limit}`,
             status: "error",
@@ -167,6 +178,21 @@ const Withdrawal = ({
             isClosable: true,
           });
           return;
+        } else if (wagerData.wagerLeft) {
+          toast({
+            title: `Please complete TurnOver first ${wagerData.wagerLeft}`,
+            status: "error",
+            duration: 2000,
+            position: "top",
+            isClosable: true,
+          });
+          return;
+        } else if (
+          value >= withdrawDetails.min_limit &&
+          value <= withdrawDetails.max_limit &&
+          value <= amount - exposure_limit
+        ) {
+          setActiveCard(cardIndex);
         }
       } else if (value > amount) {
         toast({
@@ -186,6 +212,15 @@ const Withdrawal = ({
           isClosable: true,
         });
       }
+    } else if (true) {
+      toast({
+        title: `Please complete TurnOver first ${wagerData.wagerLeft}`,
+        status: "error",
+        duration: 2000,
+        position: "top",
+        isClosable: true,
+      });
+      return;
     }
 
     if (cardIndex === 3) {
@@ -395,9 +430,21 @@ const Withdrawal = ({
             </div>
             <form onSubmit={(e) => handleButtonClick(2, e)}>
               <div className="flex flex-col gap-2 ">
-                <p className="text-sm mt-2  text-left font-normal">
-                  Enter Amount
-                </p>
+                <div className="flex justify-between">
+                  <p className="text-sm mt-2  text-left font-normal">
+                    Enter Amount
+                  </p>
+                  <p
+                    className={`text-sm mt-2  text-left font-normal ${
+                      wagerData.wagerLeft > 0
+                        ? "text-red-600"
+                        : "text-green-600"
+                    }`}
+                  >
+                    TurnOver: ({wagerData?.wagerLeft}.00)
+                  </p>
+                </div>
+
                 <div className="flex flex-col gap-2">
                   <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... w-[100%] rounded-[10px] p-[1px]">
                     <input
