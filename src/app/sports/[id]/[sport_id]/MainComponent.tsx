@@ -176,7 +176,7 @@ const MainComponent = () => {
           <div className=" w-[100%] lg:w-[70%] first-letter: mx-auto">
             {/* cricket srcore */}
             <div>
-           {scoreData?<>
+           {!scoreData?<>
             <CricketScore scoreData={scoreData} singleMatch={singleMatch} />
            </>:<>
            <div >

@@ -135,6 +135,23 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     setMarketId(mid);
     // alert(mid+sid)
   };
+
+  const [rules, setRules] = useState<any>({});
+  const fetchGeneralSetting = async () => {
+    try {
+      const response = await fetchGetRequest(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/rules/get-rules/652a38fb2a2e359a326f3cd3`
+      );
+
+      setRules(response.data);
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+  useEffect(() => {
+    fetchGeneralSetting();
+  }, []);
+
   const handlePlaceBet = async () => {
     if (!token || !otpless_token) {
       toast({
@@ -225,6 +242,8 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       return;
     }
     setBetLoading(true);
+    setTimeout(async() => {
+
     try {
       const response = await sendPostRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/place-sport-bet`,
@@ -251,6 +270,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       });
       setBetLoading(false);
     }
+  }, rules.bet_timing || 4000);
   };
 
   const fetchBetData = async () => {

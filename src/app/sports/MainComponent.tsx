@@ -351,7 +351,7 @@ const MainComponent = () => {
           <TennisData setgameCounts={setgameCounts} matchFilter={matchFilter} />
         </div>
       )}
-      <TvModal/>
+      {/* <TvModal/> */}
     </div>
   );
 };

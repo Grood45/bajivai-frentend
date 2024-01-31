@@ -139,6 +139,23 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     setTeam(team);
     setBetType(betType);
   };
+
+  const [rules, setRules] = useState<any>({});
+  const fetchGeneralSetting = async () => {
+    try {
+      const response = await fetchGetRequest(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/rules/get-rules/652a38fb2a2e359a326f3cd3`
+      );
+
+      setRules(response.data);
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
+  useEffect(() => {
+    fetchGeneralSetting();
+  }, []);
   const handlePlaceBet = async () => {
     if (!token || !otpless_token) {
       toast({
@@ -198,7 +215,9 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       parent_admin_username,
       parent_admin_role_type,
     };
+
     setBetLoading(true);
+
     let oldExposure = Math.min(firstTeamPl, secondTeamPl);
     let originalExposure = exposure_limit;
 
@@ -224,33 +243,36 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       setBetLoading(false);
       return;
     }
-    try {
-      const response = await sendPostRequest(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/place-sport-bet`,
-        { ...payload, exposure_limit: originalExposure }
-      );
-      setBet((prev: any) => [...prev, response.data.bet]);
-      setBetLoading(false);
-      setBetShow(false);
-      toast({
-        description: response.message,
-        status: "success",
-        duration: 4000,
-        position: "top",
-        isClosable: true,
-      });
-      dispatch(fetchUserDataAsync());
-    } catch (error: any) {
-      toast({
-        description: error?.data?.message,
-        status: "error",
-        position: "top",
-        duration: 4000,
-        isClosable: true,
-      });
-      setBetLoading(false);
-      console.log(error, "1");
-    }
+
+    setTimeout(async () => {
+      try {
+        const response = await sendPostRequest(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/place-sport-bet`,
+          { ...payload, exposure_limit: originalExposure }
+        );
+        setBet((prev: any) => [...prev, response.data.bet]);
+        setBetLoading(false);
+        setBetShow(false);
+        toast({
+          description: response.message,
+          status: "success",
+          duration: 4000,
+          position: "top",
+          isClosable: true,
+        });
+        dispatch(fetchUserDataAsync());
+      } catch (error: any) {
+        toast({
+          description: error?.data?.message,
+          status: "error",
+          position: "top",
+          duration: 4000,
+          isClosable: true,
+        });
+        setBetLoading(false);
+        console.log(error, "1");
+      }
+    }, rules.bet_timing || 4000);
   };
   useEffect(() => {
     let team = singleMatch?.match_name.split(" v " || "vs" || "-");

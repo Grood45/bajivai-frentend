@@ -196,14 +196,14 @@ const CricketData = ({
             </div>
             <div className="flex justify-center items-center">
               {loading && (
-              <Spinner
-              thickness='4px'
-              speed='0.65s'
-              emptyColor='gray.200'
-              marginTop={"40px"}
-              color='blue.500'
-              size='xl'
-            />
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  marginTop={"40px"}
+                  color="blue.500"
+                  size="xl"
+                />
               )}
             </div>
             <div
@@ -460,14 +460,14 @@ const CricketData = ({
             </div>
             <div className="flex justify-center items-center">
               {loading && (
-              <Spinner
-              thickness='4px'
-              speed='0.65s'
-              marginTop={"40px"}
-              emptyColor='gray.200'
-              color='blue.500'
-              size='xl'
-            />
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  marginTop={"40px"}
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
+                />
               )}
             </div>
 
