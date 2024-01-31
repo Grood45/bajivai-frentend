@@ -94,6 +94,7 @@ const MainComponent = () => {
     });
     socket.on("scoreData", (data) => {
       if (data) {
+        console.log(data, "score data of")
         setScoreData(data);
       }
       setLoading(false);

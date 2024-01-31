@@ -130,6 +130,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
         position: "bottom",
         isClosable: true,
       });
+      setBetLoading(false);
       return;
     }
     setBetShow(true);
@@ -220,6 +221,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
         position: "top",
         isClosable: true,
       });
+      setBetLoading(false);
       return;
     }
     try {
