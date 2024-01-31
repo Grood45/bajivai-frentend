@@ -265,7 +265,7 @@ function BetSlipModal() {
                                 </div>
                                 <div className="flex justify-between">
                                   <p className="text-gray-300 font-bold">
-                                    Team
+                                    Team / Question
                                   </p>
                                   <p className="text-[#fef08a]">
                                     {item?.runner_name.slice(0, 30)}{" "}

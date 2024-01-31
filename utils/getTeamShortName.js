@@ -17,7 +17,7 @@ function getTeamShortName(fullName) {
 
 export default getTeamShortName;
 
-export  function getDisplayDate(dateStr) {
+export function getDisplayDate(dateStr) {
   const itemDate = new Date(dateStr);
   const today = new Date();
   const tomorrow = new Date();
@@ -63,11 +63,10 @@ export function isToday(date) {
   );
 }
 
-
-// Helper function to check if a date is tomorrow
-export  function isTomorrow(date) {
+export function isTomorrow(date) {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
+
   return (
     date.getDate() === tomorrow.getDate() &&
     date.getMonth() === tomorrow.getMonth() &&

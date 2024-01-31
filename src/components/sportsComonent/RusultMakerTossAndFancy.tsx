@@ -351,7 +351,7 @@ const RusultMakerTossAndFancy = () => {
               >
                 MATCH
               </Th>
-              {betType == "fancy" && (
+              {betCategory == "fancy" && (
                 <Th
                   scope="col"
                   color="white"
@@ -365,7 +365,7 @@ const RusultMakerTossAndFancy = () => {
                   Questions
                 </Th>
               )}
-              {betType == "toss" && (
+              {betCategory == "toss" && (
                 <Th
                   scope="col"
                   color="white"
@@ -522,12 +522,12 @@ const RusultMakerTossAndFancy = () => {
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.match_name}
                   </Td>
-                  {betType == "fancy" && (
+                  {betCategory == "fancy" && (
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.question}
                     </Td>
                   )}
-                  {betType == "toss" && (
+                  {betCategory == "toss" && (
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.runner_name}
                     </Td>
