@@ -6,6 +6,7 @@ import { MdLiveTv } from "react-icons/md";
 import { BiCricketBall } from "react-icons/bi";
 import { TbCricket } from "react-icons/tb";
 import getTeamShortName from "../../../../utils/getTeamShortName";
+import Tv from "./Tv";
 
 function formatTime(ms: number) {
   const seconds = Math.floor((ms / 1000) % 60);
@@ -71,7 +72,7 @@ const CricketScore = ({
           )}
         </div>
         <div className="">
-          <MdLiveTv cursor="pointer" fontSize={"25px"} color="white" />
+          <Tv/>
         </div>
       </div>
       <div className="flex mt-6 justify-between px-4 md:px-10">

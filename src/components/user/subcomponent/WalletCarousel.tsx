@@ -97,7 +97,7 @@ const WCarousel = () => {
                     {item.ballancetitle}
                   </p>
                   <p className="text-xl font-semibold text-[#FFF]">
-                    {item.balance}
+                    {(item.balance).toFixed(2)}
                   </p>
                 </div>
                 <div>
