@@ -34,7 +34,18 @@ const MainComponent = () => {
 
   const getAllWithdrawDetails = async () => {
     setLoading(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-withdraw?transaction_type=${transactionType}&page=1&limit=50`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-withdraw?page=1&limit=100`;
+
+    if (search) {
+      url += `&search=${search}`;
+    }
+
+    if (transactionType) {
+      url += `&transaction_type=${transactionType}`;
+    }
+   
+   
+
     try {
       let response = await fetchGetRequest(url);
       // const data = response.data;
@@ -184,8 +195,8 @@ const MainComponent = () => {
               className={`input text-white text-sm `}
               id="Email"
               name="Email"
-              placeholder="Search the keyword..........."
               value={search}
+              placeholder="Search the here..........."
               onChange={(e) => setSearch(e.target.value)}
             />
             <button className={`button--submit flex items-center text-white`}>

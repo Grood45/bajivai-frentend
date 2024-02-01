@@ -70,7 +70,7 @@ const MainComponent = () => {
       getAllDepositDetails();
     }, 700);
     return () => clearTimeout(id);
-  }, [currentPage, transactionType]);
+  }, [currentPage, transactionType,search]);
 
   const handleFilter = (name: string) => {
     setTransactionType(name);
@@ -195,7 +195,7 @@ const MainComponent = () => {
               id="Email"
               name="Email"
               value={search}
-              placeholder="Search the keyword..........."
+              placeholder="Search the here..........."
               onChange={(e) => setSearch(e.target.value)}
             />
             <button className={`button--submit flex items-center text-white`}>

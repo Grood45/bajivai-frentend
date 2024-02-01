@@ -35,6 +35,7 @@ const MainComponent = () => {
       const data = response.data;
       const receivedData: BetHistory[] = response.data;
       if (receivedData) {
+        console.log(receivedData,"bet manage")
         setAllBet(receivedData);
       }
       setBetsCount(response.betsCount);

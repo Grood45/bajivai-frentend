@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ChakraProvider, CSSReset, Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton } from '@chakra-ui/react';
 
-const TvModal = () => {
+const TvModal = ({eventid}:{eventid:any}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -20,7 +20,7 @@ const TvModal = () => {
             <ModalCloseButton />
             <ModalBody>
               {/* Embed the content using an iframe */}
-              <iframe src="https://bababetbook.in/tv/hlive.php?eid=32962725" width="100%" height="400" frameBorder="0" allowFullScreen ></iframe>
+              <iframe src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId=${eventid}`} width="100%" height="100%" frameBorder="0" allowFullScreen ></iframe>
 
             </ModalBody>
           </ModalContent>

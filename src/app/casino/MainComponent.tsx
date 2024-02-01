@@ -31,7 +31,7 @@ import liveCasino from "../../assetuser/other/live.png";
 import tennisc from "../../assetuser/other/tennisc.png";
 import Footer from "@/components/user/Footer";
 import HCarousel from "../home/HCarousel";
-import { useToast } from "@chakra-ui/react";
+import { Spinner, useToast } from "@chakra-ui/react";
 import announ from "../../assetuser/other/dazzle-loudspeaker.gif";
 
 import {
@@ -263,7 +263,16 @@ const MainComponent = () => {
             {/* Games game */}
 
             {/* <GamesGame /> */}
-
+{provider.length==0&&
+<div className="w-full flex item-center justify-center">
+  <Spinner
+              thickness='4px'
+              speed='0.65s'
+              emptyColor='gray.200'
+              marginTop={"40px"}
+              color='blue.500'
+              size='xl'
+            /></div>}
             {provider.length > 0 && (
               <div className="flex flex-col gap-[40px]">
                 {/* {seamless game} */}

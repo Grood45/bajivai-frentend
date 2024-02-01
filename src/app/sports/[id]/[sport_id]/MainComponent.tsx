@@ -23,6 +23,7 @@ import CricketScore from "../../component/CricketScore";
 import TennisScore from "../../component/TennisScore";
 import SoccerScore from "../../component/SoccerScore";
 import BottomNavbar from "@/components/user/BottomNavbar";
+import Tv from "../../component/Tv";
 const MainComponent = () => {
   const [categoryActive, setCategoryActive] = useState(1);
   const [betShow, setBetShow] = useState(false);
@@ -180,6 +181,7 @@ const MainComponent = () => {
             <CricketScore scoreData={scoreData} singleMatch={singleMatch} />
            </>:<>
            <div >
+
                 <iframe
                   src={`https://diamondapi.uk/dcasino/sr.php?eventid=${param.id}&sportid=${param.sport_id}`}
                   className="w-[100%] border border-yellow-500 p-[1px] overflow-visible min-h-[263px]"
@@ -194,6 +196,7 @@ const MainComponent = () => {
             
 
             </div>
+            <div className="flex justify-between items-center w-[100%]">
             <div className="p-2 flex gap-4 mt-3 ">
               {category.map((item) => {
                 return (
@@ -211,6 +214,11 @@ const MainComponent = () => {
                 );
               })}
             </div>
+            <div className="">
+              <Tv eventid={param.id}/>
+            </div>
+            </div>
+          
             <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
 
             <div className="flex flex-col gap-10 mt-8">

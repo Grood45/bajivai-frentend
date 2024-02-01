@@ -71,9 +71,7 @@ const CricketScore = ({
             </p>
           )}
         </div>
-        <div className="">
-          <Tv/>
-        </div>
+       
       </div>
       <div className="flex mt-6 justify-between px-4 md:px-10">
         <div className="flex  gap-2 items-center flex-col">
@@ -100,16 +98,16 @@ const CricketScore = ({
         </div>
 
         {/* before match start */}
-        {remainingTime !== "0" && (
+        {/* {remainingTime !== "0" && ( */}
           <div className="flex flex-col items-center gap-2">
             <p className="text-xs md:text-sm">Match Start In</p>
             <p className="text-lg  md:text-3xl"> {remainingTime}</p>
           </div>
-        )}
+        {/* )} */}
 
         {/* when match start */}
 
-        {remainingTime === "0" && (
+        {/* {remainingTime === "0" && (
           <div className="flex gap-4 sm:gap-16 items-center justify-between">
             <div className="flex flex-col gap-1">
               {scoreData?.teams ? (
@@ -164,7 +162,7 @@ const CricketScore = ({
               )}
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="flex  gap-2 items-center flex-col">
           {/* <Image

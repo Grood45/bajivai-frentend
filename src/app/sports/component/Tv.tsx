@@ -13,7 +13,7 @@ import { MdLiveTv } from 'react-icons/md'
 
 import { RxCross2 } from "react-icons/rx";
 
-export default function Tv() {
+export default function Tv({eventid}:{eventid:any}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
     return (
       <>
@@ -34,6 +34,8 @@ export default function Tv() {
             <RxCross2 style={{cursor:'pointer'}}  color="white" fontSize={"25px"} onClick={onClose} />
  
             </div>
+            <iframe src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId=${eventid}`} width="100%" height="100%" frameBorder="0" allowFullScreen ></iframe>
+
             </div>
             </div>
             </ModalBody>

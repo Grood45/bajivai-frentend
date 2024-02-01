@@ -1037,7 +1037,7 @@ function StatementModel() {
                               <span className="h-[20px] w-[20px] rounded-[50%] flex items-center justify-center bg-yellow-400">
                                 <TbCurrencyTaka color="white" fontSize="15px" />
                               </span>
-                              <p
+                            <p
                                 className={`text-[16px] ${
                                   detailsBet?.result === "win"
                                     ? "text-green-400"
@@ -1046,18 +1046,22 @@ function StatementModel() {
                                     : "text-orange-400"
                                 }`}
                               >
+                                
                                 {detailsBet?.result == "win"
                                   ? "+"
                                   : detailsBet?.result == "lose"
                                   ? "-"
                                   : ""}{" "}
-                                {detailsBet?.bet_category == "fancy"
+                                  { detailsBet?.result === "win"?
+                                detailsBet?.bet_category == "fancy"
                                   ? (detailsBet?.stake * 2).toFixed(2)
                                   : detailsBet?.bet_category == "odds" &&
                                     detailsBet?.bet_type == "back"
                                   ? (detailsBet?.stake * detailsBet?.rate -
                                     detailsBet?.stake).toFixed(2)
-                                  : (detailsBet?.stake).toFixed(2)} <span className="text-white text-sm">BDT</span>
+                                  : (detailsBet?.stake).toFixed(2):(detailsBet?.stake).toFixed(2)}
+
+                                  <span className="text-white text-sm">BDT</span>
                               </p>
                             </div>
                             <div className="flex flex-col mt-5 gap-3">
@@ -1114,8 +1118,16 @@ function StatementModel() {
                                   </p>
                                 </div>
                                 <div className="flex justify-between w-[100%] items-center">
+                                  <p className="text-sm font-medium">Stake</p>
+                                  <p
+                                    className={` font-semibold text-sm  text-purple-400`}
+                                  >
+                                    {detailsBet?.stake}
+                                  </p>
+                                </div>
+                                <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">
-                                    Win Amount
+                                   {detailsBet?.result=="win"?"Win Amount":detailsBet?.result=="lose"?"Lose Amount":detailsBet?.result=="refund"?'Refund Amount':'Pending Amount'}
                                   </p>
                                   <p
                                     className={`text-[16px] ${
@@ -1131,29 +1143,44 @@ function StatementModel() {
                                       : detailsBet?.result == "lose"
                                       ? "-"
                                       : ""}{" "}
-                                    {detailsBet?.bet_category == "fancy"
+                                    { detailsBet?.result === "win"?
+                                detailsBet?.bet_category == "fancy"
                                   ? (detailsBet?.stake * 2).toFixed(2)
                                   : detailsBet?.bet_category == "odds" &&
                                     detailsBet?.bet_type == "back"
                                   ? (detailsBet?.stake * detailsBet?.rate -
                                     detailsBet?.stake).toFixed(2)
-                                  : (detailsBet?.stake).toFixed(2)}{" "}
-                                    <span className="text-white text-sm">
+                                  : (detailsBet?.stake).toFixed(2):(detailsBet?.stake).toFixed(2)} <span className="text-white text-sm">
                                       BDT
                                     </span>
                                   </p>
                                 </div>
                                 <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">BetType</p>
-                                  <button
-                                    className={`py-[2px] text-xs px-2 ${
-                                      detailsBet?.bet_type === "back"
-                                        ? "bg-[#FF6A8A]"
-                                        : "bg-[#0096FE]"
-                                    }  rounded-[5px]`}
-                                  >
-                                    {detailsBet?.bet_type}
-                                  </button>
+                                  {detailsBet?.bet_category=="fancy"?
+                                  detailsBet?.bet_category=="fancy" && detailsBet?.bet_type=="lay"?
+                                 <button
+                                 className={`py-[2px] text-xs px-2 ${
+                                   detailsBet?.bet_type === "back"
+                                     ? "bg-[#FF6A8A]"
+                                     : "bg-[#0096FE]"
+                                 }  rounded-[5px]`}
+                               >No</button>:<button
+                               className={`py-[2px] text-xs px-2 ${
+                                 detailsBet?.bet_type === "back"
+                                   ? "bg-[#FF6A8A]"
+                                   : "bg-[#0096FE]"
+                               }  rounded-[5px]`}
+                             >Yes</button>:<button
+                             className={`py-[2px] text-xs px-2 ${
+                               detailsBet?.bet_type === "back"
+                                 ? "bg-[#FF6A8A]"
+                                 : "bg-[#0096FE]"
+                             }  rounded-[5px]`}
+                           >
+                             {detailsBet?.bet_type}
+                           </button>}
+
                                 </div>
                                 <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">

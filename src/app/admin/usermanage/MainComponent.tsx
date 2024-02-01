@@ -63,6 +63,7 @@ const MainComponent = () => {
     }
   };
 
+ 
   useEffect(() => {
     let id: any;
     id = setTimeout(() => {
@@ -158,7 +159,7 @@ const MainComponent = () => {
             name="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search the keyword..........."
+            placeholder="Search here..........."
           />
           <button className={`button--submit flex items-center text-white`}>
             <BsSearch color="white" fontSize="20px" />
@@ -183,9 +184,11 @@ const MainComponent = () => {
               <tr className="text-center border-b p-2 h-[30px] border-gray-600 text-[10px] font-bold text-[#A0AEC0]">
                 <th className="text-left min-w-[100px]">Username/Fullname</th>
                 <th className="min-w-[100px]">Email-Phone</th>
-                <th className="min-w-[100px]">Country-State</th>
+                {/* <th className="min-w-[100px]">Country-State</th> */}
                 <th className="min-w-[100px]">Junied At</th>
                 <th className="min-w-[100px]">Balance</th>
+                <th className="min-w-[100px]">Exp Limit</th>
+
                 <th className="text-center min-w-[80px]">Status</th>
                 <th className="min-w-[60px]">Stake</th>
                 <th className="text-right min-w-[50px]">Action</th>
@@ -220,12 +223,12 @@ const MainComponent = () => {
                         <p className="text-xs  text-[#A0AEC0] ">{item.email}</p>
                       </div>
                     </td>
-                    <td>
+                    {/* <td>
                       <div className="flex flex-col text-center gap-[2px] ">
                         <p>{item?.country}</p>
                         <p className="text-xs  text-[#A0AEC0] ">{item.state}</p>
                       </div>
-                    </td>
+                    </td> */}
                     <td>
                       <div className="flex flex-col text-center gap-[2px] ">
                         <p>{item.joined_at}</p>
@@ -242,6 +245,16 @@ const MainComponent = () => {
                           className="h-[15px] w-[15px]"
                         />
                         <p>{item.amount.toFixed(2)}</p>
+                      </div>
+                    </td>
+                    <td className="font-bold">
+                    <div className="flex justify-center items-center gap-2">
+                        <Image
+                          src={coin}
+                          alt=""
+                          className="h-[15px] w-[15px]"
+                        />
+                        <p>1L</p>
                       </div>
                     </td>
 
@@ -325,7 +338,7 @@ const MainComponent = () => {
                       </span>
                     </p>
                   </div>
-                  <div className="flex gap-4 w-[100%] p-3">
+                  {/* <div className="flex gap-4 w-[100%] p-3">
                     <p className="text-[#A0AEC0] font-medium text-xs">
                       Country-State :-
                     </p>
@@ -335,7 +348,7 @@ const MainComponent = () => {
                         {item.state}
                       </span>
                     </p>
-                  </div>
+                  </div> */}
                   <div className="flex gap-4 w-[100%] p-3 ">
                     <p className="text-[#A0AEC0] font-medium text-xs">
                       Jointed At:-

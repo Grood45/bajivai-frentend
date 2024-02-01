@@ -14,7 +14,7 @@ const Chart: React.FC = () => {
         color: "white",
       },
       title: {
-        text: "Deposit and Withdraw  in, 2000 - 2021",
+        text: "Deposit and Withdraw  ",
         align: "left",
         style: {
           color: "white",
@@ -33,7 +33,7 @@ const Chart: React.FC = () => {
           {
             // Highlight the two last years
             from: 2019,
-            to: 2020,
+            to: 2024,
           },
         ],
 
@@ -67,7 +67,7 @@ const Chart: React.FC = () => {
       plotOptions: {
         
         series: {
-          pointStart: 2000,
+          pointStart: 2010,
           dataLabels: {
             style: {
               color: 'white' // Set series name text color to white

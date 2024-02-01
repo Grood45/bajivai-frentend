@@ -64,14 +64,14 @@ const MainComponent: React.FC = () => {
       {/* Left side of the page */}
       <div className="lg:contents hidden">
         <div className="w-[50%]   flex justify-center items-center sign-bg">
-          <div>
+          {/* <div>
             <h2 className="block text-center text-xl font-bold text-[10px] text-[#FFF]">
               Welcome!
             </h2>
             <p className="block text-center text-lg mb-4 font-medium text-[10px] text-[#FFF]">
-              Company Name
+              Bajivai 
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* Right side of the page */}
@@ -83,7 +83,7 @@ const MainComponent: React.FC = () => {
             Welcome!
           </h2>
           <p className="block text-center text-lg mb-4 font-medium text-[10px] text-[#FFF]">
-            Company Name
+            Bajivai
           </p>
         </div>
         <form
