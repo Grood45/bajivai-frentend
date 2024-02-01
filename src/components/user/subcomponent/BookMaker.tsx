@@ -1,5 +1,5 @@
 "use client";
-import { Tooltip, useToast } from "@chakra-ui/react";
+import { Spinner, Tooltip, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
@@ -50,6 +50,8 @@ interface FancyProps {
 const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
   const [betShow, setBetShow] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loading1, setLoading1] = useState<boolean>(false);
+
   const [data, setData] = useState<any>([]);
   const [rate, setRate] = useState<number>(0);
   const [stake, setStake] = useState<number>(0);
@@ -264,18 +266,26 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
   const fetchBetData = async () => {
     const category = "bookmaker";
     const match_id = param.id;
+    setLoading1(true)
     if (!user_id) {
       return;
     }
+
     try {
       // user id then match_id we have to pass here
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?category=${category}&match_id=${match_id}&status=pending`
       );
+
       const data = response.data;
+    setLoading1(false)
+
       setBet(data);
+
       // console.log(data, "bet data");
     } catch (error: any) {
+    setLoading1(false)
+
       toast({
         description: error.message || "d",
         status: "error",
@@ -365,8 +375,18 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
         <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[16px]">
           <div
             style={{ border: "0.5px solid #444" }}
-            className="rounded-[16px] bg-[#212632]  flex flex-col w-[100%] "
+            className="rounded-[16px] bg-[#212632] min-h-[140px]  flex flex-col w-[100%] "
           >
+               {loading1?<div className="w-full mt-12 flex item-center justify-center">
+               <div className="spinner">
+  <span>L</span>
+  <span>O</span>
+  <span>A</span>
+  <span>D</span>
+  <span>I</span>
+  <span>N</span>
+  <span>G</span>
+</div></div>:""}
             {data &&
               data.length > 0 &&
               data.map((item: any, index: any) => (

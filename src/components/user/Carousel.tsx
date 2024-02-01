@@ -59,12 +59,17 @@ import { RootState } from '@/app/redux-arch/store';
           settings: {
             slidesToShow: 1,
           },
+      centerPadding: '10%', // Adjust this value to control how much of the adjacent images are visible
+
+
         },
+  
         {
           breakpoint: 992,
           settings: {
             slidesToShow: 3,
           },
+
         },
       ],
     };
@@ -81,7 +86,7 @@ import { RootState } from '@/app/redux-arch/store';
           {sliderdata?.map((item, index) => {
             return (
               <div key={index} className="w-[96%]  relative">
-                <img src={item} className="w-[97%] h-[113px] lg:h-[185px] rounded-[8px] lg:rounded-[10px]" alt="" />
+                <img src={item} className="w-[97%] h-[125px] lg:h-[185px] rounded-[8px] lg:rounded-[10px]" alt="" />
               </div>
             );
           })}

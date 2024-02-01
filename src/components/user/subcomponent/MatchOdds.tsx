@@ -1,5 +1,5 @@
 "use client";
-import { Tooltip, useToast } from "@chakra-ui/react";
+import { Spinner, Tooltip, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
@@ -377,19 +377,38 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
         <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[16px] ">
           <div
             style={{ border: "0.5px solid #444" }}
-            className="rounded-[16px] bg-[#212632]  flex flex-col w-[100%] "
+            className="rounded-[16px] bg-[#212632] min-h-[140px]  flex flex-col w-[100%] "
           >
+            {loading ? (
+              <div className="w-full mt-12 flex item-center justify-center">
+                <div className="spinner">
+                  <span>L</span>
+                  <span>O</span>
+                  <span>A</span>
+                  <span>D</span>
+                  <span>I</span>
+                  <span>N</span>
+                  <span>G</span>
+                </div>
+              </div>
+            ) : data.length === 0 ? (
+              <div className="text-center flex items-center min-h-[140px]  justify-center font-semibold ">
+                <p>Not Data Found</p>
+              </div>
+            ) : (
+              ""
+            )}
             {data &&
               data?.length > 0 &&
               (param.sport_id == "2" || param.sport_id == "1") && (
                 <>
-                  <div className="h-[100%] flex items-center justify-between p-3   w-[100%]">
+                  <div className=" flex items-center justify-between p-3   w-[100%]">
                     <div className="flex  gap-3">
                       {/* <button className="h-[30px] w-[30px] text-[10px] bg-[#EAAB0F] border-2 border-[black]  text-white rounded-[50%]">
                         BA
                       </button> */}
-                      <div>
-                        <p className="text-white  text-xs font-semibold">
+                      <div className="">
+                        <p className="text-white w-[100%]  text-xs font-semibold">
                           {data[0]?.section[0]?.nat}
                         </p>
                         <p
