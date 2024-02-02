@@ -29,9 +29,9 @@ export default function Tv({eventid}:{eventid:any}) {
             <ModalBody style={{padding:'0px',borderRadius:'14px'}}>
             <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-2xl ">
           
-            <div className='h-[255px] rounded-[14px] p-2 bg-[#030712] lg:h-[270px]'>
-            <div className="absolute rounded-[50%] border bg-[#F3AF06] h-[40px] w-[40px] flex items-center justify-center  top-3 right-5">
-            <RxCross2 style={{cursor:'pointer'}}  color="white" fontSize={"25px"} onClick={onClose} />
+            <div className='h-[255px] rounded-[14px]  bg-[#030712] lg:h-[270px]'>
+            <div className="absolute rounded-[50%] border bg-[#F3AF06] h-[30px] w-[30px] flex items-center justify-center  top-1 right-1">
+            <RxCross2 style={{cursor:'pointer'}}  color="white" fontSize={"20px"} onClick={onClose} />
  
             </div>
             <iframe src={`https://nlivetv.lagaikhaipro.com/rtv.php?eventId=${eventid}`} width="100%" height="100%" frameBorder="0" allowFullScreen ></iframe>

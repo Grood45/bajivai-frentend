@@ -569,7 +569,7 @@ const [status,setStatus]=useState("pending")
                     key={index}
                     className={` ${
                       row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
-                    } hover:bg-[#E99CAD] font-semibold`}
+                    } font-semibold`}
                   >
                     {/* <Td
                       style={{
