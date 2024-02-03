@@ -366,7 +366,8 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
                 </Tooltip>
               </div>
             </div>
-            {loading?<div className="w-full mt-12 flex item-center justify-center">
+            {loading?
+            <div className="w-full mt-12 flex item-center justify-center">
                <div className="spinner">
   <span>L</span>
   <span>O</span>
@@ -375,7 +376,9 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
   <span>I</span>
   <span>N</span>
   <span>G</span>
-</div></div>:data.length===0?<div className="text-center flex items-center min-h-[140px]  justify-center font-semibold "><p>Not Data Found</p></div>:""}
+</div></div>
+:data.length===0?<div className="text-center flex items-center min-h-[140px]  justify-center font-semibold "><p>Not Data Found</p></div>:""}
+           
             <div className="  flex flex-col  gap-3 w-[100%] ">
               {data &&
                 data.map((item) => (

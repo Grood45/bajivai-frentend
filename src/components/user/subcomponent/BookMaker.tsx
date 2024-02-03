@@ -250,6 +250,7 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     socket.on("disconnect", () => {
       //console.log("Disconnected from the server");
       setLoading(false);
+
     });
 
     // Emit the "startFetching" event with the eventID
@@ -260,6 +261,7 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
       socket.disconnect();
       //console.log("socket disconnected");
       setLoading(false);
+
     };
   }, [param.id]);
 
@@ -268,6 +270,7 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     const match_id = param.id;
     setLoading1(true)
     if (!user_id) {
+      setLoading1(false)
       return;
     }
 
@@ -377,7 +380,8 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
             style={{ border: "0.5px solid #444" }}
             className="rounded-[16px] bg-[#212632] min-h-[140px]  flex flex-col w-[100%] "
           >
-               {loading1?<div className="w-full mt-12 flex item-center justify-center">
+                       {loading1?
+            <div className="w-full mt-12 flex item-center justify-center">
                <div className="spinner">
   <span>L</span>
   <span>O</span>
@@ -386,7 +390,8 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
   <span>I</span>
   <span>N</span>
   <span>G</span>
-</div></div>:""}
+</div></div>
+:data.length===0?<div className="text-center flex items-center min-h-[140px]  justify-center font-semibold "><p>Not Data Found</p></div>:""}
             {data &&
               data.length > 0 &&
               data.map((item: any, index: any) => (
