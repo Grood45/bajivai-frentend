@@ -71,7 +71,7 @@ function ResultMaker() {
     setLoading(true);
     let url = `${
       process.env.NEXT_PUBLIC_BASE_URL
-    }/api/match/get-all-match?page=${currentPage}&limit=${20}&sport=${sportType}`;
+    }/api/match/get-all-match?page=${currentPage}&limit=${20}&event_name=${sportType}`;
     if (search) {
       url += `&name=${search}`;
     }
