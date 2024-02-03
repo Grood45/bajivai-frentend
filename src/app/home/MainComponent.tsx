@@ -294,9 +294,11 @@ const MainComponent = () => {
         theme
           ? `text-[${themeChange.light.textColor1}]`
           : `text-[${themeChange.dark.textColor1}]`
-      }  ${
+      }  
+      ${
         theme ? `bg-[${themeChange.light.bg2}]` : `bg-[${themeChange.dark.bg2}]`
-      }`}
+      }
+      `}
     >
     
       {/* announcement */}

@@ -19,7 +19,8 @@ const TopNavbar = () => {
     withdrawgetway: "Withdrawal Getway",
     promotion:'Promotion',
     generalsetting:'General Setting',
-    logoAndFavicon:'Logo And Favicon'
+    logoAndFavicon:'Logo And Favicon',
+    sporthistory:"Sports Bet History"
   };
   const last_part = path.split("/")[2];
   const formattedLastPart = pathMap[last_part] || last_part;

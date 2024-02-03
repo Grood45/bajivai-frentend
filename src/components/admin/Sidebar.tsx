@@ -56,9 +56,15 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
     },
     {
       id: 5,
-      title: "Bet manage",
+      title: "Casino Bet History",
       icon: <PiCubeTransparentFill fontSize={"20px"} />,
       route: "/admin/betmanage",
+    },
+    {
+      id: 50,
+      title: "Sport Bet History",
+      icon: <PiCubeTransparentFill fontSize={"20px"} />,
+      route: "/admin/sporthistory",
     },
     {
       id: 6,
