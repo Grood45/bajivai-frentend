@@ -34,7 +34,7 @@ const [eventName,setEventName]=useState("")
     const toast = useToast();
     const getAlldashboardDetails = async () => {
       setLoading(true);
-      let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?bet_category=${betCategory}&page=${currentPage}&limit=20&status=${status}&event_name=${eventName}`;
+      let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet-for-result?bet_category=${betCategory}&page=${currentPage}&limit=20&status=${status}&sport=${eventName}`;
       if (search) {
         url += `&search=${search}`;
       }
