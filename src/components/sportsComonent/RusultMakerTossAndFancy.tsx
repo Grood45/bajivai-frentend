@@ -544,7 +544,8 @@ const RusultMakerTossAndFancy = () => {
                     {row.stake}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.stake * 2}
+                  {row?.bet_category==="fancy"?row.stake:(row.rate*row.stake-row.stake).toFixed(2)} 
+
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.stake}

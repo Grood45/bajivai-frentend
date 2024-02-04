@@ -360,7 +360,7 @@ useEffect(() => {
                   key={index}
                   className={` ${
                     row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
-                  } hover:bg-[#E99CAD] text-[12px] font-semibold`}
+                  }  text-[12px] font-semibold`}
                 >
                
                   <Td>{row.match_date.split(" ")[0]}</Td>
@@ -394,7 +394,8 @@ useEffect(() => {
                     {row.stake}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.stake * 2}
+                  {row?.bet_category==="fancy"?row.stake:(row.rate*row.stake-row.stake).toFixed(2)} 
+
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.stake}

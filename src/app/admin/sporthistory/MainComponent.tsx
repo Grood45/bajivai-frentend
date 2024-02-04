@@ -240,8 +240,8 @@ const [eventName,setEventName]=useState("")
               <th className="text-left ">Date</th>
               <th  className="">User </th>
               <th className="">Sport </th>
-              <th className="">League</th>
-              <th className="">Match</th>
+              <th className="w-[100px] pl-2">League</th>
+              <th className="w-[100px] pl-2 ">Match</th>
               <th className="">Team</th>
               <th className="">Question</th>
               <th className=""> Rate, Odds</th>
@@ -263,7 +263,12 @@ const [eventName,setEventName]=useState("")
                       className="text-center   h-[60px] m-auto  border-b border-gray-600 text-[9px] font-semibold text-white"
                     >
                       <td className="text-left">
-                        {row?.match_date}
+                        <div className="flex flex-col items-center ">
+                        <p>{row?.match_date.split(" ")[0]}</p>
+                        <p>{row?.match_date.split(" ")[1]}</p>
+
+                        </div>
+                      
                       </td>
 
                       <td>
@@ -278,11 +283,11 @@ const [eventName,setEventName]=useState("")
                             : "Cricket"}
                       </td>
 
-                      <td>
+                      <td className="pl-2">
                       {row.league_name}
                       </td>
 
-                      <td>
+                      <td className="pl-2">
                       {row.match_name}
                       </td>
 
@@ -307,7 +312,8 @@ const [eventName,setEventName]=useState("")
                       </td>
 
                       <td>
-                      {(row.rate * row.stake).toFixed(2)}
+                      {row?.bet_category==="fancy"?row.stake:(row.rate*row.stake-row.stake).toFixed(2)} 
+
                       </td>
                       <td>
                       {row.stake.toFixed(2)}
