@@ -1,4 +1,5 @@
 
+import PrivateRoute from "@/components/admin/PrivateRoute";
 import { SportsSideBar } from "@/components/sportsComonent/SportsSidebar";
 import SidebarNavbar from "@/components/user/SidebarNavbar";
 
@@ -16,6 +17,8 @@ export default function Layout({
  
   return (
     <html lang="en">
+       <PrivateRoute>
+
       <body className={inter.className}>
         <div  className=" flex  w-[100%] bg-[white]">
             <div className="sticky left-0"><SportsSideBar /></div>
@@ -25,6 +28,8 @@ export default function Layout({
           
         </div>
       </body>
+      </PrivateRoute>
+
     </html>
   );
 }
