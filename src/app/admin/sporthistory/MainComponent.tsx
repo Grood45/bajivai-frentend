@@ -327,7 +327,7 @@ const [eventName,setEventName]=useState("")
                        {row.bet_category}
                        </td>
                        <td className="text-right">
-                      {row.status}
+                       {row.status==="declaired"?<Badge colorScheme={row.result==="win"?"green":row.result==="lose"?"red":'orange'}>{row.result}</Badge>:<Badge>{row.status}</Badge>}
                        
                        </td>
                        

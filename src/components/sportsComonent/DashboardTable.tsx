@@ -644,7 +644,7 @@ const [status,setStatus]=useState("pending")
                       {row.bet_category}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.status}
+                    {row.status==="declaired"?<Badge colorScheme={row.result==="win"?"green":row.result==="lose"?"red":'orange'}>{row.result}</Badge>:<Badge>{row.status}</Badge>}
                     </Td>
                    
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>

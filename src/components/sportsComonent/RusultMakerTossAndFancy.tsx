@@ -563,7 +563,7 @@ const RusultMakerTossAndFancy = () => {
                         color: row.status == "pending" ? "#ED8936" : "#48BB78",
                       }}
                     >
-                      {row.status}
+                      {row.status==="declaired"?<Badge colorScheme={row.result==="win"?"green":row.result==="lose"?"red":'orange'}>{row.result}</Badge>:<Badge>{row.status}</Badge>}
                     </Badge>
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
