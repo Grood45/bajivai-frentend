@@ -24,6 +24,7 @@ import TennisScore from "../../component/TennisScore";
 import SoccerScore from "../../component/SoccerScore";
 import BottomNavbar from "@/components/user/BottomNavbar";
 import Tv from "../../component/Tv";
+import { MdLiveTv } from "react-icons/md";
 const MainComponent = () => {
   const [categoryActive, setCategoryActive] = useState(1);
   const [betShow, setBetShow] = useState(false);
@@ -33,7 +34,7 @@ const MainComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [singleMatch, setSingleMatch] = useState<Match>();
   const [rulesRegulation, setRulesRegulation] = useState<RulesRegulation>();
-
+const [show,setShowTv]=useState(false)
   const [scoreData, setScoreData] = useState<any>();
   const toast = useToast();
   const param = useParams();
@@ -152,6 +153,9 @@ const MainComponent = () => {
       title: "FANCY",
     },
   ];
+  const handleShowTv=()=>{
+setShowTv(!show)
+  }
   return (
     <div className=" text-white bg-gray-950 min-h-[100vh]">
       <div className="w-[100%]">
@@ -215,10 +219,12 @@ const MainComponent = () => {
               })}
             </div>
             <div className="">
-              <Tv eventid={param.id}/>
+           <MdLiveTv onClick={handleShowTv} cursor="pointer" fontSize={"25px"} color="white" />
+           
             </div>
             </div>
           
+            {show&&<Tv eventid={param.id} setShowTv={setShowTv}/>}
             <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
 
             <div className="flex flex-col gap-10 mt-8">

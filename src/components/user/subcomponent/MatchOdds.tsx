@@ -770,7 +770,10 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                     </div>
                   </div>
 
-                  {index === 0 && (
+                  {index === 0  && (
+                    <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
+                  )}
+                   {index === 1  && (
                     <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
                   )}
                 </>
