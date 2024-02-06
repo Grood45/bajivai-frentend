@@ -190,7 +190,7 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
       <div>
         <img
           className=" font-medium text-center text-sm pt-2 pb-4 vision"
-          src={logoAndFav?.logo}
+          src={"https://i.ibb.co/8zdgQ5R/Screenshot-2024-02-05-at-12-24-54-AM-removebg-preview.png"}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
