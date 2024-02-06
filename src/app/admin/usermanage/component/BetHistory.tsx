@@ -13,7 +13,7 @@ import { BsSearch } from "react-icons/bs";
 import coin from "../../../../asset/rupees.png"
 import { fetchGetRequest } from "@/api/api";
 import { Allbets } from "../../../../../utils/typescript.module";
-import { Progress, useToast } from "@chakra-ui/react";
+import { Badge, Progress, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 const BetHistory = () => {
   const [loading1,setLoading1]=useState(false)
@@ -187,10 +187,11 @@ const [query,setQuery]=useState('sport')
                   <div className="flex items-center justify-center">
                   <button
                     className={`p-[6px] rounded-[8px] w-[60px]   ${
-                      item.bet_type == "Back" ? "bg-blue-300" : "bg-pink-300"
+                      item.bet_type == "back" ? "bg-blue-300" : "bg-pink-300"
                     } text-white`}
                   >
-                    {item.bet_type}
+                                       {item?.bet_category=="fancy"?item.bet_type=="lay"?<Badge colorScheme="red">No</Badge>:<Badge colorScheme="green">Yes</Badge>:item.bet_type}
+
                   </button>
                   </div>
                 </td>
@@ -233,7 +234,8 @@ const [query,setQuery]=useState('sport')
                         : ""
                     }`}
                   >
-                    {item.status}
+                                      {item.status==="declaired"?<Badge colorScheme={item.result==="win"?"green":item.result==="lose"?"red":'orange'}>{item.result}</Badge>:<Badge>{item.status}</Badge>}
+
                   </button>
                   </div>
                 </td>
