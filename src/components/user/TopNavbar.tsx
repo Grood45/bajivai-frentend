@@ -285,7 +285,7 @@ const TopNavbar = ({ value }: { value?: number }) => {
             <div className=" border-none">
               <img
                 className=" w-[170px] ml-5 xl:ml-16  "
-                src={logoAndFav?.logo}
+                src={"https://i.ibb.co/8zdgQ5R/Screenshot-2024-02-05-at-12-24-54-AM-removebg-preview.png"}
               />
             </div>
           </div>
