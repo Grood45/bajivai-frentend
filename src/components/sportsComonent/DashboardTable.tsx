@@ -42,6 +42,7 @@ import {
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import axios from "axios";
 import { fetchGetRequest, sendPatchRequest } from "@/api/api";
+import DateRangePicker from "./CalenderDateSelect";
 
 // import { useSearchParams } from "react-router-dom";
 declare module "csstype" {
@@ -385,8 +386,10 @@ function DashboardTable() {
 
           <Box>
             {" "}
-            <Button onClick={handleSaveMatchAndLeaque} isLoading={matchDataLoading} className=" bg-[#E91E63] text-white"  >Update Match</Button>{" "}
+            <Button onClick={handleSaveMatchAndLeaque} isLoading={matchDataLoading} className=" bg-[#E91E63] text-black"  >Update Match</Button>{" "}
           </Box>
+
+          <DateRangePicker/>
         </Box>
         <div className="container overflow-scroll w-[100%]">
           {loading && (
