@@ -23,6 +23,7 @@ import {
 import { createBreakpoints } from "@chakra-ui/theme-tools";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { fetchGetRequest, sendPatchRequest, sendPostRequest } from "@/api/api";
+import DateRangePicker from "./CalenderDateSelect";
 
 const breakpoints = createBreakpoints({
   sm: "30em",
@@ -233,6 +234,7 @@ function CompetitionTable() {
           </Box>
         </Flex>
       </Box>
+
       <Box
         boxShadow="rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px"
         p={5}
@@ -248,8 +250,12 @@ function CompetitionTable() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Box className="flex gap-2"></Box>
+          <Box className="flex gap-2">
+      <DateRangePicker/>
+
+          </Box>
         </Box>
+
         <div className="container overflow-scroll w-[100%]">
           {loading && (
             <Progress size="xs" isIndeterminate colorScheme="#e91e63" />

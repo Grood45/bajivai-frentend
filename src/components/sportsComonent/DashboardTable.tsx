@@ -390,7 +390,6 @@ function DashboardTable() {
           </Box>
 
         </Box>
-        <DateRangePicker/>
 
         <div className="container overflow-scroll w-[100%]">
           {loading && (
