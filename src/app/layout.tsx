@@ -44,6 +44,7 @@ export default function RootLayout({
           pathname.includes("signin") ||
           pathname.includes("sportsAdmin") ||
           pathname.includes("sportAdmin") ||
+          pathname.includes("sportLogin") ||
 
           pathname.includes("/sports/") ? (
             <>{children}</>
