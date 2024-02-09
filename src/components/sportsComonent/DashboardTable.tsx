@@ -104,21 +104,21 @@ function DashboardTable() {
   const data = [
     {
       title: "Odds Bets",
-      value: allData?.totalOdds || 0,
+      value: allData?.totalOddsPending || 0,
       icon: BiFootball,
       bg1: "#FEA21F",
       name: "odds",
     },
     {
       title: "Bookmaker Bets",
-      value: allData?.totalBookmaker || 0,
+      value: allData?.totalBookmakerPending || 0,
       icon: BiSolidFlagCheckered,
       bg1: "#29292C",
       name: "bookmaker",
     },
     {
       title: "Fancy Bets",
-      value: allData?.totalFancy || 0,
+      value: allData?.totalFancyPending || 0,
       icon: TbCricket,
       bg1: "#E12C6C",
       name: "fancy",
@@ -126,7 +126,7 @@ function DashboardTable() {
 
     {
       title: "Toss Bets",
-      value: allData?.totaToss || 0,
+      value: allData?.totaTossPending || 0,
       icon: FaPersonSnowboarding,
       bg1: "#EC4C49",
       name: "toss",
@@ -389,8 +389,9 @@ function DashboardTable() {
             <Button onClick={handleSaveMatchAndLeaque} isLoading={matchDataLoading} className=" bg-[#E91E63] text-black"  >Update Match</Button>{" "}
           </Box>
 
-          <DateRangePicker/>
         </Box>
+        <DateRangePicker/>
+
         <div className="container overflow-scroll w-[100%]">
           {loading && (
             <Progress size="xs" isIndeterminate colorScheme="#e91e63" />

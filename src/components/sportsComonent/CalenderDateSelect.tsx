@@ -75,8 +75,9 @@ function DateRangePicker() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label className="text-[#E91E63]">
+      <form onSubmit={handleSubmit} className="text-center flex flex-col gap-2">
+        <div>
+        <label className="mr-2 text-sm font-semibold text-[#E91E63]">
           Start Date:
           <input
             className="border-2"
@@ -85,8 +86,8 @@ function DateRangePicker() {
             onChange={handleStartDateChange}
           />
         </label>
-        <br />
-        <label className="text-[#E91E63]">
+        <span className="font-bold">To</span> 
+        <label className="ml-2 text-sm font-semibold text-[#E91E63]">
           End Date:
           <input
             className="border-2"
@@ -95,11 +96,11 @@ function DateRangePicker() {
             onChange={handleEndDateChange}
           />
         </label>
-        <br />
-        <Button
+        </div>
+               <Button
           type="submit"
           isLoading={loading}
-          className=" bg-[#E91E63] text-black"
+          className=" bg-[#E91E63] text-xs text-white  my-3 m-auto "
         >
           Delete Match
         </Button>{" "}
