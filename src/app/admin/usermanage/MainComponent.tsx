@@ -13,7 +13,7 @@ import { VscUnverified } from "react-icons/vsc";
 import Link from "next/link";
 import coin from "../../../asset/rupees.png";
 import { BsSearch } from "react-icons/bs";
-import { CircularProgress, Progress, useToast } from "@chakra-ui/react";
+import { Button, CircularProgress, Progress, useToast } from "@chakra-ui/react";
 import { fetchGetRequest } from "../../../api/api";
 import { UserInterface } from "../../../../utils/typescript.module";
 import { getTimeAgo } from "../../../../utils/getTimeInDetail";
@@ -30,6 +30,9 @@ const MainComponent = () => {
     withBalanceUsers: 0,
     totalUsers: 0,
   });
+  const [pagination, setPagination] = useState<any>({});
+  const totalPages = pagination.totalPages; // Replace with your total number of pages
+
   const [userCategory, setUserCategory] = useState<string>("total_user");
   const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -51,6 +54,8 @@ const MainComponent = () => {
       const receivedData: UserInterface[] = response.data;
       setAllData(receivedData);
       setUsersCount(response.usersCount);
+      console.log(response,"response")
+      setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
       toast({
@@ -64,6 +69,22 @@ const MainComponent = () => {
   };
 
  
+const handlePrevPage = () => {
+  console.log(currentPage,totalPages)
+
+  console.log("ram")
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
+const handleNextPage = () => {
+  console.log(currentPage,totalPages)
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+  }
+};
+
   useEffect(() => {
     let id: any;
     id = setTimeout(() => {
@@ -167,6 +188,56 @@ const MainComponent = () => {
         </div>
       </div>
       {/* table hide */}
+      {allData && allData.length > 0 && (
+        <div className="text-[16px] flex m-auto justify-end gap-3 align-middle items-center p-6">
+          <span className="ag-paging-row-summary-panel">
+            <span>{(currentPage - 1) * 20 || 1}</span> to{" "}
+            <span>{20 * currentPage}</span> of{" "}
+            <span>{pagination.totalItems}</span>
+          </span>
+          <span className="">
+            <Button
+              type="button"
+              className="ml-1 disabled:text-gray-400 text-[20px]"
+              disabled={currentPage == 1}
+              onClick={() => setCurrentPage(1)}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+            >
+              {"First"}
+            </Button>
+            <Button
+              type="button"
+              className="ml-1 disabled:text-gray-400 text-[20px] mr-1"
+              // ref="btPrevious"
+              onClick={() => handlePrevPage()}
+              disabled={currentPage == 1}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+            >
+              {"<"}
+            </Button>
+            Page <span>{currentPage}</span> of{" "}
+            <span>{pagination.totalPages}</span>
+            <Button
+              onClick={() => handleNextPage()}
+              type="button"
+              disabled={currentPage == pagination.totalPages}
+              className="ml-1 disabled:text-gray-400 text-[20px]"
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
+            >
+              {">"}
+            </Button>
+            <Button
+              onClick={() => setCurrentPage(pagination.totalPages)}
+              type="button"
+              className="ml-1 disabled:text-gray-400 text-[20px]"
+              disabled={currentPage == pagination.totalPages}
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px'}}
+            >
+              {"Last"}
+            </Button>
+          </span>
+        </div>
+      )}
       <div className="hidden md:contents">
         <div
           style={{
