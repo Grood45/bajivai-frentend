@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux-arch/store";
 import { ThunkDispatch } from "redux-thunk";
 import { fetchUserDataAsync } from "@/app/redux-arch/userauth/auth.slice";
-import {findLowest} from "../../../../utils/findLowest"
+import { findLowest } from "../../../../utils/findLowest";
 type BetType = "back" | "lay";
 interface OddsData {
   b1: string;
@@ -420,7 +420,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                         </p>
                         <p
                           className={` ${
-                            !firstTeamPl && "text-red-800"
+                            firstTeamPl<0 && "text-red-800"
                           } text-[#0FBF00] text-xs font-semibold`}
                         >
                           {firstTeamPl}
@@ -443,20 +443,20 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                         </div>
                         <div className="">
                           <button
-                            onClick={() =>
+                             onClick={() =>
                               handleBet(
-                                Number(data[0].b1),
+                                data[0].section[0].odds[0].odds || 0,
                                 data[0].section[0].nat,
-                                "back"
+                                "lay"
                               )
                             }
                             className="bg-[#41ADFA] w-[90px]   text-white flex flex-col  rounded-[8px] py-1 px-6 "
                           >
                             <span className="text-xs">
-                              {data[0]?.section[2]?.odds[0]?.odds || "-"}
+                              {data[0]?.section[0]?.odds[0]?.odds || "-"}
                             </span>
                             <span className="text-[10px]">
-                              {data[0]?.section[2]?.odds[0]?.size || "-"}
+                              {data[0]?.section[0]?.odds[0]?.size || "-"}
                             </span>
                           </button>
                         </div>
@@ -508,9 +508,9 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                           {data[0]?.section[1]?.nat}
                         </p>
                         <p
-                          className={`${
-                            !secondTeamPl && "text-red-800"
-                          }text-[#0FBF00] text-xs font-semibold`}
+                          className={` ${
+                            thirdTeamPl<0 && "text-red-800"
+                          } text-[#0FBF00] text-xs font-semibold`}
                         >
                           {secondTeamPl}
                         </p>
@@ -534,9 +534,9 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                           <button
                             onClick={() =>
                               handleBet(
-                                Number(data[0].b1),
-                                data[0].section[2].nat,
-                                "back"
+                                data[0].section[1].odds[0].odds || 0,
+                                data[0].section[1].nat,
+                                "lay"
                               )
                             }
                             className={` ${
@@ -603,8 +603,115 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                       </div>
                     </div>
                   </div>
-
                   <div className="h-[1px] bg-[#444444C7]"></div>
+
+                  {data[0]?.section.length>2&&<div className="h-[100%] flex items-center justify-between p-3   w-[100%]">
+                    <div className="flex  gap-3">
+                      {/* <button className="h-[30px] w-[30px] text-[10px] bg-[#EAAB0F] border-2 border-[black]  text-white rounded-[50%]">
+                        BA
+                      </button> */}
+                      <div>
+                        <p className="text-white text-xs font-semibold">
+                          {data[0]?.section[2]?.nat}
+                        </p>
+                        <p
+                          className={`${
+                            thirdTeamPl<0 && "text-red-800"
+                          }text-[#0FBF00] text-xs font-semibold`}
+                        >
+                          {thirdTeamPl}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-1">
+                        <div className="hidden lg:contents">
+                          <button className="bg-[#41ADFA] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                            <span className="text-xs">{"-"}</span>
+                            <span className="text-[10px]">{"-"}</span>
+                          </button>
+                        </div>
+                        <div className="hidden lg:contents">
+                          <button className="bg-[#41ADFA] w-[90px]  text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                            <span className="text-xs">{"-"}</span>
+                            <span className="text-[10px]">{"-"}</span>
+                          </button>
+                        </div>
+                        <div className="">
+                          <button
+                           onClick={() =>
+                            handleBet(
+                              data[0].section[2].odds[0].odds || 0,
+                              data[0].section[2].nat,
+                              "lay"
+                            )
+                          }
+                            className={` ${
+                              (prevCricketDataofOdds &&
+                                prevCricketDataofOdds[0]?.section[2]?.odds[0]
+                                  ?.size !==
+                                  data[0]?.section[2]?.odds[0]?.size) ||
+                              prevCricketDataofOdds[0]?.section[2]?.odds[0]
+                                ?.odds !== data[0]?.section[2]?.odds[0]?.odds
+                                ? "animate-pulse bg-blue-600 opacity-3 w-[90px] items-center justify-center text-white flex flex-col rounded-[8px] py-1 px-6"
+                                : "bg-[#41ADFA] w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6"
+                            } `}
+                          >
+                            <span className="text-xs">
+                              {data[0]?.section[2]?.odds[0]?.odds || "-"}
+                            </span>
+                            <span className="text-[10px]">
+                              {data[0]?.section[2]?.odds[0]?.size || "-"}
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex gap-1">
+                        <div className="hidden lg:contents">
+                          <button
+                            onClick={() =>
+                              handleBet(
+                                data[0]?.section[2]?.odds[1]?.odds,
+                                data[0]?.section[2]?.nat,
+                                "lay"
+                              )
+                            }
+                            className={`bg-[#FD5FA1] w-[90px] ${
+                              (prevCricketDataofOdds &&
+                                prevCricketDataofOdds[0]?.section[2]?.odds[1]
+                                  ?.size !==
+                                  data[0]?.section[2]?.odds[1]?.size) ||
+                              prevCricketDataofOdds[0]?.section[2]?.odds[1]
+                                ?.odds !== data[0]?.section[2]?.odds[1]?.odds
+                                ? "animate-pulse bg-red-600 opacity-3 w-[90px] items-center justify-center text-white flex flex-col rounded-[8px] py-1 px-6"
+                                : "bg-[#FD5FA1] w-[90px] items-center justify-center text-white flex flex-col  rounded-[8px] py-1 px-6"
+                            } `}
+                          >
+                            <span className="text-xs">
+                              {data[0]?.section[2]?.odds[1]?.odds || "-"}
+                            </span>
+                            <span className="text-[10px]">
+                              {data[0]?.section[2]?.odds[1]?.size || "-"}
+                            </span>
+                          </button>
+                        </div>
+                        <div className="hidden lg:contents">
+                          <button className="bg-[#FD5FA1]  w-[90px] text-white flex flex-col  rounded-[8px] py-1 px-6 ">
+                            <span className="text-xs">{"-"}</span>
+                            <span className="text-[10px]">{"-"}</span>
+                          </button>
+                        </div>
+                        <div className="">
+                          <button className="bg-[#FD5FA1] w-[90px]  text-white flex flex-col   rounded-[8px] py-1 px-6 ">
+                            <span className="text-xs">{"-"}</span>
+                            <span className="text-[10px]">{"-"}</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>}
+
+                 { data[0]?.section.length>2&&<div className="h-[1px] bg-[#444444C7]"></div>}
                 </>
               )}
 
@@ -770,10 +877,10 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                     </div>
                   </div>
 
-                  {index === 0  && (
+                  {index === 0 && (
                     <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
                   )}
-                   {/* {index === 1  && (
+                  {/* {index === 1  && (
                     <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
                   )} */}
                 </>
