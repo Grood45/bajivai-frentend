@@ -190,7 +190,7 @@ const CricketData = ({
                   style={{ border: "1px solid rgba(68, 68, 68, 0.86)" }}
                   className="bg-[#212632] text-white p-1 md:p-[6px] text-[10px] md:text-xs font-medium rounded-[5px]"
                 >
-                  {limit ? "See all" : "Hide"}
+                  {limit ? "Hide" : "See All"}
                 </button>
               </div>
             </div>
@@ -211,7 +211,7 @@ const CricketData = ({
             >
               {matchData.length > 0 &&
                 matchData
-                  .slice(0, limit ? 10 : 100)
+                  .slice(0, limit ? 100 : 9)
                   .map((item: CricketData) => {
                     let matchItem: any = data.find(
                       (ele: any) => ele.match_id == item.gid

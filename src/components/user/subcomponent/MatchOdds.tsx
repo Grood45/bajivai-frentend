@@ -497,7 +497,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                     </div>
                   </div>
 
-                  <div className="h-[1px] bg-[#444444C7]"></div>
+                  <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
                   <div className="h-[100%] flex items-center justify-between p-3   w-[100%]">
                     <div className="flex  gap-3">
                       {/* <button className="h-[30px] w-[30px] text-[10px] bg-[#EAAB0F] border-2 border-[black]  text-white rounded-[50%]">
@@ -603,7 +603,8 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="h-[1px] bg-[#444444C7]"></div>
+                  {data[0]?.section.length>2&&<div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>}
+
 
                   {data[0]?.section.length>2&&<div className="h-[100%] flex items-center justify-between p-3   w-[100%]">
                     <div className="flex  gap-3">
@@ -880,9 +881,9 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
                   {index === 0 && (
                     <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
                   )}
-                  {/* {index === 1  && (
+                   {data.length>2&& (
                     <div className="bg-gradient-to-r  from-indigo-500 via-purple-500 to-pink-500 ... h-[1px] my-1"></div>
-                  )} */}
+                  )} 
                 </>
               ))}
 

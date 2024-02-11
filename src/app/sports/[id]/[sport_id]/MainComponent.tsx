@@ -142,7 +142,7 @@ const [show,setShowTv]=useState(false)
     },
     {
       id: 3,
-      title: "BOOKMAKER",
+      title:"BOOKMAKER",
     },
     {
       id: 4,
@@ -202,9 +202,12 @@ setShowTv(!show)
             </div>
             <div className="flex justify-between items-center w-[100%]">
             <div className="p-2 flex gap-4 mt-3 ">
-              {category.map((item) => {
+
+
+               {category.slice(0,param.sport_id==="4"?5:2).map((item) => {
                 return (
-                  <span
+                  <>
+                   {<span
                     onClick={() => setCategoryActive(item.id)}
                     key={item.id}
                     className={`pb-[2px] text-white ${
@@ -214,7 +217,9 @@ setShowTv(!show)
                     } cursor-pointer font-semibold text-[12px]`}
                   >
                     {item.title}
-                  </span>
+                  </span>}
+                  </>
+                 
                 );
               })}
             </div>
