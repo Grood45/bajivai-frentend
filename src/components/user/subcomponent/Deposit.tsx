@@ -391,12 +391,17 @@ const Deposit = ({
                                 </p>
                               </div>
                             </div>
+                            <div className="flex flex-col items-center">
                             <p className="text-[10px] ">
                               Processing Time :{" "}
                               <span className="text-green-500">
                                 {item.processing_time} minute
                               </span>{" "}
+
                             </p>
+                            <p className="text-xs text-green-300 font-semibold">+{item.bonus}%</p>
+                            </div>
+                           
 
                             <Radio
                               isChecked={radio === item._id ? true : false}
@@ -506,7 +511,7 @@ const Deposit = ({
 
               <div className="text-sm flex flex-col items-center justify-center gap-1 font-medium">
                 <p>Deposit Amount</p>
-                <p className="text-xs font-light">{value}</p>
+                <p className="text-xs text-green-500 font-semibold ">+{value}<span className="ml-1 text-white">BDT</span></p>
               </div>
             </div>
 

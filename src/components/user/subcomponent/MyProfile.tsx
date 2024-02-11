@@ -600,7 +600,7 @@ console.log(username,"username",joined_at,"joined_at")
             <p className="text-lg  text-center font-semibold">
               Transaction Details
             </p>
-            <div>
+            <div className="flex flex-col items-center">
               <p
                 className={`mt-6  
                 ${
@@ -613,16 +613,19 @@ console.log(username,"username",joined_at,"joined_at")
               >
                 {transactionDetails?.type}
               </p>
+              <div className="flex items-center gap-3">
               <p
-                className={`text-sm mt-1 text-center ${
+                className={`text-sm  text-center ${
                   transactionDetails?.status === "pending"
                   ? "text-orange-500":transactionDetails?.status==="reject"?"text-red-600": "text-[#0FBF00]"
                 }  `}
               >
-                {transactionDetails?.deposit_amount ||
+                {transactionDetails?.type==="deposit"?"+":"-"}{transactionDetails?.deposit_amount ||
                   transactionDetails?.withdraw_amount}{" "}
                 <span className="">BDT</span>
               </p>
+              <p className="text-xs text-green-300 font-semibold">+{transactionDetails?.bonus}%</p>
+              </div>
             </div>
             <div className={`${theme ?`bg-[${themeChange.light.bg2}]` : `bg-[${themeChange.dark.bg2}]`} shadow-2xl  pl-5 flex items-center gap-3 w-[100%] p-2 rounded-[4px]`}>
               <PiInfo  />
@@ -630,6 +633,7 @@ console.log(username,"username",joined_at,"joined_at")
                 deposit amount admin information
               </p>
             </div>
+            
 
             <div className="flex flex-col gap-2">
               <p className=" text-sm font-medium">

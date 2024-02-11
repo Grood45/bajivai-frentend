@@ -55,6 +55,7 @@ function StatementModel() {
       if (receivedData) {
         setStateMentData(receivedData);
       }
+      console.log(response, "response");
       setLoading1(false);
       console.log(data, "getAllbets data");
     } catch (error: any) {
@@ -79,7 +80,7 @@ function StatementModel() {
 
   const sportsdata = filterDataByCategory("sport");
   const casinoData = filterDataByCategory("casino");
-
+  console.log(statemendatas, casinoData, "sc");
   const {
     isOpen,
     onOpen,
@@ -353,7 +354,7 @@ function StatementModel() {
                                             : "text-[#EAAB0F]"
                                         }  font-medium`}
                                       >
-                                        {(item.stake).toFixed(2)}
+                                        {item.stake.toFixed(2)}
                                         <span className="text-[10px] font-light">
                                           {/* BDT */}
                                         </span>
@@ -464,7 +465,7 @@ function StatementModel() {
                               {sportsdata.map((item) => {
                                 return (
                                   <div
-                                  onClick={() => handleStatement(5, item)}
+                                    onClick={() => handleStatement(5, item)}
                                     key={item._id}
                                     className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
                                   >
@@ -497,7 +498,7 @@ function StatementModel() {
                                               : "text-[#0FBF00]"
                                           }  font-medium`}
                                         >
-                                          {(item.stake).toFixed(2)}
+                                          {item.stake.toFixed(2)}
                                           <span className="text-[10px] font-light">
                                             {/* BDT */}
                                           </span>
@@ -596,7 +597,7 @@ function StatementModel() {
                             {casinoData.map((item) => {
                               return (
                                 <div
-                                onClick={() => handleStatement(5, item)}
+                                  onClick={() => handleStatement(5, item)}
                                   key={item._id}
                                   className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
                                 >
@@ -737,74 +738,76 @@ function StatementModel() {
                               </p>
                             </div>
                             <div className="overflow-scroll   h-[100vh]">
-                              {statemendatas.map((item) => {
-                                return (
-                                  <div
-                                  onClick={() => handleStatement(5, item)}
-                                    key={item._id}
-                                    className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
-                                  >
+                              {statemendatas
+                                .filter((item) => item.result == "")
+                                .map((item) => {
+                                  return (
                                     <div
-                                      style={{
-                                        boxShadow:
-                                          "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
-                                      }}
-                                      className="flex justify-between m  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                      onClick={() => handleStatement(5, item)}
+                                      key={item._id}
+                                      className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
                                     >
-                                      <div className="flex gap-4 items-center">
-                                        <Image
-                                          src={
-                                            item.event_type !== "casino"
-                                              ? bollyball
-                                              : card
-                                          }
-                                          alt=""
-                                        />
-                                        <div className="flex flex-col gap-[2px]">
-                                          <p className="text-xs ">
-                                            {item.match_name}
+                                      <div
+                                        style={{
+                                          boxShadow:
+                                            "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
+                                        }}
+                                        className="flex justify-between m  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                      >
+                                        <div className="flex gap-4 items-center">
+                                          <Image
+                                            src={
+                                              item.event_type !== "casino"
+                                                ? bollyball
+                                                : card
+                                            }
+                                            alt=""
+                                          />
+                                          <div className="flex flex-col gap-[2px]">
+                                            <p className="text-xs ">
+                                              {item.match_name}
+                                            </p>
+                                            <p className="text-[10px] ">
+                                              {item.event_name}
+                                            </p>
+                                            <p className="text-[10px] text-[#A4A9AE]">
+                                              {item.placed_at}
+                                            </p>
+                                          </div>
+                                        </div>
+                                        <div className="flex text-center flex-col gap-1">
+                                          <p
+                                            className={`text-sm  ${
+                                              item.result == "lose"
+                                                ? "text-[#FF0202]"
+                                                : item.result == "win"
+                                                ? "text-[#0FBF00]"
+                                                : "text-[#EAAB0F]"
+                                            }  font-medium`}
+                                          >
+                                            {item.stake.toFixed(2)}
+                                            <span className="text-[10px] font-light">
+                                              {/* BDT */}
+                                            </span>
                                           </p>
-                                          <p className="text-[10px] ">
-                                            {item.event_name}
-                                          </p>
-                                          <p className="text-[10px] text-[#A4A9AE]">
-                                            {item.placed_at}
+                                          <p
+                                            className={`text-xs  ${
+                                              item.result == "lose"
+                                                ? "text-[#FF0202]"
+                                                : item.result == "win"
+                                                ? "text-[#0FBF00]"
+                                                : "text-[#EAAB0F]"
+                                            }`}
+                                          >
+                                            {item.result == ""
+                                              ? "pending"
+                                              : item.result}
                                           </p>
                                         </div>
                                       </div>
-                                      <div className="flex text-center flex-col gap-1">
-                                        <p
-                                          className={`text-sm  ${
-                                            item.result == "lose"
-                                              ? "text-[#FF0202]"
-                                              : item.result == "win"
-                                              ? "text-[#0FBF00]"
-                                              : "text-[#EAAB0F]"
-                                          }  font-medium`}
-                                        >
-                                          {(item.stake).toFixed(2)}
-                                          <span className="text-[10px] font-light">
-                                            {/* BDT */}
-                                          </span>
-                                        </p>
-                                        <p
-                                          className={`text-xs  ${
-                                            item.result == "lose"
-                                              ? "text-[#FF0202]"
-                                              : item.result == "win"
-                                              ? "text-[#0FBF00]"
-                                              : "text-[#EAAB0F]"
-                                          }`}
-                                        >
-                                          {item.result == ""
-                                            ? "pending"
-                                            : item.result}
-                                        </p>
-                                      </div>
                                     </div>
-                                  </div>
-                                );
-                              })}
+                                  );
+                                })}
                             </div>
                           </div>
                         </div>
@@ -892,7 +895,7 @@ function StatementModel() {
                               {statemendatas.map((item) => {
                                 return (
                                   <div
-                                  onClick={() => handleStatement(5, item)}
+                                    onClick={() => handleStatement(5, item)}
                                     key={item._id}
                                     className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
                                   >
@@ -934,7 +937,7 @@ function StatementModel() {
                                               : "text-[#EAAB0F]"
                                           }  font-medium`}
                                         >
-                                          {(item.stake).toFixed(2)}
+                                          {item.stake.toFixed(2)}
                                           <span className="text-[10px] font-light">
                                             {/* BDT */}
                                           </span>
@@ -1037,7 +1040,7 @@ function StatementModel() {
                               <span className="h-[20px] w-[20px] rounded-[50%] flex items-center justify-center bg-yellow-400">
                                 <TbCurrencyTaka color="white" fontSize="15px" />
                               </span>
-                            <p
+                              <p
                                 className={`text-[16px] ${
                                   detailsBet?.result === "win"
                                     ? "text-green-400"
@@ -1046,22 +1049,23 @@ function StatementModel() {
                                     : "text-orange-400"
                                 }`}
                               >
-                                
                                 {detailsBet?.result == "win"
                                   ? "+"
                                   : detailsBet?.result == "lose"
                                   ? "-"
                                   : ""}{" "}
-                                  { detailsBet?.result === "win"?
-                                detailsBet?.bet_category == "fancy"
-                                  ? (detailsBet?.stake * 2).toFixed(2)
-                                  : detailsBet?.bet_category == "odds" &&
-                                    detailsBet?.bet_type == "back"
-                                  ? (detailsBet?.stake * detailsBet?.rate -
-                                    detailsBet?.stake).toFixed(2)
-                                  : (detailsBet?.stake).toFixed(2):(detailsBet?.stake).toFixed(2)}
-
-                                  <span className="text-white text-sm">BDT</span>
+                                {detailsBet?.result === "win"
+                                  ? detailsBet?.bet_category == "fancy"
+                                    ? (detailsBet?.stake * 2).toFixed(2)
+                                    : detailsBet?.bet_category == "odds" &&
+                                      detailsBet?.bet_type == "back"
+                                    ? (
+                                        detailsBet?.stake * detailsBet?.rate -
+                                        detailsBet?.stake
+                                      ).toFixed(2)
+                                    : (detailsBet?.stake).toFixed(2)
+                                  : (detailsBet?.stake).toFixed(2)}
+                                <span className="text-white text-sm">BDT</span>
                               </p>
                             </div>
                             <div className="flex flex-col mt-5 gap-3">
@@ -1127,7 +1131,13 @@ function StatementModel() {
                                 </div>
                                 <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">
-                                   {detailsBet?.result=="win"?"Win Amount":detailsBet?.result=="lose"?"Lose Amount":detailsBet?.result=="refund"?'Refund Amount':'Pending Amount'}
+                                    {detailsBet?.result == "win"
+                                      ? "Win Amount"
+                                      : detailsBet?.result == "lose"
+                                      ? "Lose Amount"
+                                      : detailsBet?.result == "refund"
+                                      ? "Refund Amount"
+                                      : "Pending Amount"}
                                   </p>
                                   <p
                                     className={`text-[16px] ${
@@ -1143,44 +1153,59 @@ function StatementModel() {
                                       : detailsBet?.result == "lose"
                                       ? "-"
                                       : ""}{" "}
-                                    { detailsBet?.result === "win"?
-                                detailsBet?.bet_category == "fancy"
-                                  ? (detailsBet?.stake * 2).toFixed(2)
-                                  : detailsBet?.bet_category == "odds" &&
-                                    detailsBet?.bet_type == "back"
-                                  ? (detailsBet?.stake * detailsBet?.rate -
-                                    detailsBet?.stake).toFixed(2)
-                                  : (detailsBet?.stake).toFixed(2):(detailsBet?.stake).toFixed(2)} <span className="text-white text-sm">
+                                    {detailsBet?.result === "win"
+                                      ? detailsBet?.bet_category == "fancy"
+                                        ? (detailsBet?.stake * 2).toFixed(2)
+                                        : detailsBet?.bet_category == "odds" &&
+                                          detailsBet?.bet_type == "back"
+                                        ? (
+                                            detailsBet?.stake *
+                                              detailsBet?.rate -
+                                            detailsBet?.stake
+                                          ).toFixed(2)
+                                        : (detailsBet?.stake).toFixed(2)
+                                      : (detailsBet?.stake).toFixed(2)}{" "}
+                                    <span className="text-white text-sm">
                                       BDT
                                     </span>
                                   </p>
                                 </div>
                                 <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">BetType</p>
-                                  {detailsBet?.bet_category=="fancy"?
-                                  detailsBet?.bet_category=="fancy" && detailsBet?.bet_type=="lay"?
-                                 <button
-                                 className={`py-[2px] text-xs px-2 ${
-                                   detailsBet?.bet_type === "back"
-                                     ? "bg-[#FF6A8A]"
-                                     : "bg-[#0096FE]"
-                                 }  rounded-[5px]`}
-                               >No</button>:<button
-                               className={`py-[2px] text-xs px-2 ${
-                                 detailsBet?.bet_type === "back"
-                                   ? "bg-[#FF6A8A]"
-                                   : "bg-[#0096FE]"
-                               }  rounded-[5px]`}
-                             >Yes</button>:<button
-                             className={`py-[2px] text-xs px-2 ${
-                               detailsBet?.bet_type === "back"
-                                 ? "bg-[#FF6A8A]"
-                                 : "bg-[#0096FE]"
-                             }  rounded-[5px]`}
-                           >
-                             {detailsBet?.bet_type}
-                           </button>}
-
+                                  {detailsBet?.bet_category == "fancy" ? (
+                                    detailsBet?.bet_category == "fancy" &&
+                                    detailsBet?.bet_type == "lay" ? (
+                                      <button
+                                        className={`py-[2px] text-xs px-2 ${
+                                          detailsBet?.bet_type === "back"
+                                            ? "bg-[#FF6A8A]"
+                                            : "bg-[#0096FE]"
+                                        }  rounded-[5px]`}
+                                      >
+                                        No
+                                      </button>
+                                    ) : (
+                                      <button
+                                        className={`py-[2px] text-xs px-2 ${
+                                          detailsBet?.bet_type === "back"
+                                            ? "bg-[#FF6A8A]"
+                                            : "bg-[#0096FE]"
+                                        }  rounded-[5px]`}
+                                      >
+                                        Yes
+                                      </button>
+                                    )
+                                  ) : (
+                                    <button
+                                      className={`py-[2px] text-xs px-2 ${
+                                        detailsBet?.bet_type === "back"
+                                          ? "bg-[#FF6A8A]"
+                                          : "bg-[#0096FE]"
+                                      }  rounded-[5px]`}
+                                    >
+                                      {detailsBet?.bet_type}
+                                    </button>
+                                  )}
                                 </div>
                                 <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">

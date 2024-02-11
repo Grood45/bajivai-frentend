@@ -784,7 +784,7 @@ function WalletModel() {
                             <p className="text-lg text-center font-semibold">
                               Transaction Details
                             </p>
-                            <div>
+                            <div className="flex flex-col items-center justify-center">
                               <p
                                 className={`mt-6  ${
                                   transactionDetails?.status === "pending"
@@ -794,17 +794,22 @@ function WalletModel() {
                               >
                                 {transactionDetails?.type}
                               </p>
+                              <div className="flex items-center gap-3">
+
                               <p
-                                className={`text-sm mt-1 text-center ${
+                                className={`text-sm text-center ${
                                   transactionDetails?.status === "pending"
                                   ? "text-orange-600":transactionDetails?.status==="reject"?"text-red-600"
                                   : "text-green-600"
                                 }  `}
                               >
-                                {transactionDetails?.deposit_amount ||
+                               {transactionDetails?.type==="deposit"?"+":"-"} {transactionDetails?.deposit_amount ||
                                   transactionDetails?.withdraw_amount}{" "}
                                 <span className="">BDT</span>
                               </p>
+              <p className="text-xs text-green-300 font-semibold">+{transactionDetails?.bonus}%</p>
+              </div>
+
                             </div>
                             <div className="bg-[#1D2025] pl-5 flex items-center gap-3 w-[100%] p-2 rounded-[4px]">
                               <PiInfo color="white" />
