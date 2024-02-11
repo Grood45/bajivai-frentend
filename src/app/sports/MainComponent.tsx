@@ -244,7 +244,7 @@ const MainComponent = () => {
 
       {/* sportsbook */}
 
-      {/* <div className="">
+      <div className="">
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
             <Image src={sportBook} alt="" className="w-[35px] h-[35px]" />
@@ -262,7 +262,7 @@ const MainComponent = () => {
           handleGame={handleGame}
           gameTypeData={SportsGameType}
         />
-      </div> */}
+      </div> 
 
       {/* category button */}
       <div

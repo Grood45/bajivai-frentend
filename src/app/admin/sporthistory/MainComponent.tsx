@@ -126,6 +126,8 @@ const [eventName,setEventName]=useState("")
   const handleFilter = (name: string) => {
     setStatus(name);
   };
+
+  
   return (
     <div className=" min-h-[100vh]">
       {/* four-card */}
@@ -525,6 +527,34 @@ const [eventName,setEventName]=useState("")
             })}
         </div>
       </div>
+
+      {/* {allData && allData.length > 0 && ( */}
+        <div className="text-[16px] text-white text-sm font-semibold flex m-auto mb-4 mr-5 justify-end gap-3 align-middle items-center mt-2">
+      
+            <button
+              type="button"
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              // ref="btPrevious"
+              onClick={() => handlePrevPage()}
+              disabled={currentPage == 1}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+            >
+              {"<"}
+            </button>
+            Page <span>{currentPage}</span> of{" "}
+            <span>{pagination.totalPages}</span>
+            <button
+              onClick={() => handleNextPage()}
+              type="button"
+              disabled={currentPage == pagination.totalPages}
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
+            >
+              {">"}
+            </button>
+          
+        </div>
+      {/* )} */}
     </div>
   );
 };

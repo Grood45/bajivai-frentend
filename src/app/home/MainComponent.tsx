@@ -318,11 +318,11 @@ const MainComponent = () => {
       </div>
 
       {/* trending imges */}
-      <div className="md:contents hidden">
+      <div className="">
         {provider.length > 0 && (
           <div className="flex flex-col gap-[40px]">
             {provider
-              .slice(10, 15)
+              .slice(13, 14)
               .map(
                 (ele: any) =>
                   ele.status == true && (
@@ -432,6 +432,24 @@ const MainComponent = () => {
 
         {/* <HCarousel casinodata={casinodata} /> */}
       {/* </div> */}
+      <div className="md:contents hidden">
+        {provider.length > 0 && (
+          <div className="flex flex-col gap-[40px]">
+            {provider
+              .slice(12, 13)
+              .map(
+                (ele: any) =>
+                  ele.status == true && (
+                    <SeamlessGame
+                      gpName={ele.gpName}
+                      id={ele.gpId}
+                      key={ele.gpId}
+                    />
+                  )
+              )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

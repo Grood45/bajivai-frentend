@@ -31,10 +31,12 @@ const MainComponent = () => {
   const [transactionCount, aetTransactionCount] = useState<TransactionsCount>();
   const toast = useToast();
   const params = useParams();
+  const [pagination, setPagination] = useState<any>({});
+  const totalPages = pagination.totalPages; // Replace with your total number of pages
 
   const getAllWithdrawDetails = async () => {
     setLoading(true);
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-withdraw?page=1&limit=100`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-withdraw?page=${currentPage}&limit=20`;
 
     if (search) {
       url += `&search=${search}`;
@@ -55,6 +57,7 @@ const MainComponent = () => {
       setAllData(response.data);
       aetTransactionCount(response.transactionsCount);
       setLoading(false);
+      setPagination(response.pagination);
     } catch (error: any) {
       toast({
         description: `${error?.data?.message}`,
@@ -128,6 +131,24 @@ const MainComponent = () => {
       icon: <VscUnverified fontSize={"20px"} color="white" />,
     },
   ];
+
+     
+const handlePrevPage = () => {
+  console.log(currentPage,totalPages)
+
+  console.log("ram")
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
+const handleNextPage = () => {
+  console.log(currentPage,totalPages)
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+  }
+};
+
 
   return (
     <div className=" ">
@@ -436,6 +457,34 @@ const MainComponent = () => {
         </div>
         </div>
       </div>
+
+      {allWithdraw && allWithdraw.length > 0 && (
+        <div className="text-[16px] text-white text-sm font-semibold flex m-auto mb-4 mr-5 justify-end gap-3 align-middle items-center mt-2">
+      
+            <button
+              type="button"
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              // ref="btPrevious"
+              onClick={() => handlePrevPage()}
+              disabled={currentPage == 1}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+            >
+              {"<"}
+            </button>
+            Page <span>{currentPage}</span> of{" "}
+            <span>{pagination.totalPages}</span>
+            <button
+              onClick={() => handleNextPage()}
+              type="button"
+              disabled={currentPage == pagination.totalPages}
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
+            >
+              {">"}
+            </button>
+          
+        </div>
+      )}
     </div>
   );
 };

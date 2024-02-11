@@ -188,56 +188,7 @@ const handleNextPage = () => {
         </div>
       </div>
       {/* table hide */}
-      {allData && allData.length > 0 && (
-        <div className="text-[16px] flex m-auto justify-end gap-3 align-middle items-center p-6">
-          <span className="ag-paging-row-summary-panel">
-            <span>{(currentPage - 1) * 20 || 1}</span> to{" "}
-            <span>{20 * currentPage}</span> of{" "}
-            <span>{pagination.totalItems}</span>
-          </span>
-          <span className="">
-            <Button
-              type="button"
-              className="ml-1 disabled:text-gray-400 text-[20px]"
-              disabled={currentPage == 1}
-              onClick={() => setCurrentPage(1)}
-              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
-            >
-              {"First"}
-            </Button>
-            <Button
-              type="button"
-              className="ml-1 disabled:text-gray-400 text-[20px] mr-1"
-              // ref="btPrevious"
-              onClick={() => handlePrevPage()}
-              disabled={currentPage == 1}
-              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
-            >
-              {"<"}
-            </Button>
-            Page <span>{currentPage}</span> of{" "}
-            <span>{pagination.totalPages}</span>
-            <Button
-              onClick={() => handleNextPage()}
-              type="button"
-              disabled={currentPage == pagination.totalPages}
-              className="ml-1 disabled:text-gray-400 text-[20px]"
-              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
-            >
-              {">"}
-            </Button>
-            <Button
-              onClick={() => setCurrentPage(pagination.totalPages)}
-              type="button"
-              className="ml-1 disabled:text-gray-400 text-[20px]"
-              disabled={currentPage == pagination.totalPages}
-              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px'}}
-            >
-              {"Last"}
-            </Button>
-          </span>
-        </div>
-      )}
+     
       <div className="hidden md:contents">
         <div
           style={{
@@ -424,10 +375,11 @@ const handleNextPage = () => {
                     <p className="text-[#A0AEC0] font-medium text-xs">
                       Jointed At:-
                     </p>
+                    
                     <p className="text-[#fff] font-medium text-xs">
-                      {item.juniedat}{" "}
+                      {item.joined_at}{" "}
                       <span className="text-[#A0AEC0] text-[10px]">
-                        {item.date}
+                      {getTimeAgo(item.joined_at)}
                       </span>
                     </p>
                   </div>
@@ -438,7 +390,7 @@ const handleNextPage = () => {
                     </p>
                     <div className="flex justify-center items-center gap-2">
                       <Image src={coin} alt="" className="h-[15px] w-[15px]" />
-                      <p className="text-white text-xs">{item.value}</p>
+                      <p className="text-white text-xs"> {item.amount.toFixed(2)}</p>
                     </div>
                   </div>
 
@@ -447,7 +399,7 @@ const handleNextPage = () => {
                       stake:-
                     </p>
                     <p className="text-[#fff] font-medium text-xs">
-                      {item.stake}
+                    <p>{item.exposure_limit.toFixed(2)}</p>
                     </p>
                   </div>
 
@@ -464,6 +416,33 @@ const handleNextPage = () => {
           })}
         </div>
       </div>
+      {allData && allData.length > 0 && (
+        <div className="text-[16px] text-white text-sm font-semibold flex m-auto mb-4 mr-5 justify-end gap-3 align-middle items-center mt-2">
+      
+            <button
+              type="button"
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              // ref="btPrevious"
+              onClick={() => handlePrevPage()}
+              disabled={currentPage == 1}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+            >
+              {"<"}
+            </button>
+            Page <span>{currentPage}</span> of{" "}
+            <span>{pagination.totalPages}</span>
+            <button
+              onClick={() => handleNextPage()}
+              type="button"
+              disabled={currentPage == pagination.totalPages}
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
+            >
+              {">"}
+            </button>
+          
+        </div>
+      )}
     </div>
   );
 };

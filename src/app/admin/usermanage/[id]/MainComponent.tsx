@@ -182,7 +182,7 @@ console.log(data,"asdff")
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between mt-4 gap-4 w-[98%] m-auto  ">
+    <div className="flex flex-col md:flex-row pb-[100px] mt-4 min-h-[100vh] gap-4 w-[98%] m-auto  ">
       {/* sidebar */}
       <div className=" w-[100%] md:w-[24%]">
         <div className="flex flex-col-reverse  md:flex-col gap-6">
