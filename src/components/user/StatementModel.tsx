@@ -307,8 +307,8 @@ function StatementModel() {
                             </p>
                           </div>
 
-                          <div className="flex   pb-[50px] mt-2  flex-col gap-2">
-                            {statemendatas.slice(0, 3).map((item) => {
+                          <div className="flex  overflow-scroll h-[300px]  pb-[50px] mt-2  flex-col gap-2">
+                            {statemendatas.map((item) => {
                               return (
                                 <div
                                   onClick={() => handleStatement(5, item)}
@@ -1070,12 +1070,12 @@ function StatementModel() {
                             </div>
                             <div className="flex flex-col mt-5 gap-3">
                               <div className="rounded-[2px] p-2 bg-[#15191E] flex item-center justify-center">
-                                <p className="font-semibold text-lg text-center text-[#fff]">
+                              {detailsBet?.event_type=="sport"?<p className="font-semibold text-lg text-center text-[#fff]">
                                   {detailsBet?.bet_category}
-                                </p>
+                                </p>:<p className="font-semibold text-lg text-center text-[#fff]">Casino</p>}
                               </div>
                               <div className="flex flex-col p-4 rounded-[2px] bg-[#15191E]  gap-3">
-                                <div className="flex justify-between w-[100%] items-center">
+                              {detailsBet?.event_type=="sport"&&  <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-semibold">
                                     Status
                                   </p>
@@ -1092,8 +1092,8 @@ function StatementModel() {
                                       ? "pending"
                                       : detailsBet?.result}
                                   </p>
-                                </div>
-                                <div className="flex justify-between w-[100%] items-center">
+                                </div>}
+                                {detailsBet?.event_type=="sport"&& <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">
                                     BetCategory
                                   </p>
@@ -1102,8 +1102,8 @@ function StatementModel() {
                                   >
                                     {detailsBet?.bet_category}
                                   </p>
-                                </div>
-                                <div className="flex justify-between w-[100%] items-center">
+                                </div>}
+                                {detailsBet?.event_type=="sport"&&<div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">
                                     Match Bet
                                   </p>
@@ -1112,25 +1112,26 @@ function StatementModel() {
                                   >
                                     {detailsBet?.event_name}
                                   </p>
-                                </div>
-                                <div className="flex justify-between w-[100%] items-center">
+                                </div>}
+                                {detailsBet?.event_type=="sport"&& <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">ODD</p>
                                   <p
                                     className={` font-semibold text-sm  text-green-400`}
                                   >
                                     {detailsBet?.rate}
                                   </p>
-                                </div>
-                                <div className="flex justify-between w-[100%] items-center">
+                                </div>}
+                                {detailsBet?.event_type=="sport"&&<div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">Stake</p>
                                   <p
                                     className={` font-semibold text-sm  text-purple-400`}
                                   >
                                     {detailsBet?.stake}
                                   </p>
-                                </div>
-                                <div className="flex justify-between w-[100%] items-center">
-                                  <p className="text-sm font-medium">
+                                </div>}
+                                {detailsBet?.event_type=="sport"?
+                                  <div className="flex justify-between w-[100%] items-center">
+                                <p className="text-sm font-medium">
                                     {detailsBet?.result == "win"
                                       ? "Win Amount"
                                       : detailsBet?.result == "lose"
@@ -1169,8 +1170,30 @@ function StatementModel() {
                                       BDT
                                     </span>
                                   </p>
-                                </div>
+                                </div>:
                                 <div className="flex justify-between w-[100%] items-center">
+                                <p className="text-sm font-medium">
+                                    {detailsBet?.result_type == "win"
+                                    ? "Win Amount":detailsBet?.result_type=="lose" ?"Lose Amount":"Refund Amount"}
+                                  </p>
+                                  <p
+                                    className={`text-[16px] ${
+                                      detailsBet?.result_type === "win"
+                                        ? "text-green-400":detailsBet?.result_type=="lose"?"text-red-400":"text-orange-400"
+                                       
+                                    }`}
+                                  >
+                                    {detailsBet?.result_type == "win"
+                                      ? "+":detailsBet?.result_type=="lose"?"-":""}
+                                    
+                                    {detailsBet?.result_type=="win"?detailsBet?.win_loss:detailsBet?.stake}
+                                    <span className="text-white text-sm">
+                                      BDT
+                                    </span>
+                                  </p>
+                                </div>
+                                }
+                                {detailsBet?.event_type=="sport"&&    <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">BetType</p>
                                   {detailsBet?.bet_category == "fancy" ? (
                                     detailsBet?.bet_category == "fancy" &&
@@ -1206,8 +1229,8 @@ function StatementModel() {
                                       {detailsBet?.bet_type}
                                     </button>
                                   )}
-                                </div>
-                                <div className="flex justify-between w-[100%] items-center">
+                                </div>}
+                                {detailsBet?.event_type=="sport"&&<div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">
                                     Team/Question
                                   </p>
@@ -1217,26 +1240,26 @@ function StatementModel() {
                                       "..."}
                                     {detailsBet?.Question}
                                   </p>
-                                </div>
+                                </div>}
                               </div>
                             </div>
                             <div className="rounded-[2px] p-2 bg-[#15191E] py-2  ">
                               <p className="font-medium text-center text-[14px]">
                                 Other Details
                               </p>
-                              <div className="flex px-3  justify-between mt-2 w-[100%] items-center">
+                             {detailsBet?.event_type=="sport"&&<div className="flex px-3  justify-between mt-2 w-[100%] items-center">
                                 <p className="text-sm font-medium">
                                   League Name
                                 </p>
                                 <p className="font-medium text-xs ">
                                   {detailsBet?.league_name}
                                 </p>
-                              </div>
+                              </div>}
                               <div className="flex px-3 mt-2 justify-between w-[100%] items-center">
                                 <p className="text-sm font-medium">
                                   Match Name
                                 </p>
-                                <p className="font-medium text-xs">
+                                <p className="font-medium text-purple-400 text-xs">
                                   {detailsBet?.match_name}
                                 </p>
                               </div>
