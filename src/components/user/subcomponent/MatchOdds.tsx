@@ -124,17 +124,17 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     if (odd < 1) {
       return;
     }
-    // if (odd > 10) {
-    //   toast({
-    //     description: "odd value should be less than 10",
-    //     status: "warning",
-    //     duration: 4000,
-    //     position: "bottom",
-    //     isClosable: true,
-    //   });
-    //   setBetLoading(false);
-    //   return;
-    // }
+    if (odd > 10) {
+      toast({
+        description: "odd value should be less than 10",
+        status: "warning",
+        duration: 4000,
+        position: "bottom",
+        isClosable: true,
+      });
+      setBetLoading(false);
+      return;
+    }
     setBetShow(true);
     setRate(odd);
     // setMatchName(matchName);
@@ -229,7 +229,7 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       allBet,
       data[0]?.nat,
       data[1]?.nat,
-      "The Draw"
+      data[2]?.nat
     );
 
     // get the final exposure
