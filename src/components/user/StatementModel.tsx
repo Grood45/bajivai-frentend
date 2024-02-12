@@ -344,16 +344,18 @@ function StatementModel() {
                                         </p>
                                       </div>
                                     </div>
-                                    <div className="flex text-center flex-col gap-1">
-                                      <p
+                                    {item.event_type==="sport"&&  <div className="flex text-center flex-col gap-1">
+                                    
+                                     <p
                                         className={`text-sm  ${
                                           item.result == "lose"
-                                            ? "text-[#FF0202]"
+                                            ? "text-red-400"
                                             : item.result == "win"
-                                            ? "text-[#0FBF00]"
-                                            : "text-[#EAAB0F]"
+                                            ? "text-green-400"
+                                            : "text-orange-400"
                                         }  font-medium`}
                                       >
+                                        {item?.result=="win"?"+":item?.result=="lose"?"-":""}
                                         {item.stake.toFixed(2)}
                                         <span className="text-[10px] font-light">
                                           {/* BDT */}
@@ -372,7 +374,32 @@ function StatementModel() {
                                           ? "pending"
                                           : item.result}
                                       </p>
-                                    </div>
+                                    </div>}
+
+                                    {item?.event_type==="casino"&&
+                                    <div className="flex flex-col text-xs justify-center items-center">
+                             <p
+                                className={`text-[16px] ${
+                                  item?.result_type === "win"
+                                    ? "text-green-400"
+                                    : item?.result_type === "lose"
+                                    ? "text-red-400"
+                                    : "text-orange-400"
+                                }`}
+                              >
+                                {item?.result_type == "win"
+                                  ? "+"
+                                  : item?.result_type == "lose"
+                                  ? "-"
+                                  : ""}{" "}
+                                {item?.result_type === "win"?item?.win_loss-item?.stake:item?.stake}.00
+                                  
+                              </p>
+                              <p className={` ${item?.result_type=="win"?"text-green-400":item?.result_type=="lose"?"text-red-400":"text-orange-400"} `}>
+                                {item?.result_type=="win"?"win":item?.result_type=="lose"?"lose":"refund"}
+                              </p>
+                              </div>
+                              }
                                   </div>
                                 </div>
                               );
@@ -622,6 +649,7 @@ function StatementModel() {
                                         </p>
                                       </div>
                                     </div>
+                                    
                                     <div className="flex text-center flex-col gap-1">
                                       <p
                                         className={`text-sm  ${
@@ -1040,33 +1068,56 @@ function StatementModel() {
                               <span className="h-[20px] w-[20px] rounded-[50%] flex items-center justify-center bg-yellow-400">
                                 <TbCurrencyTaka color="white" fontSize="15px" />
                               </span>
-                              <p
+                            {detailsBet?.event_type==="casino"&&
+                             <p
                                 className={`text-[16px] ${
-                                  detailsBet?.result === "win"
+                                  detailsBet?.result_type === "win"
                                     ? "text-green-400"
-                                    : detailsBet?.result === "lose"
+                                    : detailsBet?.result_type === "lose"
                                     ? "text-red-400"
                                     : "text-orange-400"
                                 }`}
                               >
-                                {detailsBet?.result == "win"
+                                {detailsBet?.result_type == "win"
                                   ? "+"
-                                  : detailsBet?.result == "lose"
+                                  : detailsBet?.result_type == "lose"
                                   ? "-"
                                   : ""}{" "}
-                                {detailsBet?.result === "win"
-                                  ? detailsBet?.bet_category == "fancy"
-                                    ? (detailsBet?.stake * 2).toFixed(2)
-                                    : detailsBet?.bet_category == "odds" &&
-                                      detailsBet?.bet_type == "back"
-                                    ? (
-                                        detailsBet?.stake * detailsBet?.rate -
-                                        detailsBet?.stake
-                                      ).toFixed(2)
-                                    : (detailsBet?.stake).toFixed(2)
-                                  : (detailsBet?.stake).toFixed(2)}
+                                {detailsBet?.result_type === "win"?detailsBet?.win_loss-detailsBet?.stake:detailsBet?.stake}
+                                  
                                 <span className="text-white text-sm">BDT</span>
-                              </p>
+                              </p>}
+                              {detailsBet?.event_type==="sport"&& 
+                                 <p
+                                 className={`text-[16px] ${
+                                   detailsBet?.result === "win"
+                                     ? "text-green-400"
+                                     : detailsBet?.result === "lose"
+                                     ? "text-red-400"
+                                     : "text-orange-400"
+                                 }`}
+                               >
+                                 {detailsBet?.result == "win"
+                                   ? "+"
+                                   : detailsBet?.result == "lose"
+                                   ? "-"
+                                   : ""}{" "}
+                                 {detailsBet?.result === "win"
+                                   ? detailsBet?.bet_category == "fancy"
+                                     ? (detailsBet?.stake * 2).toFixed(2)
+                                     : detailsBet?.bet_category == "odds" &&
+                                       detailsBet?.bet_type == "back"
+                                     ? (
+                                         detailsBet?.stake *
+                                           detailsBet?.rate -
+                                         detailsBet?.stake
+                                       ).toFixed(2)
+                                     : (detailsBet?.stake).toFixed(2)
+                                   : (detailsBet?.stake).toFixed(2)}{" "}
+                                 <span className="text-white text-sm">
+                                   BDT
+                                 </span>
+                               </p>}
                             </div>
                             <div className="flex flex-col mt-5 gap-3">
                               <div className="rounded-[2px] p-2 bg-[#15191E] flex item-center justify-center">
@@ -1121,14 +1172,14 @@ function StatementModel() {
                                     {detailsBet?.rate}
                                   </p>
                                 </div>}
-                                {detailsBet?.event_type=="sport"&&<div className="flex justify-between w-[100%] items-center">
+                               <div className="flex justify-between w-[100%] items-center">
                                   <p className="text-sm font-medium">Stake</p>
                                   <p
                                     className={` font-semibold text-sm  text-purple-400`}
                                   >
-                                    {detailsBet?.stake}
+                                    {detailsBet?.stake} BDT
                                   </p>
-                                </div>}
+                                </div>
                                 {detailsBet?.event_type=="sport"?
                                   <div className="flex justify-between w-[100%] items-center">
                                 <p className="text-sm font-medium">
@@ -1186,7 +1237,7 @@ function StatementModel() {
                                     {detailsBet?.result_type == "win"
                                       ? "+":detailsBet?.result_type=="lose"?"-":""}
                                     
-                                    {detailsBet?.result_type=="win"?detailsBet?.win_loss:detailsBet?.stake}
+                                    {detailsBet?.result_type=="win"?detailsBet?.win_loss-detailsBet?.stake:detailsBet?.stake}
                                     <span className="text-white text-sm">
                                       BDT
                                     </span>

@@ -48,7 +48,7 @@ const [eventName,setEventName]=useState("")
         setAllData(data);
         setPagination(data.pagination);
         setLoading(false);
-        console.log(data,"query")
+        console.log(data,"query123")
       setBetsCount(response.betsCount);
         
       } catch (error: any) {
@@ -191,7 +191,7 @@ const [eventName,setEventName]=useState("")
               <option value={""}>Sports</option>
               <option value={"cricket"}>Cricket</option>
 
-              <option value={"football"}>Football</option>
+              <option value={"soccer"}>Football</option>
               <option value={"tennis"}>Tennis</option>
 
             </select>
@@ -278,11 +278,7 @@ const [eventName,setEventName]=useState("")
                       </td>
 
                       <td>
-                      {row.sport_id == 1
-                            ? "Tennis"
-                            : row.sport_id === 2
-                            ? "Scoccer"
-                            : "Cricket"}
+                     {row?.event_name}
                       </td>
 
                       <td className="pl-2">

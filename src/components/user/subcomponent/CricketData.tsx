@@ -211,7 +211,6 @@ const CricketData = ({
             >
               {matchData.length > 0 &&
                 matchData
-                  .slice(0, limit ? 100 : 9)
                   .map((item: CricketData) => {
                     let matchItem: any = data.find(
                       (ele: any) => ele.match_id == item.gid

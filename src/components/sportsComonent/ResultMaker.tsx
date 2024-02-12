@@ -55,7 +55,7 @@ function ResultMaker() {
   const [resultTeam, setResultTeam] = useState<any>("");
   const [resultMatchId, setResultMatchId] = useState<any>("");
   const [requestResultType, setRequestResultType] = useState<any>("");
-  const [sportType,setSportType]=useState("")
+  const [sportType,setSportType]=useState("cricket")
   const totalPages = pagination.totalPages; // Replace with your total number of pages
   const UpdateStatus: any = async (name: any, match_id: any) => {
     let payload = { name };
@@ -79,6 +79,7 @@ function ResultMaker() {
     try {
       const response = await fetchGetRequest(url);
       setMatches(response.data);
+      console.log(response.data,"crfiug")
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -499,11 +500,7 @@ function ResultMaker() {
                             borderRight: "1px solid #ccc",
                           }}
                         >
-                          {row.sport_id == 1
-                            ? "Tennis"
-                            : row.sport_id === 2
-                            ? "Scoccer"
-                            : "Cricket"}
+                          {row?.sport_name}
                         </Td>
                         <Td
                           style={{

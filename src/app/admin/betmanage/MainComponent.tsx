@@ -215,8 +215,10 @@ const MainComponent = () => {
               <th className="text-right">Status</th>
             </tr>
             <tbody className=" ">
-              {allBet &&
-                allBet.map((item) => {
+            {allBet &&
+    allBet
+      .filter(item => item.event_type === "casino") // Filter items with event_type equal to "casino"
+      .map((item) => {
                   return (
                     <tr
                       key={item?._id}

@@ -25,6 +25,8 @@ const MyProfile = ({
   const [loading1, setLoading1] = useState(false);
   const [transactiondata, setTransactionData] = useState<AllTransaction[]>([]);
   const [copiedItem, setCopiedItem] = useState(null);
+  const [plData, setPlData] = useState<any>({});
+
   const [transactionDetails, setTransactionDetails] =
     useState<AllTransaction>();
   const userAuth = useSelector((state: RootState) => state);
@@ -67,8 +69,32 @@ console.log(username,"username",joined_at,"joined_at")
     }
   };
 
+  const getPlReport = async () => {
+    setLoading1(true);
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-total-pl/${user_id}?type=user&username=${username}`;
+    try {
+      let response = await fetchGetRequest(url);
+      const data = response;
+      console.log(data,"plreport")
+      if (data) {
+        setPlData(data);
+      }
+    } catch (error: any) {
+      console.log(error?.data?.message)
+
+      // toast({
+      //   description: `${error?.data?.message}`,
+      //   status: "error",
+      //   duration: 4000,
+      //   position: "top",
+      //   isClosable: true,
+      // });
+    }
+  };
+
   useEffect(() => {
     getAllTransaction();
+    getPlReport()
   }, []);
 
   const handleProfileTransaction = (id: number, data?: AllTransaction) => {
@@ -267,8 +293,8 @@ console.log(username,"username",joined_at,"joined_at")
                 </defs>
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2">Profit & Loss</p>
-              <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-sm  ${plData?.allPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.allPL>0&&"+"}{plData?.allPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -381,9 +407,9 @@ console.log(username,"username",joined_at,"joined_at")
                   </filter>
                 </defs>
               </svg>
-              <p className="text-[10px] sm:text-xs  -mt-2 ">Sport Profit</p>
-              <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-[10px]  sm:text-xs  -mt-2 `}>Sport Profit</p>
+              <p className={`text-sm  ${plData?.sportsPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.sportsPL>0&&"+"}{plData?.sportsPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -497,8 +523,8 @@ console.log(username,"username",joined_at,"joined_at")
                 </defs>
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2 ">Casino Profit</p>
-              <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-sm  ${plData?.casinoPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.casinoPL>0&&"+"}{plData?.casinoPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>

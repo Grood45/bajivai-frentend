@@ -75,11 +75,11 @@ const MainComponent = () => {
       title: "Refferrals",
       icon: <AiOutlineShareAlt />,
     },
-    // {
-    //   id: 6,
-    //   title: "Profit & Loss",
-    //   icon: <MdOutlineAccountBalanceWallet />,
-    // },
+    {
+      id: 6,
+      title: "Profit & Loss",
+      icon: <MdOutlineAccountBalanceWallet />,
+    },
     {
       id: 7,
       title: "Bet History",
@@ -390,6 +390,8 @@ console.log(data,"asdff")
         {active === 3 && <WithDrawl />}
         {active === 4 && <Transaction />}
         {active === 5 && <Referral />}
+        {active === 6 && <ProfiltAndLoss username ={userData?.username} user_id={userData?.user_id}  />}
+
         {active === 7 && <BetHistory />}
       </div>
     </div>
