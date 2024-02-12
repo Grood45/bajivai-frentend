@@ -634,11 +634,9 @@ function DashboardTable() {
                       {row.username}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.sport_id == 1
-                        ? "Tennis"
-                        : row.sport_id === 2
-                        ? "Scoccer"
-                        : "Cricket"}
+                      
+
+                        {row?.event_name}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.league_name}

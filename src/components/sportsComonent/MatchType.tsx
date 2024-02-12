@@ -317,11 +317,7 @@ function MatchType() {
                       borderRight: "1px solid #ccc",
                     }}
                   >
-                    {row.sport_id == 1
-                      ? "Tennis"
-                      : row.sport_id === 2
-                      ? "Scoccer"
-                      : "Cricket"}
+                    {row?.sport_name}
                   </Td>
                   <Td
                     style={{
