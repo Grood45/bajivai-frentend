@@ -6,13 +6,15 @@ import { usePathname, useRouter } from "next/navigation";
 import { AiFillHome } from "react-icons/ai";
 import { CgCardSpades } from "react-icons/cg";
 import { BiCricketBall, BiSearch } from "react-icons/bi";
-import { BsBrightnessHigh, BsFillBagFill } from "react-icons/bs";
+import { BsBrightnessHigh, BsFillBagFill, BsWhatsapp } from "react-icons/bs";
 import { SlPeople } from "react-icons/sl";
 import { MdDarkMode, MdSupport } from "react-icons/md";
 import { manageSideBar_Fn } from "@/app/redux-arch/fetures/nav-slice";
 import themeChange from "@/theme";
 import { FcSupport } from "react-icons/fc";
+import { CiFacebook } from "react-icons/ci";
 import Link from "next/link";
+import { FaInstagram } from "react-icons/fa";
 const SidebarNavbar = ({
   identity,
   value,
@@ -317,11 +319,10 @@ const SidebarNavbar = ({
               </span>
             );
           })}
-
           <span className=" lg:bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[12px]">
             {" "}
 
-            {/* <Link href={whatsappLink} target="_blank" rel="noopener noreferrer"> */}
+            <Link href={""} target="_blank" rel="noopener noreferrer">
             <button
               
               className={`w-[100%]  ${
@@ -330,30 +331,7 @@ const SidebarNavbar = ({
                   : " flex  flex-col items-center p-1 gap-0 lg:p-3 rounded-[6px] lg:gap-1 lg:rounded-[12px]"
               }  text-white  ${theme ? "text-black" : "text-white"}  bg-[#212632] `}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="29"
-                viewBox="0 0 28 29"
-                fill="none"
-              >
-                <g clip-path="url(#clip0_5_1891)">
-                  <path
-                    d="M14 2.51544C11.6794 2.51544 9.45376 3.43731 7.81282 5.07826C6.17187 6.7192 5.25 8.9448 5.25 11.2654V13.0154H7C7.46413 13.0154 7.90925 13.1998 8.23744 13.528C8.56563 13.8562 8.75 14.3013 8.75 14.7654V20.0154C8.75 20.4796 8.56563 20.9247 8.23744 21.2529C7.90925 21.5811 7.46413 21.7654 7 21.7654H5.25C4.78587 21.7654 4.34075 21.5811 4.01256 21.2529C3.68437 20.9247 3.5 20.4796 3.5 20.0154V11.2654C3.5 9.88656 3.77159 8.52118 4.29926 7.24727C4.82694 5.97335 5.60036 4.81584 6.57538 3.84082C7.55039 2.86581 8.70791 2.09238 9.98182 1.56471C11.2557 1.03703 12.6211 0.765442 14 0.765442C15.3789 0.765442 16.7443 1.03703 18.0182 1.56471C19.2921 2.09238 20.4496 2.86581 21.4246 3.84082C22.3996 4.81584 23.1731 5.97335 23.7007 7.24727C24.2284 8.52118 24.5 9.88656 24.5 11.2654V21.7654C24.5 22.9258 24.0391 24.0386 23.2186 24.859C22.3981 25.6795 21.2853 26.1404 20.125 26.1404H16.3905C16.2369 26.4065 16.016 26.6274 15.75 26.781C15.4839 26.9346 15.1822 27.0154 14.875 27.0154H13.125C12.6609 27.0154 12.2158 26.8311 11.8876 26.5029C11.5594 26.1747 11.375 25.7296 11.375 25.2654C11.375 24.8013 11.5594 24.3562 11.8876 24.028C12.2158 23.6998 12.6609 23.5154 13.125 23.5154H14.875C15.1822 23.5154 15.4839 23.5963 15.75 23.7499C16.016 23.9035 16.2369 24.1244 16.3905 24.3904H20.125C20.8212 24.3904 21.4889 24.1139 21.9812 23.6216C22.4734 23.1293 22.75 22.4616 22.75 21.7654H21C20.5359 21.7654 20.0908 21.5811 19.7626 21.2529C19.4344 20.9247 19.25 20.4796 19.25 20.0154V14.7654C19.25 14.3013 19.4344 13.8562 19.7626 13.528C20.0908 13.1998 20.5359 13.0154 21 13.0154H22.75V11.2654C22.75 10.1164 22.5237 8.97856 22.0839 7.91696C21.6442 6.85536 20.9997 5.89077 20.1872 5.07826C19.3747 4.26574 18.4101 3.62122 17.3485 3.1815C16.2869 2.74177 15.1491 2.51544 14 2.51544Z"
-                    fill="white"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_5_1891">
-                    <rect
-                      width="28"
-                      height="28"
-                      fill="white"
-                      transform="translate(0 0.765442)"
-                    />
-                  </clipPath>
-                </defs>
-              </svg>
+              <BsWhatsapp fontSize="25px" />
               <span
                 className={`text-[10px] sm:text-xs     ${
                   showSideBar1 && identity === 1
@@ -361,11 +339,63 @@ const SidebarNavbar = ({
                     : "contents lg:hidden  "
                 }  `}
               >
-                Support
+                Whatsapp
               </span>
             </button>
-            {/* </Link> */}
+            </Link>
           </span>
+          <span className=" lg:bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[12px]">
+            {" "}
+
+            <Link href={""} target="_blank" rel="noopener noreferrer">
+            <button
+              
+              className={`w-[100%]  ${
+                showSideBar1 && identity === 1
+                  ? " flex items-center p-3 gap-1  rounded-[12px] "
+                  : " flex  flex-col items-center p-1 gap-0 lg:p-3 rounded-[6px] lg:gap-1 lg:rounded-[12px]"
+              }  text-white  ${theme ? "text-black" : "text-white"}  bg-[#212632] `}
+            >
+              <CiFacebook fontSize="30px" />
+              <span
+                className={`text-[10px] sm:text-xs     ${
+                  showSideBar1 && identity === 1
+                    ? "contents "
+                    : "contents lg:hidden  "
+                }  `}
+              >
+                Facebook
+              </span>
+            </button>
+            </Link>
+          </span>
+          <span className=" lg:bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[12px]">
+            {" "}
+
+            <Link href={""} target="_blank" rel="noopener noreferrer">
+            <button
+              
+              className={`w-[100%]  ${
+                showSideBar1 && identity === 1
+                  ? " flex items-center p-3 gap-1  rounded-[12px] "
+                  : " flex  flex-col items-center p-1 gap-0 lg:p-3 rounded-[6px] lg:gap-1 lg:rounded-[12px]"
+              }  text-white  ${theme ? "text-black" : "text-white"}  bg-[#212632] `}
+            >
+              <FaInstagram fontSize="25px" />
+              <span
+                className={`text-[10px] sm:text-xs     ${
+                  showSideBar1 && identity === 1
+                    ? "contents "
+                    : "contents lg:hidden  "
+                }  `}
+              >
+                Instagram
+              </span>
+            </button>
+            </Link>
+          </span>
+
+        
         </div>
       </div>
     </div>

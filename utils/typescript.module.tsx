@@ -250,6 +250,8 @@ export interface Allbets {
   user_id: string;
   username: string;
   _id: string;
+  win_loss:number,
+  result_type:string
 }
 
 export interface AllTransaction {

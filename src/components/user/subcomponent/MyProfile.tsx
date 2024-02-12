@@ -293,8 +293,8 @@ console.log(username,"username",joined_at,"joined_at")
                 </defs>
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2">Profit & Loss</p>
-              <p className="text-sm  font-medium">
-                {plData?.allPL}<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-sm  ${plData?.allPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.allPL>0&&"+"}{plData?.allPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -407,9 +407,9 @@ console.log(username,"username",joined_at,"joined_at")
                   </filter>
                 </defs>
               </svg>
-              <p className="text-[10px] sm:text-xs  -mt-2 ">Sport Profit</p>
-              <p className="text-sm  font-medium">
-              {plData?.sportsPL}<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-[10px]  sm:text-xs  -mt-2 `}>Sport Profit</p>
+              <p className={`text-sm  ${plData?.sportsPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.sportsPL>0&&"+"}{plData?.sportsPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -523,8 +523,8 @@ console.log(username,"username",joined_at,"joined_at")
                 </defs>
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2 ">Casino Profit</p>
-              <p className="text-sm  font-medium">
-              {plData?.casinoPL}<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-sm  ${plData?.casinoPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.casinoPL>0&&"+"}{plData?.casinoPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>

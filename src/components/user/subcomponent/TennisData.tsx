@@ -240,7 +240,7 @@ const finalData:any=[]
             >
               {matchData &&
                 matchData.length > 0 &&
-                matchData.slice(0, limit ? 100 : 115).map((item: any) => {
+                matchData.map((item: any) => {
                   let matchItem = data.find(
                     (ele: any) => ele.match_id == item.gmid
                   );

@@ -244,7 +244,7 @@ const [loading,setLoading]=useState(false)
             sm:w-[100wh] mt-[16px]  `}
             >
               {matchData.length > 0 &&
-                matchData.slice(0, limit ? 100 : 20).map((item: any) => {
+                matchData.map((item: any) => {
                   let matchItem = data.find(
                     (ele: any) => ele.match_id == item.gmid
                   );

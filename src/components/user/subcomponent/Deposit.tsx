@@ -399,7 +399,13 @@ const Deposit = ({
                               </span>{" "}
 
                             </p>
-                            <p className="text-xs text-green-300 font-semibold">+{item.bonus}%</p>
+                            <p className="text-[10px] ">
+                              Bonus :
+                              <span className="text-green-500">
+                              +{item.bonus}% 
+                              </span>{" "}
+
+                            </p>
                             </div>
                            
 
