@@ -24,7 +24,6 @@ const CricketScore = ({
   singleMatch: any;
 }) => {
   const [remainingTime, setTimeRemaining] = useState("");
-  (scoreData,singleMatch, "scoreDatasdaaddsaa");
 
   const lastBall =
     scoreData?.last24balls && scoreData.last24balls.length > 0
