@@ -73,7 +73,6 @@ function Notification() {
       }
       setLoading1(false);
     } catch (error: any) {
-      console.log(error?.data?.message)
       // toast({
       //   description: `${error?.data?.message}`,
       //   status: "error",

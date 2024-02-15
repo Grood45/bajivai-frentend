@@ -10,7 +10,6 @@ const MainComponent = () => {
       const handleSubmit = (event:any) => {
         event.preventDefault();
         // Perform login logi here, e.g., send username and password to server
-        console.log("ram",username,password)
         if(username==="sportadminb" && password==="sport321"){
             // localStorage?.setItem("sportadmin","true")
             // Cookies.set('sportadmin', 'true');

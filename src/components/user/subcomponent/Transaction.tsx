@@ -47,11 +47,9 @@ const Transaction = ({
       if (receivedData) {
         setTransactionData(receivedData);
       }
-      console.log(receivedData, "receive data");
 
       setLoading1(false);
     } catch (error: any) {
-      console.log(error?.data?.message)
       // toast({
       //   description: `${error?.data?.message}`,
       //   status: "error",
@@ -64,7 +62,6 @@ const Transaction = ({
 
   useEffect(() => {
     getAllTransaction();
-    console.log(transactionDetails, "klklk");
   }, []);
 
   const handleTransaction = (cardIndex?: any, data?: AllTransaction) => {

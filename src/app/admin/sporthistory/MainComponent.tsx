@@ -48,7 +48,6 @@ const [eventName,setEventName]=useState("")
         setAllData(data);
         setPagination(data.pagination);
         setLoading(false);
-        console.log(data,"query123")
       setBetsCount(response.betsCount);
         
       } catch (error: any) {

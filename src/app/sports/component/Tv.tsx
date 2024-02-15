@@ -4,7 +4,6 @@ import { MdLiveTv } from 'react-icons/md'
 import { RxCross2 } from "react-icons/rx";
 
 export default function Tv({eventid,setShowTv}:{eventid:any,setShowTv:any}) {
-    console.log(eventid,"event id")
     return (
       <>
         <div className='fixed z-50  top-[70px] w-[95%] pl-2 sm:pl-0 sm:w-auto sm:right-[10px]'>

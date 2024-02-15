@@ -90,7 +90,6 @@ const [loading,setLoading]=useState(false)
       );
       const data = response.data;
       setData(data);
-      console.log(data, "soccer");
 
       setPagination(response.pagination);
       setLoading(false)
@@ -148,8 +147,6 @@ const [loading,setLoading]=useState(false)
         }
       });
 
-    console.log(finalData, "finalData");
-    console.log(matchData, "match data soccer");
     const countMatches = matchData.reduce((count, item: any) => {
       const matchItem = data.find(
         (ele: any) => ele.match_id == item.gmid && item.iplay === true
@@ -170,7 +167,6 @@ const [loading,setLoading]=useState(false)
       };
     });
 
-    console.log(matchData, "matchdata");
   }, [matchData]);
 
   let newData =

@@ -92,7 +92,6 @@ const RusultMakerTossAndFancy = () => {
     try {
       const response = await fetchGetRequest(url);
       setBets(response.data);
-      console.log(response.data, "hffhg");
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -105,7 +104,6 @@ const RusultMakerTossAndFancy = () => {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -139,7 +137,6 @@ const RusultMakerTossAndFancy = () => {
   };
 
   const handleConfirmResult = async () => {
-    console.log(selectedMatches);
     setResultLoading(true);
     let payload = { user_ids: selectedMatches, answer: result };
     try {

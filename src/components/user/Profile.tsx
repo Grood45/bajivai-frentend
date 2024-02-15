@@ -83,7 +83,6 @@ const Profile = () => {
       setTodayWithdraw(percentOfWithdraw);
      
     } catch (error: any) {
-      console.log(error)
       // toast({
       //   description: error?.message,
       //   status: "error",

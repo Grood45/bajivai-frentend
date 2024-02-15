@@ -37,14 +37,12 @@ const MainComponent = () => {
       const data = response.data;
       const receivedData: BetHistory[] = response.data;
       if (receivedData) {
-        console.log(receivedData,"bet manage")
         setAllBet(receivedData);
       }
       setBetsCount(response.betsCount);
       setLoading(false);
       setPagination(response.pagination);
     } catch (error: any) {
-      console.log(error?.data?.message)
       // toast({
       //   description: `${error?.data?.message}`,
       //   status: "error",
@@ -104,16 +102,13 @@ const MainComponent = () => {
   ];
 
   const handlePrevPage = () => {
-    console.log(currentPage,totalPages)
   
-    console.log("ram")
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
   
   const handleNextPage = () => {
-    console.log(currentPage,totalPages)
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }

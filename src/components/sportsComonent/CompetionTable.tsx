@@ -244,7 +244,6 @@ const [selectedDeleteMatches, setSelectDelete] = useState<any>([]);
     setDeleteLoading(true);
     try {
         let payload: any = { match_ids: [match_id] };
-        console.log(payload, "payload");
         let response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/match/delete-previous-match`, { data: payload });
         toast({
             title: response?.data?.message,
@@ -258,11 +257,9 @@ const [selectedDeleteMatches, setSelectDelete] = useState<any>([]);
         const updatedMatches = matches.filter((match: any) => {
           return match.match_id !== match_id; // Use strict comparison
         });
-        console.log(updatedMatches,"updatematch")
         setMatches(updatedMatches);
     } catch (err: any) {
         setDeleteLoading(false);
-        console.log(err, "err");
         toast({
             title: err?.data?.message,
             status: "error",
@@ -284,7 +281,6 @@ const handleDeleteSelectedMatch=async()=>{
   }
   try {
       let payload: any = { match_ids: selectedDeleteMatches };
-      console.log(payload, "payload");
       let response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/match/delete-previous-match`, { data: payload });
       toast({
           title: response?.data?.message,
@@ -297,11 +293,9 @@ const handleDeleteSelectedMatch=async()=>{
       // Update matches after deletion
       const updatedMatches = matches.filter((match: any) => !selectedDeleteMatches.includes(match.match_id));
 
-      console.log(updatedMatches,"updatematch")
       setMatches(updatedMatches);
   } catch (err: any) {
       setDeleteLoading(false);
-      console.log(err, "err");
       toast({
           title: err?.data?.message,
           status: "error",

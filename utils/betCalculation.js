@@ -147,6 +147,5 @@ export const calculateBookmakerPL = (bet, runner1, runner2, runner3 = "The Draw"
       totalDrawLay += bet[h].stake;
     }
   }
-  console.log(totalDrawBack, totalDrawLay);
   return [Math.round(l1), Math.round(l2), math.round(l3)];
 };

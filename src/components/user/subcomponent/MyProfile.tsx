@@ -44,7 +44,6 @@ const MyProfile = ({
     referal_code = "",
   } = userAuth?.combineR?.userAuth?.data?.user || {};
   const toast = useToast();
-console.log(username,"username",joined_at,"joined_at")
   const getAllTransaction = async () => {
     setLoading1(true);
     let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-transaction/${user_id}`;
@@ -57,7 +56,6 @@ console.log(username,"username",joined_at,"joined_at")
       }
       setLoading1(false);
     } catch (error: any) {
-      console.log(error?.data?.message)
 
       // toast({
       //   description: `${error?.data?.message}`,
@@ -75,12 +73,10 @@ console.log(username,"username",joined_at,"joined_at")
     try {
       let response = await fetchGetRequest(url);
       const data = response;
-      console.log(data,"plreport")
       if (data) {
         setPlData(data);
       }
     } catch (error: any) {
-      console.log(error?.data?.message)
 
       // toast({
       //   description: `${error?.data?.message}`,

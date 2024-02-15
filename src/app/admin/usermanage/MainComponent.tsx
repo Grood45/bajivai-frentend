@@ -54,7 +54,6 @@ const MainComponent = () => {
       const receivedData: UserInterface[] = response.data;
       setAllData(receivedData);
       setUsersCount(response.usersCount);
-      console.log(response,"response")
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -70,16 +69,13 @@ const MainComponent = () => {
 
  
 const handlePrevPage = () => {
-  console.log(currentPage,totalPages)
 
-  console.log("ram")
   if (currentPage > 1) {
     setCurrentPage(currentPage - 1);
   }
 };
 
 const handleNextPage = () => {
-  console.log(currentPage,totalPages)
   if (currentPage < totalPages) {
     setCurrentPage(currentPage + 1);
   }

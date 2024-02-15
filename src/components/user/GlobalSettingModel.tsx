@@ -81,7 +81,6 @@ function GlobalSettingModel() {
 
   const handleVerfiyEmail = () => {};
   const handleOtpEmail = () => {
-    console.log(sendotp, "ram");
     setEmail(true);
   };
 
@@ -141,7 +140,6 @@ function GlobalSettingModel() {
     try {
       let response = await sendPatchRequest(url, payload);
       const data = response.data;
-      console.log(data);
       toast({
         description: response.message,
         status: "success",
@@ -201,7 +199,6 @@ const [changePasswordLoading,setChangePasswordLoading]=useState(false)
           position: "top",
           isClosable: true,
         });
-        console.log(error, "erroro");
       }
       setChangePasswordLoading(false);
     }

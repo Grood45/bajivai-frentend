@@ -79,9 +79,7 @@ const TopNavbar = ({ value }: { value?: number }) => {
     dispatch(fetchUserDataAsync());
   }, [theme]);
 
-  console.log(token, "token");
-  console.log(otpless_token, "otpless_token");
-  console.log(showSideBar3, "showSideBar3");
+ 
 
   const pathname = usePathname();
   return (

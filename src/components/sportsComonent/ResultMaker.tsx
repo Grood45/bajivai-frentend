@@ -79,7 +79,6 @@ function ResultMaker() {
     try {
       const response = await fetchGetRequest(url);
       setMatches(response.data);
-      console.log(response.data,"crfiug")
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {

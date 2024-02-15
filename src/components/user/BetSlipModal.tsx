@@ -53,19 +53,15 @@ function BetSlipModal() {
     let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?status=pending&limit=1000`;
     try {
       let response = await fetchGetRequest(url);
-      console.log(response, "response");
       const data = response.data;
       const receivedData: BetSlip[] = response.data;
-      console.log(data, "betslip data");
       if (response) {
         setTotalBet(response.pagination.totalbet);
-        console.log(totalBet, "totaljggBet");
       }
       if (receivedData) {
         setBetslipData(receivedData);
       }
       setLoading1(false);
-      console.log(data, "betslip data");
     } catch (error: any) {
       toast({
         description: `${error?.data?.message}`,
@@ -74,7 +70,6 @@ function BetSlipModal() {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

@@ -24,8 +24,7 @@ function DateRangePicker() {
   // Handler for form submission
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    console.log("Start Date:", startDate);
-    console.log("End Date:", endDate);
+    
     // You can perform further actions here, such as passing the dates to another component or making an API call.
     await deletePreviousMatch();
   };
@@ -34,7 +33,6 @@ function DateRangePicker() {
     setLoading(true);
     let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/delete-previous-match?`;
     const ConvertDate = (date: any) => {
-      console.log(date, "date");
       let year = date.split("-")[0];
       let month = Number(date.split("-")[1]);
       let day = Number(date.split("-")[2]);
@@ -42,7 +40,6 @@ function DateRangePicker() {
       return finalDate;
     };
 
-    console.log(ConvertDate(startDate), ConvertDate(endDate));
 
     if (startDate) {
       url += `start_date=${ConvertDate(startDate)}`;

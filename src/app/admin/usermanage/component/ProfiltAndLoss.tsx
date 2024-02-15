@@ -16,12 +16,10 @@ const userAuth = useSelector((state: RootState) => state);
     try {
       let response = await fetchGetRequest(url);
       const data = response;
-      console.log(data,"plreport")
       if (data) {
         setPlData(data);
       }
     } catch (error: any) {
-      console.log(error?.data?.message)
 
       // toast({
       //   description: `${error?.data?.message}`,

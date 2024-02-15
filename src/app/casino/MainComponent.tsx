@@ -199,7 +199,6 @@ const MainComponent = () => {
       const width = window.innerWidth;
       // Adjust the threshold as needed for your specific case
       const isMobile = width <= 768;
-      console.log(isMobile ? 'Mobile' : 'Desktop');
     };
     // Add event listener for window resize
     window.addEventListener('resize', handleResize);

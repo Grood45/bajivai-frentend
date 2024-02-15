@@ -72,7 +72,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
   } = userAuth?.combineR?.userAuth?.data?.user || {};
   const toast = useToast();
   const param = useParams();
-  console.log(param, "param");
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   // fetch data of odds, bbokmaker, fancy, toss
   const { token = "", otpless_token = "" } =
@@ -84,13 +83,11 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     });
     socket.on("oddsData", (data) => {
       if (data.t1 && param.sport_id == "4") {
-        console.log(data, "odds data for cricket");
         setData((prev) => {
           setPrevCricketDataofOdds(prev);
           return data.t1[0];
         });
       } else if ((data && param.sport_id == "1") || param.sport_id == "2") {
-        console.log(data, "odds data for cricket");
         // let filterData = data[0].section.filter(
         //   (ele: any) => ele.nat !== "The Draw"
         // );
@@ -151,7 +148,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
 
       setRules(response.data);
     } catch (error) {
-      console.log(error, "error");
     }
   };
 
@@ -276,7 +272,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
           isClosable: true,
         });
         setBetLoading(false);
-        console.log(error, "1");
       }
     }, rules.bet_timing || 4000);
   };
@@ -285,7 +280,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
     if (Array.isArray(team)) {
       const result = calculatePL(bet, team[0], team[1], "The Draw");
       let [pl1, pl2, pl3] = result;
-      console.log(pl1, pl2, "pl of");
       // alert("hihninik")
       setFirstTeamPl(pl1);
       setSecondTeamPl(pl2);
@@ -305,7 +299,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
       );
       const data = response.data;
       setBet(data);
-      console.log(data, "bet data");
     } catch (error: any) {
       toast({
         description: error?.data?.message || "Something went wrong",
@@ -314,7 +307,6 @@ const MatchOdds: React.FC<FancyProps> = ({ singleMatch }) => {
         duration: 4000,
         isClosable: true,
       });
-      console.log(error);
     }
   };
 

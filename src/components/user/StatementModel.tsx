@@ -50,14 +50,11 @@ function StatementModel() {
     try {
       let response = await fetchGetRequest(url);
       const data = response.data;
-      console.log(data, "all bet");
       const receivedData: Allbets[] = response.data;
       if (receivedData) {
         setStateMentData(receivedData);
       }
-      console.log(response, "response");
       setLoading1(false);
-      console.log(data, "getAllbets data");
     } catch (error: any) {
       toast({
         description: `${error?.data?.message}`,
@@ -66,7 +63,6 @@ function StatementModel() {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -80,7 +76,6 @@ function StatementModel() {
 
   const sportsdata = filterDataByCategory("sport");
   const casinoData = filterDataByCategory("casino");
-  console.log(statemendatas, casinoData, "sc");
   const {
     isOpen,
     onOpen,
@@ -101,7 +96,6 @@ function StatementModel() {
     setShowStateMent(id);
     if (id === 5) {
       setDetailsBet(detail);
-      console.log(detail, "detail");
     }
   };
   const ShowUser = (id: number) => {
@@ -312,7 +306,6 @@ function StatementModel() {
                               return (
                                 <div
                                   onClick={() => handleStatement(5, item)}
-                                  // onClick={()=>console.log("ram",statemendatas,"all bet")}
                                   key={item._id}
                                   className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
                                 >

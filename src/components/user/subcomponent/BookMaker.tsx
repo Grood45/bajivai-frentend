@@ -186,8 +186,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     if (newExposure < 0) {
       originalExposure += Math.abs(newExposure);
     }
-    // console.log(newExposure);
-    console.log(originalExposure, "og");
     if (originalExposure > amount) {
       toast({
         description: "Insufficient Balance.",
@@ -222,18 +220,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
         isClosable: true,
       });
       setBetLoading(false);
-      console.log(error, "1");
     }
   };
   // fetch data of odds, bbokmaker, fancy, toss
   useEffect(() => {
     const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      //console.log("Connected to the server");
       setLoading(true);
     });
     socket.on("bookmakerData", (data) => {
-      // console.log("Received bookmaker data:", data);
       if (data.t2) {
         setData((prev: any) => {
           setPrevCricketDataofOdds(prev);
@@ -241,14 +236,12 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
 
           
 
-          console.log(filteredData, "filteredDaata")
 
           return filteredData[0]?.bm1 || [];
         });
       }
     });
     socket.on("disconnect", () => {
-      //console.log("Disconnected from the server");
       setLoading(false);
 
     });
@@ -259,7 +252,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
-      //console.log("socket disconnected");
       setLoading(false);
 
     };
@@ -285,7 +277,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
 
       setBet(data);
 
-      // console.log(data, "bet data");
     } catch (error: any) {
     setLoading1(false)
 
@@ -303,7 +294,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
   useEffect(() => {
     fetchBetData();
   }, []);
-  // console.log(singleMatch, "dataatat");
 
   useEffect(() => {
     let team = singleMatch?.match_name.split(" v " || "vs");

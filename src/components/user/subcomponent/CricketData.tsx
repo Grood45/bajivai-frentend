@@ -67,7 +67,6 @@ const CricketData = ({
       );
       const data = response.data;
       setData(data);
-      console.log(data, "cricket");
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -88,7 +87,6 @@ const CricketData = ({
     socket.on("connect", () => {});
 
     socket.on("Data", (data: any) => {
-      // console.log(data, "datatyatatatattf")
       if (data) {
         setMatchData(data?.t1 || []);
       }
@@ -142,7 +140,6 @@ const CricketData = ({
       };
     });
   }, [matchData]);
-  console.log(matchData, "matchdata cricket");
   let newData =
     matchFilter === "Inplay"
       ? matchData.length > 0 && matchData.filter((item) => item.iplay === true)

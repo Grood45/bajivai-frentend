@@ -71,7 +71,6 @@ const [show,setShowTv]=useState(false)
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/match/get-single-match/${param.id}`
       );
       let data = response.data;
-      console.log(data,scoreData,"singlematch")
       setSingleMatch(data);
     } catch (error: any) {
       toast({
@@ -96,7 +95,6 @@ const [show,setShowTv]=useState(false)
     });
     socket.on("scoreData", (data) => {
       if (data) {
-        console.log(data, "score data of")
         setScoreData(data);
       }
       setLoading(false);
@@ -116,7 +114,6 @@ const [show,setShowTv]=useState(false)
 
   const countdown: any = singleMatch?.open_date;
   // const countdown:any="12/11/2023 8:15:00 AM"
-  console.log(countdown && countdown, "flase&true");
   const countdownDate = new Date(countdown && countdown).getTime();
   const hasCountdownPassed = () => {
     if (isNaN(countdownDate)) {
@@ -128,7 +125,6 @@ const [show,setShowTv]=useState(false)
     return currentTime > Number(countdownDate);
   };
   const isCountdownPassed = hasCountdownPassed();
-  console.log(isCountdownPassed);
 
 
   const category = [

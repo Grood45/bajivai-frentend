@@ -28,7 +28,6 @@ function MainComponent() {
       setLoading(false);
     } catch (error: any) {
       setLoading(false);
-      console.log(error?.data?.message)
       // toast({
       //   title: error?.data?.message,
       //   status: "error",

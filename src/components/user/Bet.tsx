@@ -56,7 +56,6 @@ const Bet: React.FC<BetProps> = ({
     setStake(value);
     setActiveValue(index);
   };
-  console.log(stake * rate, "ans", stake, rate);
 
   return (
     <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] w-[100%] lg:w-[50%] left-0 lg:left-[18%] lg:mx-auto  fixed bottom-0 z-50  rounded-[15px]">

@@ -23,7 +23,6 @@ const MainComponent = () => {
       const receivedData = response.data;
       if (receivedData) {
         setWithdrawData(receivedData);
-        console.log(data, "recived data");
       }
       setLoading(false);
     } catch (error: any) {

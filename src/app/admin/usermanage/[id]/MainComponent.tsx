@@ -94,7 +94,6 @@ const MainComponent = () => {
     try {
       let response = await fetchGetRequest(url);
       const data = response.data;
-console.log(data,"asdff")
       setLoading(false);
       const receivedData: UserInterface = response.data;
       if (receivedData) {
@@ -124,7 +123,6 @@ console.log(data,"asdff")
       if (response) {
         setPlData(response);
       }
-      console.log(response, "p/ldata");
     } catch (error: any) {
       setLoading1(false);
       toast({
@@ -134,7 +132,6 @@ console.log(data,"asdff")
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
   

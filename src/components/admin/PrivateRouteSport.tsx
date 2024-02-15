@@ -17,7 +17,6 @@ const PrivateRouteSport: React.FC<PrivateRouteProps> = ({ children }) => {
   // Simulate authentication (replace this with your actual authentication logic)
 //   const isAuthenticated = auth?.combineR?.auth?.token||null
 const auth = getCookie('sportsadmin');
-console.log(auth,"auth")
   useEffect(() => {
     if (!auth){
       router.push("/sportLogin");

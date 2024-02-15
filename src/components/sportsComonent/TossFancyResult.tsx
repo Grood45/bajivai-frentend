@@ -56,7 +56,6 @@ const GetAllBets = async () => {
     try {
       const response = await fetchGetRequest(url);
       setBets(response.data);
-      console.log(response.data,"hffhg")
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -69,7 +68,6 @@ const GetAllBets = async () => {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 

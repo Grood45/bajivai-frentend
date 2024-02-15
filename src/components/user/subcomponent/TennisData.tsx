@@ -87,7 +87,6 @@ const [loading,setLoading]=useState(false)
       );
       const data = response.data;
       setData(data);
-      console.log(data,"tennis")
       setPagination(response.pagination);
     setLoading(false)
 
@@ -138,7 +137,6 @@ const finalData:any=[]
       }
     });
   
-    console.log(finalData,"finalData")
     const countMatches = matchData.reduce((count, item:any) => {
       const matchItem = data.find((ele:any) => ele.match_id == item.gmid && item.iplay === true);
       if (matchItem !== undefined) {

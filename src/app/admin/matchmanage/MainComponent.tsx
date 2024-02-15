@@ -143,7 +143,6 @@ const MainComponent = () => {
   ];
 
   const handlePrevPage = () => {
-    console.log(currentPage,totalPages)
   
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -151,7 +150,6 @@ const MainComponent = () => {
   };
   
   const handleNextPage = () => {
-    console.log(currentPage,totalPages)
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
