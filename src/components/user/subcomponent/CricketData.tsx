@@ -337,7 +337,7 @@ const CricketData = ({
                                             item?.ename
                                               .split(" / ")[1]
                                               .split("  ")[1]
-                                              .split(" ")[0]
+                                              // .split(" ")[0]
                                           }
                                         </p>
                                       </div>
@@ -608,7 +608,7 @@ const CricketData = ({
                                           item?.ename
                                             .split(" / ")[1]
                                             .split("  ")[1]
-                                            .split(" ")[0]
+                                           
                                         }
                                       </p>
                                     </div>
