@@ -39,24 +39,24 @@ const SportsBookCarousel = ({
   };
 
   return (
-    <div className="custom-carousel w-[100%]  mt-2">
+    <div className=" w-[100%]  mt-2">
+      
       <Slider {...settings}>
         {gameTypeData?.map((game: any) => (
           <div key={game.id} className="p-2 cursor-pointer">
             <div
               onClick={() => handleGame(game.name)}
               key={game.gameId}
-              className="card w-[100%]"
+              className="bg-yellow-600 rounded-[9px] w-[100%]"
             >
               <div className="background"></div>
               <img
                 src={game.image}
                 className="h-[130px] w-[100%] rounded-[10px]"
               />
-              <div className="logo font-bold text-red-500">Play</div>
 
-              <div className="box box1">
-                <p className="text-black font-bold text-left mt-6">
+              <div className="">
+                <p className="text-xs text-center font-bold text-white py-2">
                   {" "}
                   {game.name}
                 </p>

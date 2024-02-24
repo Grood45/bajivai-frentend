@@ -227,18 +227,17 @@ const MainComponent = () => {
       }`}
     >
       {/* announcement */}
-      <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... -mt-3  p-[2px] rounded-l-[8px] rounded-r-[8px]">
-        <div className="flex w-[100%] items-center rounded-l-[8px] rounded-r-[8px] justify-between text-sm bg-[#D79C27]">
+      <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... -mt-[44px] lg:rounded-l-[8px] lg:rounded-r-[8px] lg:mt-[-20px] p-[2px] ml-[-3%] lg:ml-[0%] w-[106%] lg:w-[100%] ">
+        <div className="flex w-[100%] items-center lg:rounded-l-[8px] lg:rounded-r-[8px] justify-between text-sm bg-[#D79C27]">
           <div className=" flex w-[8%] lg:w-[5%] justify-center   rounded-l-[8px] h-[100%]]">
             <Image className=" w-[30px] m-auto " src={announ} alt="" />
           </div>
           {/* @ts-ignore */}
 
-          <marquee className={`w-[100%] text-[#212632] font-semibold  p-2`}>
+          <marquee className={`w-[100%] text-[#212632] font-semibold  p-1`}>
             {logoAndFav?.marque || ""}
             {/* @ts-ignore */}
           </marquee>
-          <div className="  rounded-r-[8px] w-[5%] p-2 h-[100%]"></div>
         </div>
       </div>
 
@@ -342,7 +341,7 @@ const MainComponent = () => {
           />{" "}
         </div>
       ) : (
-        <div className="flex flex-col mb-[100px]  gap-8">
+        <div className="flex flex-col   gap-8">
           <CricketData
             setgameCounts={setgameCounts}
             matchFilter={matchFilter}

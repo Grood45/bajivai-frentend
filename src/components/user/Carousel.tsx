@@ -81,14 +81,14 @@ const Carousel = () => {
       <Slider ref={sliderRef} {...settings}>
         {sliderdata?.map((item, index) => {
           return (
-            <div key={index} className="w-[100%] md:w-[96%]  relative">
-              <img src={item} className="w-[100%] md:w-[97%] h-[145px] lg:h-[185px] rounded-[8px] lg:rounded-[10px]" alt="" />
+            <div key={index} className="w-[105%] md:w-[96%]  relative">
+              <img src={item} className="w-[100%] md:w-[97%] h-[145px] lg:h-[185px] lg:rounded-[10px]" alt="" />
             </div>
           );
         })}
       </Slider>
 
-      <ul className="slick-dots absolute bottom-4 left-1/2 transform -translate-x-1/2 flex">
+      {/* <ul className="slick-dots absolute bottom-4 left-1/2 transform -translate-x-1/2 flex">
         {sliderdata?.map((item, index) => {
           const dotStyle = {
             width: index === currentSlide ? '20px' : '10px',
@@ -102,7 +102,7 @@ const Carousel = () => {
             <li key={index} style={dotStyle} onClick={() => goToSlide(index)}></li>
           );
         })}
-      </ul>
+      </ul> */}
     </div>
   );
 };

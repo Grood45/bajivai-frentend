@@ -13,8 +13,7 @@ import RightSidebar from "./RightSidebar";
 import { AppDispatch, RootState, useAppSelector } from "@/app/redux-arch/store";
 import { useDispatch, useSelector } from "react-redux";
 import { manageSideBar_Fn } from "@/app/redux-arch/fetures/nav-slice";
-import SignUpModal from "./SignUpModal";
-import SignInModal from "./SignInModal";
+
 import Profile from "./Profile";
 import PamentModel from "./PamentModel";
 import Notification from "./Notification";
@@ -29,8 +28,10 @@ import { fetchGetRequest } from "@/api/api";
 import themeChange from "@/theme";
 import { FaRupeeSign } from "react-icons/fa";
 import ModalComponent from "./subcomponent/LoginModal";
-import LoginModal from "./LoginModal";
 import { TbCurrencyTaka } from "react-icons/tb";
+import MobileSidebar from "./MobileSidebar";
+import SignUpModal from "./SignUpModals";
+import LoginModal from "./LoginModals";
 const TopNavbar = ({ value }: { value?: number }) => {
   const [isLeftActive, setIsLeftActive] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
@@ -93,7 +94,7 @@ const TopNavbar = ({ value }: { value?: number }) => {
       >
         <div className="   flex gap-2 w-[60%] justify-between">
           <div className="w-[100%] lg:w-[20%]  flex items-center gap-3  ">
-            <div className="">
+            <div className="lg:contents hidden">
               {showSideBar1 ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -175,6 +176,10 @@ const TopNavbar = ({ value }: { value?: number }) => {
                   />
                 </svg>
               )}
+            </div>
+            <div className="lg:hidden">
+      <MobileSidebar/>
+
             </div>
 
             <img
@@ -360,7 +365,10 @@ const TopNavbar = ({ value }: { value?: number }) => {
             </div>
           </div>
         ) : (
-          <LoginModal ID={1} />
+          <div className="flex item-center gap-2">
+          <SignUpModal/>
+              <LoginModal ID={1} />
+                    </div>
         )}
       </div>
 

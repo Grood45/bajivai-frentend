@@ -1,6 +1,7 @@
 import React from 'react'
 import SidebarNavbar from './SidebarNavbar'
 import { useAppSelector } from '@/app/redux-arch/store';
+import MobileSidebar from './MobileSidebar';
 
 const MainSidebar = () => {
 
@@ -18,13 +19,9 @@ const MainSidebar = () => {
     </div>
   </div>
 
-   {showSideBar1 && ( 
-  <div className="contents lg:hidden">
-    <div className=" fixed top-[64px]  left-0 z-[1000]  ">
-      <SidebarNavbar identity={2} value={1} />
-    </div>
-  </div>
-    )} 
+ 
+  
+    
     </div>
   )
 }

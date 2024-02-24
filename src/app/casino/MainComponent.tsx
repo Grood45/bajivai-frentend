@@ -62,29 +62,7 @@ const MainComponent = () => {
     userAuth?.combineR?.userAuth?.data?.data || {};
   const toast = useToast();
 
-  const sportbardata = [
-    {
-      id: 1,
-      img: sportbar,
-    },
-    {
-      id: 2,
-      img: sportbar,
-    },
-    {
-      id: 3,
-      img: sportbar,
-    },
-    {
-      id: 4,
-      img: sportbar,
-    },
-    {
-      id: 5,
-      img: sportbar,
-    },
-  ];
-
+  
   const { showSideBar1, theme } = useAppSelector(
     (store) => store.combineR.NavStateReducer
   );
@@ -223,20 +201,19 @@ const MainComponent = () => {
      
 
             {/* announcement */}
-            <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... -mt-3  p-[2px] rounded-l-[8px] rounded-r-[8px]">
-              <div className="flex w-[100%] items-center rounded-l-[8px] rounded-r-[8px] justify-between text-sm bg-[#D79C27]">
+            <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... -mt-[44px] lg:rounded-l-[8px] lg:rounded-r-[8px] lg:mt-[-20px] p-[2px] ml-[-3%] lg:ml-[0%] w-[106%] lg:w-[100%] ">
+              <div className="flex w-[100%] items-center lg:rounded-l-[8px] lg:rounded-r-[8px] justify-between text-sm bg-[#D79C27]">
                 <div className=" flex w-[8%] lg:w-[5%] justify-center   rounded-l-[8px] h-[100%]]">
                   <Image className=" w-[30px] m-auto " src={announ} alt="" />
                 </div>
                 {/* @ts-ignore */}
 
                 <marquee
-                  className={`w-[100%] text-[#212632] font-semibold  p-2`}
+                  className={`w-[100%] text-[#212632] font-semibold  p-1`}
                 >
                   {logoAndFav?.marque || ""}
                   {/* @ts-ignore */}
                 </marquee>
-                <div className="  rounded-r-[8px] w-[5%] p-2 h-[100%]"></div>
               </div>
             </div>
 
@@ -323,13 +300,15 @@ export const GameCard: any = ({
 export const SeamlessGame: any = ({
   id,
   gpName,
+  activeCategory
 }: {
   id: String | number;
   gpName: String;
+  activeCategory:any
 }) => {
   const [data, setData] = useState<GameProvider[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(6);
+  const [limit, setLimit] = useState<any>(activeCategory==="All Game"?1000:6);
   const [gameId, setGameId] = useState<String | number>();
   const [loading, setLoading] = useState<boolean>(false);
   const [pagination, setPagination] = useState<any>({
@@ -449,6 +428,7 @@ export const SeamlessGame: any = ({
               </p>
             </div>
 
+
             <div className="flex gap-3 ">
               <button
                 onClick={handleSeeAll}
@@ -475,7 +455,7 @@ export const SeamlessGame: any = ({
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-3 gap-3 lg:gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-3 gap-5 lg:gap-2">
             {data.map((item) => {
               return (
                 <div
@@ -483,9 +463,9 @@ export const SeamlessGame: any = ({
                   handleGame("SeamlessGame", item.gameProviderId, item.gameID)
                 }
                 key={item.gameID}
-                className="cursor-pointer relative h-[100px] group"
+                className="cursor-pointer relative rounded-md bg-yellow-600"
               >
-                <div className="h-[100px]">
+                <div className="h-[100px] ">
                 <img
                     src={
                       item?.gameInfos[0]?.gameIconUrl ||
@@ -495,8 +475,8 @@ export const SeamlessGame: any = ({
                     alt=""
                   />
                 </div>
-                <div className="title text-[12px]  Game Game1    font-bold text-black  absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-               <span className="px-2 bg-yellow-300 rounded-[6px] ">{item?.gameInfos[0]?.language == "en" && (
+                <div className="title text-[12px]    font-bold text-black  flex items-center justify-center mt-1 ">
+               <span className="px-2 text-white font-bold rounded-[6px] ">{item?.gameInfos[0]?.language == "en" && (
                       <p className="">
                         {item.gameInfos[0].gameName.slice(0,10)}
                       </p>
@@ -510,46 +490,7 @@ export const SeamlessGame: any = ({
                 </div>
               </div>
               
-                // <div
-                //   onClick={() =>
-                //     handleGame("SeamlessGame", item.gameProviderId, item.gameID)
-                //   }
-                //   key={item.gameID}
-                //   className="flex flex-col cursor-pointer  text-center min-h-[100px] items-center  justify-between rounded-[10px] bg-[#212632]  "
-                // >
-                  // <img
-                  //   src={
-                  //     item?.gameInfos[0]?.gameIconUrl ||
-                  //     "https://img.freepik.com/free-vector/casino-background-logo-with-game-card-signs_172107-1205.jpg?size=626&ext=jpg&ga=GA1.1.775584884.1689143940&semt=ais"
-                  //   }
-                  //   className="w-[100%] h-[100%] rounded-md"
-                  //   alt=""
-                  // />
-                //    <div className="flex flex-col px-2 gap-2">
-                //     {item?.gameInfos[0]?.language == "en" && (
-                //       <p className="text-[10px]">
-                //         {item.gameInfos[0].gameName}
-                //       </p>
-                //     )}
-                //     {item?.gameInfos[1]?.language == "en" && (
-                //       <p className="text-[10px]">
-                //         {item.gameInfos[0].gameName}
-                //       </p>
-                //     )}
-                //     <button
-                //       onClick={() =>
-                //         handleGame(
-                //           "SeamlessGame",
-                //           item.gameProviderId,
-                //           item.gameID
-                //         )
-                //       }
-                //       className="px-1 w-[100px] text-white m-auto p-1 font-bold bg-[#DCA029] text-[12px] rounded-[8px]"
-                //     >
-                //       {gameId == item.gameID && loading ? "..." : "Play Now"}
-                //     </button>
-                //   </div> 
-                //  </div>
+               
               );
             })}
           </div>
