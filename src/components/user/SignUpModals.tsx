@@ -33,7 +33,7 @@ import { HiPhoneArrowUpRight } from "react-icons/hi2";
 import { logoutAsync } from "@/app/redux-arch/adminauth/auth.slice";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-function SignUpModal() {
+function SignUpModal({title}:{title:any}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -131,10 +131,10 @@ function SignUpModal() {
   return (
     <>
       <button
-        className="px-1 w-[100px] md:w-[100px] justify-end text-white p-[6px] font-bold bg-blue-500 text-xs md:text-[14px] rounded-[6px]"
+        className={`px-1   ${title!=="Register"?"w-[250px] py-3":"w-[100px]"} justify-end text-white p-[6px] font-bold bg-blue-500 text-xs md:text-[14px] rounded-[6px]`}
         onClick={onOpen}
       >
-        Register
+        {title}
       </button>
 
       <Modal size={{ base: "sm", md: "sm" }} isOpen={isOpen} onClose={onClose}>

@@ -35,9 +35,14 @@ import casino4 from "../../assetuser/new/casino4.jpg";
 import casino5 from "../../assetuser/new/casino5.jpeg";
 import casino6 from "../../assetuser/new/casino6.jpg";
 import casino7 from "../../assetuser/new/casino7.jpeg";
-import { AllGameType, SportsGameType } from "../../../utils/providerData";
+import deposit from "../../assetuser/deposit (1).png";
+import withdral from "../../assetuser/withdrawal.png";
+import refer from "../../assetuser/refer.png";
 
+import { AllGameType, SportsGameType } from "../../../utils/providerData";
+import { manageSideBar_Fn } from "../redux-arch/fetures/nav-slice";
 import Link from "next/link";
+import PamentModel from "@/components/user/PamentModel";
 const MainComponent = () => {
   const [active, setCategoryActive] = useState<number>(1);
   const [matchFilter, setMatchFilter] = useState<String>("All");
@@ -52,6 +57,11 @@ const MainComponent = () => {
     token = "",
     otpless_token = "",
     username = "",
+    first_name = "",
+    last_name = "",
+    email = "",
+    exposure_limit = 0,
+    amount = 0,
   } = userAuth?.combineR?.userAuth?.data?.data || {};
   const category = [
     {
@@ -298,10 +308,10 @@ const MainComponent = () => {
   const cardsPerPage = 4;
   const totalCards = sportdata.length;
 
-  const { showSideBar1, theme } = useAppSelector(
+  const { showSideBar1, theme,type } = useAppSelector(
     (store) => store.combineR.NavStateReducer
   );
-
+console.log(type,"tupe")
   const toast = useToast();
   const [logoAndFav, setLogoAndFav] = useState<LogoAndFav>();
   const handleGetLogoAndFav = async () => {
@@ -326,7 +336,8 @@ const MainComponent = () => {
   }, []);
 
   const handleActive = (value: any) => {
-    setCategoryActive(value);
+    dispatch(manageSideBar_Fn({ type: "changeType", value: value }));
+    
   };
 
   const handleGame = async (game: GameProvider) => {
@@ -371,8 +382,6 @@ const MainComponent = () => {
   const [activeCategorySlot, setActiveCategorySlot] = useState("All Game");
   const [activeCategoryHot, setActiveCategoryHot] = useState("All Game");
 
-
-
   const categories = [
     "All Game",
     "EvolutionGaming",
@@ -393,7 +402,7 @@ const MainComponent = () => {
     "PGSoft",
     "AFBGaming",
     "Rich88",
-    "CQNine" ,
+    "CQNine",
     "Yggdrasil",
     "JokerGaming",
     "FlowGamingHub",
@@ -405,7 +414,7 @@ const MainComponent = () => {
     "AdvantPlay",
     "Live22",
     "568WinGames",
-    "TCGaming"
+    "TCGaming",
   ];
 
   const categoriesHot = [
@@ -421,8 +430,6 @@ const MainComponent = () => {
     "MicroGaming LiveCasino",
     "Habanero",
     "FunkyGames",
-
-
   ];
 
   const handleCategoryClick = (category: any) => {
@@ -431,14 +438,14 @@ const MainComponent = () => {
   const handleCategoryClickSlot = (category: any) => {
     setActiveCategorySlot(category);
   };
-  
+
   const handleCategoryClickHot = (category: any) => {
     setActiveCategoryHot(category);
   };
 
   return (
     <div
-      className={`min-h-[100vh] flex flex-col gap-5 ${
+      className={` flex flex-col gap-5 ${
         theme
           ? `text-[${themeChange.light.textColor1}]`
           : `text-[${themeChange.dark.textColor1}]`
@@ -466,6 +473,40 @@ const MainComponent = () => {
 
       {/* trending imges */}
 
+      {/* after login */}
+      <div className="md:hidden">
+        <div className="flex  justify-between items-center mt-3 w-[100%]  ">
+          <div className="w-[60%] flex flex-col gap-1 pl-3 text-white justify-center font-semibold  h-[100%] ">
+            <p className="text-[16px]">{username}</p>
+            <p className="text-sm">Exp : {exposure_limit}</p>
+          </div>
+
+          <div className="w-[80%] flex justify-between gap-2   ">
+            <div className="flex flex-col  items-center  w-[100%]">
+             
+                <PamentModel code="4" heading="" />
+
+              <p className="text-xs font-semibold text-white mt-2">Deposit</p>
+            </div>
+
+            <div className="flex flex-col items-center w-[100%]">
+                <PamentModel code="5" heading="" />
+              <p className="text-xs font-semibold text-white mt-2">withdraw</p>
+            </div>
+            <Link href="/refer&earn" className="flex flex-col items-center w-[100%]">
+              <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... p-[1px] rounded-[8px] w-[100%]">
+                <div className="flex flex-col gap-1 items-center rounded-[8px] p-2 bg-[#212632] w-[100%]">
+                  <Image src={refer} alt="" className="h-[35px] w-[35px]" />
+                </div>
+              </div>
+              <p className="text-xs font-semibold text-white mt-2">
+                refer&earn
+              </p>
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* category button */}
       <div
         className={`flex gap-2 lg:gap-4 overflow-scroll  w-[100wh] font-semibold text-white ${
@@ -478,7 +519,7 @@ const MainComponent = () => {
               <div
                 onClick={() => handleActive(item.id)}
                 className={` cursor-pointer ${
-                  active === item.id ? "bg-yellow-600" : "bg-[#212632]"
+                  type === item.id ? "bg-yellow-600" : "bg-[#212632]"
                 }  text-center lg:w-[100%] flex flex-col gap-1 items-center justify-center rounded-[12px] h-[70px] lg:h-[80px]  `}
               >
                 {item.icon == "" ? item.icon2 : item.icon}
@@ -492,7 +533,7 @@ const MainComponent = () => {
       </div>
 
       {/* //sport */}
-      {active === 1 && (
+      {type === 1 && (
         <div>
           <div className="grid  grid-cols-1 lg:grid-cols-3 justify-between gap-4">
             {sportbardata.map((item) => {
@@ -524,7 +565,6 @@ const MainComponent = () => {
                           gpName={ele.gpName}
                           id={ele.gpId}
                           key={ele.gpId}
-
                         />
                       )
                   )}
@@ -553,7 +593,7 @@ const MainComponent = () => {
         </div>
       )}
 
-      {active === 2 && (
+      {type === 2 && (
         <div className="grid  grid-cols-2  lg:grid-cols-3 justify-between gap-4">
           {casinodata.map((item) => {
             return (
@@ -572,7 +612,7 @@ const MainComponent = () => {
           })}
         </div>
       )}
-      {active === 3 && (
+      {type === 3 && (
         <div>
           <div className="">
             <div className="flex justify-between">
@@ -596,7 +636,7 @@ const MainComponent = () => {
         </div>
       )}
 
-      {active === 4 && (
+      {type === 4 && (
         <div>
           <div className="flex overflow-scroll w-[100wh] text-center mt-5  text-sm gap-2 text-white">
             {categories.map((category, index) => (
@@ -614,13 +654,15 @@ const MainComponent = () => {
             ))}
           </div>
           <div className="mt-6">
-            {provider.length===0&& <Spinner
+            {loading ? 
+              <Spinner
                 thickness="4px"
                 speed="0.65s"
                 emptyColor="gray.200"
                 color="blue.500"
                 size="lg"
-              />}
+              />
+            :""}
             {provider.length > 0 && (
               <div className="flex flex-col gap-[40px]">
                 {activeCategory === "All Game" &&
@@ -654,7 +696,6 @@ const MainComponent = () => {
                           id={ele.gpId}
                           key={ele.gpId}
                           activeCategory="All Game"
-
                         />
                       )
                   )}
@@ -664,7 +705,8 @@ const MainComponent = () => {
         </div>
       )}
 
-      {active === 5 && <div>
+      {type === 5 && (
+        <div>
           <div className="flex overflow-scroll w-[100wh] text-center mt-5  text-sm gap-2 text-white">
             {categoriesSlot.map((category, index) => (
               <p
@@ -681,20 +723,21 @@ const MainComponent = () => {
             ))}
           </div>
           <div className="mt-6">
-            {provider.length===0&& <Spinner
+            {provider.length === 0 && (
+              <Spinner
                 thickness="4px"
                 speed="0.65s"
                 emptyColor="gray.200"
                 color="blue.500"
                 size="lg"
-              />}
+              />
+            )}
             {provider.length > 0 && (
               <div className="flex flex-col gap-[40px]">
                 {activeCategorySlot === "All Game" &&
                   provider.map(
                     (ele: any) =>
                       ele.status === true &&
-                      
                       (ele.gpName === "CQNine" ||
                         ele.gpName === "JokerGaming" ||
                         ele.gpName === "Yggdrasil" ||
@@ -730,16 +773,17 @@ const MainComponent = () => {
                           id={ele.gpId}
                           key={ele.gpId}
                           activeCategory="All Game"
-
                         />
                       )
                   )}
               </div>
             )}
           </div>
-        </div>}
+        </div>
+      )}
 
-      {active === 6 && <div>
+      {type === 6 && (
+        <div>
           <div className="flex overflow-scroll w-[100wh] text-center mt-5  text-sm gap-2 text-white">
             {categoriesHot.map((category, index) => (
               <p
@@ -756,13 +800,15 @@ const MainComponent = () => {
             ))}
           </div>
           <div className="mt-6">
-            {provider.length===0&& <Spinner
+            {provider.length === 0 && (
+              <Spinner
                 thickness="4px"
                 speed="0.65s"
                 emptyColor="gray.200"
                 color="blue.500"
                 size="lg"
-              />}
+              />
+            )}
             {provider.length > 0 && (
               <div className="flex flex-col gap-[40px]">
                 {activeCategoryHot === "All Game" &&
@@ -779,7 +825,7 @@ const MainComponent = () => {
                         ele.gpName === "CQNineLC" ||
                         ele.gpName === "Sv388Cockfighting" ||
                         ele.gpName === "Habanero" ||
-                        ele.gpName === "MicroGaming LiveCasino" ) && (
+                        ele.gpName === "MicroGaming LiveCasino") && (
                         <SeamlessGame
                           gpName={ele.gpName}
                           id={ele.gpId}
@@ -797,14 +843,14 @@ const MainComponent = () => {
                           id={ele.gpId}
                           key={ele.gpId}
                           activeCategory="All Game"
-
                         />
                       )
                   )}
               </div>
             )}
           </div>
-        </div>}
+        </div>
+      )}
     </div>
   );
 };

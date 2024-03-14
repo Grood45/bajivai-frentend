@@ -42,7 +42,7 @@ const TopNavbar = ({ value }: { value?: number }) => {
     setIsLeftActive(!isLeftActive);
   };
   const dispatch = useDispatch<AppDispatch>();
-  const { showSideBar1, showSideBar3, theme } = useAppSelector(
+  const { showSideBar1, showSideBar3, theme,type } = useAppSelector(
     (store) => store.combineR.NavStateReducer
   );
   const [login, setLogin] = useState(false);
@@ -80,7 +80,11 @@ const TopNavbar = ({ value }: { value?: number }) => {
     dispatch(fetchUserDataAsync());
   }, [theme]);
 
- 
+ const handleNavigate=(value:any)=>{
+  router.push("/home")
+  dispatch(manageSideBar_Fn({ type: "changeType", value: value }));
+
+ }
 
   const pathname = usePathname();
   return (
@@ -201,11 +205,11 @@ const TopNavbar = ({ value }: { value?: number }) => {
                   }`}
                 >
                   <Button
-                    onClick={() => router.push("/casino")}
+                    onClick={()=>handleNavigate(2)}
                     colorScheme=""
                     style={{
-                      color: pathname.includes("casino") ? "white" : "#DA9E2A",
-                      backgroundColor: pathname.includes("casino")
+                      color: type==2 ? "white" : "#DA9E2A",
+                      backgroundColor: type==2
                         ? "#F3AF06"
                         : "",
                       borderRadius: "50px",
@@ -218,11 +222,11 @@ const TopNavbar = ({ value }: { value?: number }) => {
                     Casino
                   </Button>
                   <Button
-                    onClick={() => router.push("/sports")}
+                    onClick={() =>handleNavigate(3)}
                     colorScheme=""
                     style={{
-                      color: pathname.includes("sports") ? "white" : "#DA9E2A",
-                      backgroundColor: pathname.includes("sports")
+                      color: type==3 ? "white" : "#DA9E2A",
+                      backgroundColor: type==3
                         ? "#F3AF06"
                         : "",
                       borderRadius: "50px",
@@ -297,9 +301,9 @@ const TopNavbar = ({ value }: { value?: number }) => {
         {/* after auth */}
         {token && otpless_token ? (
           <div className="flex items-center  gap-4  sm:gap-6 lg:gap-10 ">
-            <div className="">
+            {/* <div className="">
               <Notification />
-            </div>
+            </div> */}
             <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... p-[1px] rounded-[50px] ">
               <div
                 // style={{ boxShadow: "6px 5px 4px 0px #373A40 inset" }}
@@ -344,7 +348,7 @@ const TopNavbar = ({ value }: { value?: number }) => {
                       <SlArrowDown color={theme ? "black" : "white"} />
                     </span> */}
                     </p>
-                    <p className="text-[8px] lg:text-[10px]">
+                    <p className="text-[8px] hidden lg:contents lg:text-[10px]">
                       Exp:{" "}
                       <span className="text-red-400">{exposure_limit}</span>
                     </p>
@@ -366,7 +370,7 @@ const TopNavbar = ({ value }: { value?: number }) => {
           </div>
         ) : (
           <div className="flex item-center gap-2">
-          <SignUpModal/>
+          <SignUpModal title="Register"/>
               <LoginModal ID={1} />
                     </div>
         )}

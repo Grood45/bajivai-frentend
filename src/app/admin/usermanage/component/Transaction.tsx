@@ -9,6 +9,7 @@ import { fetchGetRequest } from '@/api/api';
 import { AllTransaction } from '../../../../../utils/typescript.module';
 import { useToast } from '@chakra-ui/react';
 import { useParams } from 'next/navigation';
+import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 
 const Transaction = () => {
   const [loading1,setLoading1]=useState(false)
@@ -91,20 +92,21 @@ const Transaction = () => {
                 <td className="">
                   <div className="flex text-left flex-col ">
                     <p>{item.username}</p>
-                    <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p>
+                    {/* <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p> */}
                   </div>
                 </td>
                  <td>{item.transaction_id}</td>
                  <td className="">
                   <div className="flex text-center flex-col ">
-                    <p>{item.initiated_at}</p>
+                    <p>{item.initiated_at.split(" ")[0]}</p>
                     {/* <p className="text-xs  text-[#A0AEC0] ">{item.userid}</p> */}
                   </div>
                 </td>
-                <td className='text-[#46F209]'> + <span>&#8377;</span> {item.withdraw_amount}</td>
+                <td className='text-[#46F209]'> + {item.withdraw_amount} BDT</td>
                 <td>
                 <div className="flex justify-center text-center items-center gap-2">
-                    <Image src={coin} alt="" className="h-[15px] w-[15px]" />
+                <span className="bg-yellow-500 text-white flex items-center justify-center h-[20px] w-[20px] rounded-[50%]" ><FaBangladeshiTakaSign fontSize="10px" /></span> 
+
                     <p >{item.wallet_amount}</p>
                   </div>
                 </td>
@@ -148,7 +150,7 @@ const Transaction = () => {
                       <p className="text-white">
                         {item.username}
                       </p>
-                      <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p>
+                      {/* <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p> */}
                     </div>
                     </div>
                    
@@ -158,7 +160,7 @@ const Transaction = () => {
                       Trx ID :-
                     </p>
                     <p className="text-[#fff] font-medium text-xs">
-                      {item.transaction_id}{" "}
+                      {item.transaction_id.slice(0,8)}...{" "}
                       <span className="text-[#A0AEC0] text-[10px]">
                         {/* {item.userid} */}
                       </span>
@@ -169,7 +171,8 @@ const Transaction = () => {
                       Amount:-
                     </p>
                     <p className="text-[#E31A1A] font-medium text-xs">
-                    <span>&#8377;</span> {item.withdraw_amount}
+                    {/* <span>&#8377;</span>  */}
+                    {item.withdraw_amount}
                     </p>
                   </div>
                   <div className="flex gap-4 w-[100%] p-3 ">
@@ -177,7 +180,7 @@ const Transaction = () => {
                      Transacted:-
                     </p>
                     <p className="text-[#fff] font-medium text-xs">
-                    {item.initiated_at}
+                    {item.initiated_at.split(" ")[0]}
                       {/* <span className="text-[#A0AEC0] text-[10px]">
                       2 years ago
                       </span> */}
@@ -189,7 +192,8 @@ const Transaction = () => {
                       Balance:-
                     </p>
                     <div className="flex justify-center items-center gap-2">
-                      <Image src={coin} alt="" className="h-[15px] w-[15px]" />
+                    <span className="bg-yellow-500 text-white flex items-center justify-center h-[20px] w-[20px] rounded-[50%]" ><FaBangladeshiTakaSign fontSize="10px" /></span> 
+
                       <p className="text-white text-xs">{item.wallet_amount}</p>
                     </div>
                   </div>

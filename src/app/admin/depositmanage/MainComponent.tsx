@@ -20,6 +20,7 @@ import {
 import { Button, CircularProgress, Progress, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { getTimeAgo } from "../../../../utils/getTimeInDetail";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const MainComponent = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -265,24 +266,25 @@ const handleNextPage = () => {
                     </td>
                     <td>
                       <div className="flex flex-col text-center gap-[2px] ">
-                        <p>{item.initiated_at}</p>
-                        <p className="text-xs  text-[#A0AEC0] ">
+                        <p>{item.initiated_at.split(" ")[0]}</p>
+                        {/* <p className="text-xs  text-[#A0AEC0] ">
                           {getTimeAgo(item.initiated_at)}
-                        </p>
+                        </p> */}
                       </div>
                     </td>
                     <td>
                       <div className="flex flex-col text-center gap-[2px] ">
                         <p>{item.username}</p>
                         <p className="text-xs  text-[#A0AEC0] ">
-                          {item.user_id}
+                          {/* {item.user_id} */}
                         </p>
                       </div>
                     </td>
                     <td>
                       <div className="flex flex-col text-center gap-[2px]">
                         <p className="text-[16px] ">
-                          <span>&#8377;</span> {item.deposit_amount} +{" "}
+                          {/* <span>&#8377;</span>  */}
+                          {item.deposit_amount} +{" "}
                           <span className="text-xs text-red-500 ">
                             {item.bonus}
                           </span>
@@ -294,11 +296,8 @@ const handleNextPage = () => {
                     </td>
                     <td className="">
                       <div className="flex   justify-center text-center items-center gap-2">
-                        <Image
-                          src={coin}
-                          alt=""
-                          className="h-[15px] w-[15px]"
-                        />
+                      <span className="bg-yellow-500 text-white flex items-center justify-center h-[20px] w-[20px] rounded-[50%]" ><FaBangladeshiTakaSign fontSize="10px" /></span> 
+
                         <span>{item.wallet_amount.toFixed(2)}</span>
                       </div>
                     </td>
@@ -314,9 +313,9 @@ const handleNextPage = () => {
                         >
                           {item.status}
                         </button>
-                        <p className="text-[10px] text-center  text-[#A0AEC0] ">
+                        {/* <p className="text-[10px] text-center  text-[#A0AEC0] ">
                           {getTimeAgo(item.initiated_at)}
-                        </p>
+                        </p> */}
                       </div>
                     </td>
                     <td>
@@ -383,7 +382,7 @@ const handleNextPage = () => {
                     />
                     <div className="flex gap-[2px] flex-col ">
                       <p className="text-white">{item.username}</p>
-                      <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p>
+                      {/* <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p> */}
                     </div>
                   </div>
 
@@ -405,9 +404,9 @@ const handleNextPage = () => {
                       </p>
                       <p className="text-[#fff] font-medium text-xs">
                         {item.initiated_at.split(" ")[0]}{" "}
-                        <span className="text-[#A0AEC0] text-[10px]">
+                        {/* <span className="text-[#A0AEC0] text-[10px]">
                           {item.initiated_at.split(" ")[1]}
-                        </span>
+                        </span> */}
                       </p>
                     </div>
                     <div className="flex gap-4 w-[100%] p-3 ">
@@ -415,7 +414,7 @@ const handleNextPage = () => {
                         Deposit Amount :-
                       </p>
                       <p className="text-[#fff] font-medium text-xs">
-                        ${item.deposit_amount.toFixed(2)}
+                        {item.deposit_amount.toFixed(2)} BDT
                       </p>
                     </div>
 
@@ -424,11 +423,8 @@ const handleNextPage = () => {
                         Balance:-
                       </p>
                       <div className="flex justify-center items-center gap-2">
-                        <Image
-                          src={coin}
-                          alt=""
-                          className="h-[15px] w-[15px]"
-                        />
+                      <span className="bg-yellow-500 text-white flex items-center justify-center h-[20px] w-[20px] rounded-[50%]" ><FaBangladeshiTakaSign fontSize="10px" /></span> 
+
                         <p className="text-white text-xs">
                           {item.wallet_amount.toFixed(2)}
                         </p>

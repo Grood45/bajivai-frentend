@@ -56,6 +56,8 @@ const SidebarNavbar = ({
         </svg>
       ),
       route: "/home",
+      type:1,
+
     },
     {
       id: 2,
@@ -112,7 +114,8 @@ const SidebarNavbar = ({
           />
         </svg>
       ),
-      route: "/casino",
+      route: "",
+      type:2,
     },
     {
       id: 3,
@@ -140,10 +143,11 @@ const SidebarNavbar = ({
           </defs>
         </svg>
       ),
-      route: "/sports",
+      route: "",
+      type:3
     },
     {
-      id: 4,
+      id: 14,
       title: "Promotion",
       img: (
         <svg
@@ -178,7 +182,7 @@ const SidebarNavbar = ({
       route: "/promotion",
     },
     {
-      id: 5,
+      id: 15,
       title: "Refer & Earn",
       img: (
         <svg
@@ -206,7 +210,7 @@ const SidebarNavbar = ({
           />
         </svg>
       ),
-      route: "refer&earn",
+      route: "/refer&earn",
     },
     // {
     //   id: 6,
@@ -244,28 +248,47 @@ const SidebarNavbar = ({
 
   // MdDarkMode
   const dispatch = useDispatch<AppDispatch>();
-  const { showSideBar1, theme } = useAppSelector(
+  const { showSideBar1, theme,type } = useAppSelector(
     (store) => store.combineR.NavStateReducer
   );
-  const handleNavigate = (id: number, route: any) => {
-    setActive(id);
+  const handleNavigate = (id: number, route: any,type:any) => {
     setIncreas(true);
     router.push(route);
-    if (id === 8) {
+    if(route==="/refer&earn"||route==="/promotion"){
+    setActive(id);
+
+      dispatch(manageSideBar_Fn({ type: "changeType", value: 0 }));
+
+    }
+    else if(type==1){
+      router.push(route);
+    setActive(0);
+
+      dispatch(manageSideBar_Fn({ type: "changeType", value: type }));
+
+    }
+   else if(route==""){
+      router.push("/home");
+    setActive(0);
+
+      dispatch(manageSideBar_Fn({ type: "changeType", value: type }));
+    }
+    else if (id === 8) {
+    setActive(0);
+
       setthemeToogle(!themeToogle);
       dispatch(manageSideBar_Fn({ type: "theme" }));
     }
   };
-
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (pathname.includes("sports")) {
-      setActive(3);
-    } else if (pathname.includes("casino")) {
-      setActive(2);
-    }
-  }, [pathname]);
+  // useEffect(() => {
+  //   if (pathname.includes("sports")) {
+  //     setActive(3);
+  //   } else if (pathname.includes("casino")) {
+  //     setActive(2);
+  //   }
+  // }, [pathname]);
 
   const whatsappLink = 'https://wa.me/message/FM3QZSPGT4K6P1';
   return (
@@ -292,13 +315,13 @@ const SidebarNavbar = ({
                 <button
                   style={{
                     background:
-                      active === item.id
+                      type === item.id || active===item.id
                         ? "linear-gradient(270deg, #B48200 0%, #675C3F 33.6%)"
                         : theme
                         ? "gray"
                         : themeChange.dark.bg1,
                   }}
-                  onClick={() => handleNavigate(item.id, item.route)}
+                  onClick={() => handleNavigate(item.id, item.route,item.type)}
                   className={`w-[100%]  ${
                     showSideBar1 && identity === 1
                       ? " flex items-center p-3 gap-1  rounded-[12px] "

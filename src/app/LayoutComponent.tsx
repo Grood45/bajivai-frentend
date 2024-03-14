@@ -41,7 +41,7 @@ const LayoutComponent = ({ children }: { children?: any }) => {
               </div>
             ) : null}
 
-            <div className="px-2">
+            <div className="px-2 ">
             {children}
               </div>
 

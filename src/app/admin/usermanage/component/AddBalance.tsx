@@ -64,7 +64,7 @@ addBalance()
         }}
         className="w-[100%] text-xs rounded-[5px] p-[7px]"
       >
-        Add Balance
+        Deposit Balance
       </button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

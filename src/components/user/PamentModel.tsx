@@ -20,6 +20,9 @@ import cancel from "../../assetuser/authsocial/CANCLE.png";
 import themeChange from "@/theme";
 import Image from "next/image";
 import { RootState, useAppSelector } from "@/app/redux-arch/store";
+import deposit from '../../assetuser/deposit (1).png'
+import withdral from '../../assetuser/withdrawal.png'
+import refer from '../../assetuser/refer.png'
 import { useSelector } from "react-redux";
 function PamentModel({ heading, code }: { heading: string; code: string }) {
   const userAuth = useSelector((state: RootState) => state);
@@ -76,6 +79,9 @@ function PamentModel({ heading, code }: { heading: string; code: string }) {
           </svg>
         )}
 
+
+
+
         {code === "1" && (
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
         <g clip-path="url(#clip0_7_1961)">
@@ -104,6 +110,7 @@ function PamentModel({ heading, code }: { heading: string; code: string }) {
       </svg>
         )}
 
+
         {code === "1" || code === "2" ? (
           <p className="text-xs onClick={onOpen} font-medium">{heading}</p>
         ) : (
@@ -123,6 +130,16 @@ function PamentModel({ heading, code }: { heading: string; code: string }) {
           <HiPlus />
         </div>
       )}
+{code==="4"&&<div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... p-[1px] -mt-4 rounded-[8px] w-[100%]">
+<div onClick={onOpen} className="flex flex-col gap-1 items-center p-2    rounded-[8px] bg-[#212632] w-[100%]">
+      <Image src={deposit} alt="" className="h-[35px] w-[35px]" />
+</div></div>}
+{code==="5"&&
+
+<div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... p-[1px] -mt-4  rounded-[8px] w-[100%]">
+<div onClick={onOpen} className="flex flex-col gap-1 items-center p-2  rounded-[8px] bg-[#212632] w-[100%]">
+      <Image src={withdral} alt="" className="h-[35px] w-[35px]" />
+</div></div>}
 
       <Modal
         size={{ base: "full", md: "md" }}
@@ -145,7 +162,7 @@ function PamentModel({ heading, code }: { heading: string; code: string }) {
           >
             {/* for withdrawal model */}
 
-            {code === "1" && <Withdrawal onClose={onClose} />}
+            {code === "1"||code==="3"||code==="5" && <Withdrawal onClose={onClose} />}
             {code === "0"  && <Withdrawal onClose={onClose} />}
 
             {/* for transaction model */}
@@ -187,7 +204,7 @@ function PamentModel({ heading, code }: { heading: string; code: string }) {
               </div>
             )}
             {/* for deposite model */}
-            {code === "3" && <Deposit onClose={onClose} />}
+            {code==="4" && <Deposit onClose={onClose} />}
           </ModalBody>
           </div>
         </ModalContent>

@@ -6,36 +6,39 @@ const initialState: initalStateType = {
   showSideBar1: false,
   showSideBar2: false,
   showSideBar3: false,
+  type:1
 };
 
 //if actions object come then it's type is going to be PayloadAction<tpye>
-
 export const navState = createSlice({
   name: "NavBarState",
   initialState,
   reducers: {
-    
-    manageSideBar_Fn: (state = initialState, action) => {
-      const { payload } = action;
+    manageSideBar_Fn: (state, action: PayloadAction<{ type: string; value?: number }>) => {
+      const { type, value } = action.payload;
 
-      switch (payload.type) {
+      switch (type) {
         case "theme":
-          return {...state, theme:!state.theme}
+          return { ...state, theme: !state.theme };
         case "sidebar1":
           return { ...state, showSideBar1: !state.showSideBar1 };
-
         case "sidebar2":
           return { ...state, showSideBar2: !state.showSideBar2 };
-
         case "sidebar3":
           return { ...state, showSideBar3: !state.showSideBar3 };
-
+        case "changeType":
+          if (value !== undefined) {
+            return { ...state, type: value };
+          }
+          return state;
         default:
           return state;
       }
     },
   },
 });
+
+
 
 export const { manageSideBar_Fn } = navState.actions;
 export default navState.reducer;

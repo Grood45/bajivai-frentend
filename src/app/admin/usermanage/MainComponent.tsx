@@ -17,6 +17,7 @@ import { Button, CircularProgress, Progress, useToast } from "@chakra-ui/react";
 import { fetchGetRequest } from "../../../api/api";
 import { UserInterface } from "../../../../utils/typescript.module";
 import { getTimeAgo } from "../../../../utils/getTimeInDetail";
+import SignUpModal from "@/components/user/SignUpModals";
 
 const MainComponent = () => {
   const [allData, setAllData] = useState<UserInterface[]>();
@@ -52,6 +53,7 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: UserInterface[] = response.data;
+      console.log(receivedData,"recieve data")
       setAllData(receivedData);
       setUsersCount(response.usersCount);
       setPagination(response.pagination);
@@ -184,14 +186,16 @@ const handleNextPage = () => {
         </div>
       </div>
       {/* table hide */}
-     
+     <div className="flex justify-end mt-3">
+     <SignUpModal title="Add New User"/>
+     </div>
       <div className="hidden md:contents">
         <div
           style={{
             background:
               "linear-gradient(127deg, rgba(6, 11, 40, 0.74) 28.26%, rgba(10, 14, 35, 0.71) 91.2%)",
           }}
-          className="h-[100%]   rounded-[6px] md:rounded-[16px] p-3 w-[100%] mt-8"
+          className="h-[100%]   rounded-[6px] md:rounded-[16px] p-3 w-[100%] mt-2"
         >
           {loading && (
             <Progress size="xs" isIndeterminate colorScheme="#e91e63" />
@@ -249,9 +253,9 @@ const handleNextPage = () => {
                     </td> */}
                     <td>
                       <div className="flex flex-col text-center gap-[2px] ">
-                        <p>{item.joined_at}</p>
+                        <p>{item.joined_at.split(" ")[0]}</p>
                         <p className="text-xs  text-[#A0AEC0] ">
-                          {getTimeAgo(item.joined_at)}
+                          {/* {getTimeAgo(item.joined_at)} */}
                         </p>
                       </div>
                     </td>
@@ -262,7 +266,10 @@ const handleNextPage = () => {
                           alt=""
                           className="h-[15px] w-[15px]"
                         />
-                        <p>{item.amount.toFixed(2)}</p>
+                       <p>
+  {item && item.amount !== null && item.amount.toFixed(2)}
+</p>
+
                       </div>
                     </td>
                     <td className="font-bold">
@@ -373,9 +380,9 @@ const handleNextPage = () => {
                     </p>
                     
                     <p className="text-[#fff] font-medium text-xs">
-                      {item.joined_at}{" "}
+                      {item.joined_at.split(" ")[0]}{" "}
                       <span className="text-[#A0AEC0] text-[10px]">
-                      {getTimeAgo(item.joined_at)}
+                      {/* {getTimeAgo(item.joined_at)} */}
                       </span>
                     </p>
                   </div>
@@ -386,7 +393,8 @@ const handleNextPage = () => {
                     </p>
                     <div className="flex justify-center items-center gap-2">
                       <Image src={coin} alt="" className="h-[15px] w-[15px]" />
-                      <p className="text-white text-xs"> {item.amount.toFixed(2)}</p>
+                      <p className="text-white text-xs">   {item && item.amount !== null && item.amount.toFixed(2)}
+</p>
                     </div>
                   </div>
 

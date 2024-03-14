@@ -94,9 +94,9 @@ const [query,setQuery]=useState('sport')
                     <Image src={coin} alt="" className="h-[15px] w-[15px]" />
                     <p>{item.balance}</p>
                   </div>
-                    <span className="text-green-700 text-xs">
+                    {/* <span className="text-green-700 text-xs">
                       {item.profit}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
                 <span

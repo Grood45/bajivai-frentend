@@ -65,7 +65,7 @@ const toast=useToast()
                 }}
                 className="w-[100%] text-xs rounded-[5px] p-[7px]"
               >
-                Subtract Balance
+                Withdrawal Balance
               </button>
        
         <Modal isOpen={isOpen} onClose={onClose}>
