@@ -215,7 +215,7 @@ const RightSidebar = () => {
                           <p className="text-[#fef08a]">{item?.stake}</p>
                         </div>
                         <div className="flex justify-between">
-                          <p className="text-gray-300 font-bold">Team</p>
+                          <p className="text-gray-300 font-bold">Selection</p>
                           <p title={item?.runner_name} className="text-[#fef08a]">{item?.runner_name.slice(0,20)}{item?.runner_name.length>20&&"..."}</p>
                         </div>
                         <div className="flex justify-between">

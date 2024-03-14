@@ -44,6 +44,7 @@ export default function RootLayout({
           pathname.includes("signin") ||
           pathname.includes("sportsAdmin") ||
           pathname.includes("sportAdmin") ||
+          pathname.includes("sportLogin") ||
 
           pathname.includes("/sports/") ? (
             <>{children}</>
@@ -54,7 +55,7 @@ export default function RootLayout({
           )}
 
           
-             <div className="mb-[100px] lg:mb-[0px] border">  <TawkToWidget/></div>
+             <div className="mb-[100px] lg:mb-[0px] ">  <TawkToWidget/></div>
         </ReduxProviders>
       </body>
     </html>

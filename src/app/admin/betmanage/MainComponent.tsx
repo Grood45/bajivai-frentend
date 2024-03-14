@@ -26,6 +26,8 @@ const MainComponent = () => {
   const [betsCount, setBetsCount] = useState<betsCount>();
   const toast = useToast();
   const params = useParams();
+  const [pagination, setPagination] = useState<any>({});
+  const totalPages = pagination.totalPages; // Replace with your total number of pages
 
   const getAllBetDetails = async () => {
     setLoading(true);
@@ -39,8 +41,8 @@ const MainComponent = () => {
       }
       setBetsCount(response.betsCount);
       setLoading(false);
+      setPagination(response.pagination);
     } catch (error: any) {
-      console.log(error?.data?.message)
       // toast({
       //   description: `${error?.data?.message}`,
       //   status: "error",
@@ -98,6 +100,19 @@ const MainComponent = () => {
       icon: <VscUnverified fontSize={"20px"} color="white" />,
     },
   ];
+
+  const handlePrevPage = () => {
+  
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
     <div className=" ">
@@ -195,8 +210,10 @@ const MainComponent = () => {
               <th className="text-right">Status</th>
             </tr>
             <tbody className=" ">
-              {allBet &&
-                allBet.map((item) => {
+            {allBet &&
+    allBet
+      .filter(item => item.event_type === "casino") // Filter items with event_type equal to "casino"
+      .map((item) => {
                   return (
                     <tr
                       key={item?._id}
@@ -437,6 +454,34 @@ const MainComponent = () => {
             })}
         </div>
       </div>
+
+      {allBet && allBet.length > 0 && (
+        <div className="text-[16px] text-white text-sm font-semibold flex m-auto mb-4 mr-5 justify-end gap-3 align-middle items-center mt-2">
+      
+            <button
+              type="button"
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              // ref="btPrevious"
+              onClick={() => handlePrevPage()}
+              disabled={currentPage == 1}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+            >
+              {"<"}
+            </button>
+            Page <span>{currentPage}</span> of{" "}
+            <span>{pagination.totalPages}</span>
+            <button
+              onClick={() => handleNextPage()}
+              type="button"
+              disabled={currentPage == pagination.totalPages}
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
+            >
+              {">"}
+            </button>
+          
+        </div>
+      )}
     </div>
   );
 };

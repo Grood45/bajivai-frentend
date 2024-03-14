@@ -56,7 +56,6 @@ const GetAllBets = async () => {
     try {
       const response = await fetchGetRequest(url);
       setBets(response.data);
-      console.log(response.data,"hffhg")
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -69,7 +68,6 @@ const GetAllBets = async () => {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -360,7 +358,7 @@ useEffect(() => {
                   key={index}
                   className={` ${
                     row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
-                  } hover:bg-[#E99CAD] text-[12px] font-semibold`}
+                  }  text-[12px] font-semibold`}
                 >
                
                   <Td>{row.match_date.split(" ")[0]}</Td>
@@ -394,14 +392,15 @@ useEffect(() => {
                     {row.stake}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.stake * 2}
+                  {row?.bet_category==="fancy"?row.stake:(row.rate*row.stake-row.stake).toFixed(2)} 
+
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.stake}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {/* {row.bet_type} */}
-                    {betType=="fancy"?row.bet_type=="lay"?<Badge colorScheme="red">No</Badge>:<Badge colorScheme="green">Yes</Badge>:row.bet_type}
+                    {row?.bet_category=="fancy"?row.bet_type=="lay"?<Badge colorScheme="red">No</Badge>:<Badge colorScheme="green">Yes</Badge>:row.bet_type}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.bet_category}

@@ -28,7 +28,6 @@ const MainComponent = () => {
       if (receivedData) {
         setDepositData(receivedData);
       }
-      console.log(receivedData,"in deposit section")
 
       setLoading(false);
     } catch (error: any) {

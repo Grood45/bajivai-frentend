@@ -15,6 +15,7 @@ import { Progress, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { fetchGetRequest } from "@/api/api";
 import { getTimeAgo } from "../../../../../utils/getTimeInDetail";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const WithDrawl = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -73,7 +74,7 @@ const WithDrawl = () => {
         >
           <div>
             <p className="font-semibold text-md text-white">
-              Successful Deposit
+              Successful Withdrawal
             </p>
             <p className="font-semibold text-lg text-white"> {allAmount.approvedAmount}</p>
           </div>
@@ -147,25 +148,26 @@ const WithDrawl = () => {
                   <td>
                     <div className="flex flex-col gap-[2px]  ">
                       <p>{item.method}</p>
-                      <p className="text-xs  text-[#A0AEC0] ">{item.transaction_id}</p>
+                      <p className="text-xs  text-[#A0AEC0] ">{item.transaction_id.slice(0,8)}...</p>
                     </div>
                   </td>
                   <td>
                     <div className="flex flex-col text-center gap-[2px] ">
-                      <p>{item.initiated_at}</p>
-                      <p className="text-xs  text-[#A0AEC0] ">{getTimeAgo(item.initiated_at)}</p>
+                      <p>{item.initiated_at.split(" ")[0]}</p>
+                      {/* <p className="text-xs  text-[#A0AEC0] ">{getTimeAgo(item.initiated_at)}</p> */}
                     </div>
                   </td>
                   <td>
                     <div className="flex flex-col text-center gap-[2px] ">
                       <p>{item.username}</p>
-                      <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p>
+                      {/* <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p> */}
                     </div>
                   </td>
                   <td>
                     <div className="flex flex-col text-center gap-[2px]">
                       <p className="text-[16px] ">
-                        <span>&#8377;</span> {item.withdraw_amount} +{" "}
+                        {/* <span>&#8377;</span>  */}
+                        {item.withdraw_amount} +{" "}
                         <span className="text-xs text-red-500 ">
                           {+item.bonus}
                         </span>
@@ -177,7 +179,8 @@ const WithDrawl = () => {
                   </td>
                   <td className="">
                     <div className="flex   justify-center text-center items-center gap-2">
-                      <Image src={coin} alt="" className="h-[15px] w-[15px]" />
+                    <span className="bg-yellow-500 text-white flex items-center justify-center h-[20px] w-[20px] rounded-[50%]" ><FaBangladeshiTakaSign fontSize="10px" /></span> 
+
                       <span>{item.wallet_amount}</span>
                     </div>
                   </td>
@@ -194,7 +197,7 @@ const WithDrawl = () => {
                         {item.status}
                       </button>
                       <p className="text-[10px] text-center  text-[#A0AEC0] ">
-                          {getTimeAgo(item.initiated_at)}
+                          {/* {getTimeAgo(item.initiated_at)} */}
                       </p> 
                     </div>
                   </td>
@@ -260,7 +263,7 @@ const WithDrawl = () => {
                   />
                   <div className="flex gap-[2px] flex-col ">
                     <p className="text-white">{item.username}</p>
-                    <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p>
+                    {/* <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p> */}
                   </div>
                 </div>
 
@@ -272,7 +275,7 @@ const WithDrawl = () => {
                     <p className="text-[#fff] font-medium text-xs">
                       {item.method}{" "}
                       <span className="text-[#A0AEC0] text-[10px]">
-                        {item.transaction_id}
+                        {item.transaction_id.slice(0,8)}...
                       </span>
                     </p>
                   </div>
@@ -281,9 +284,9 @@ const WithDrawl = () => {
                       Initiated :-
                     </p>
                     <p className="text-[#fff] font-medium text-xs">
-                      {item.initiated_at}
+                      {item.initiated_at.split(" ")[0]}
                       <span className="text-[#A0AEC0] text-[10px]">
-                      {getTimeAgo(item.initiated_at)}
+                      {/* {getTimeAgo(item.initiated_at)} */}
                       </span>
                     </p>
                   </div>
@@ -292,7 +295,7 @@ const WithDrawl = () => {
                       Deposit Amount :-
                     </p>
                     <p className="text-[#fff] font-medium text-xs">
-                      ${item.withdraw_amount}
+                    {item.withdraw_amount} BDT
                     </p>
                   </div>
 
@@ -301,7 +304,8 @@ const WithDrawl = () => {
                       Balance:-
                     </p>
                     <div className="flex justify-center items-center gap-2">
-                      <Image src={coin} alt="" className="h-[15px] w-[15px]" />
+                    <span className="bg-yellow-500 text-white flex items-center justify-center h-[20px] w-[20px] rounded-[50%]" ><FaBangladeshiTakaSign fontSize="10px" /></span> 
+
                       <p className="text-white text-xs">{item.wallet_amount}</p>
                     </div>
                   </div>

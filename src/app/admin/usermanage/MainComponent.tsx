@@ -13,10 +13,11 @@ import { VscUnverified } from "react-icons/vsc";
 import Link from "next/link";
 import coin from "../../../asset/rupees.png";
 import { BsSearch } from "react-icons/bs";
-import { CircularProgress, Progress, useToast } from "@chakra-ui/react";
+import { Button, CircularProgress, Progress, useToast } from "@chakra-ui/react";
 import { fetchGetRequest } from "../../../api/api";
 import { UserInterface } from "../../../../utils/typescript.module";
 import { getTimeAgo } from "../../../../utils/getTimeInDetail";
+import SignUpModal from "@/components/user/SignUpModals";
 
 const MainComponent = () => {
   const [allData, setAllData] = useState<UserInterface[]>();
@@ -30,6 +31,9 @@ const MainComponent = () => {
     withBalanceUsers: 0,
     totalUsers: 0,
   });
+  const [pagination, setPagination] = useState<any>({});
+  const totalPages = pagination.totalPages; // Replace with your total number of pages
+
   const [userCategory, setUserCategory] = useState<string>("total_user");
   const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -49,8 +53,10 @@ const MainComponent = () => {
       let response = await fetchGetRequest(url);
       const data = response.data;
       const receivedData: UserInterface[] = response.data;
+      console.log(receivedData,"recieve data")
       setAllData(receivedData);
       setUsersCount(response.usersCount);
+      setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
       toast({
@@ -62,6 +68,20 @@ const MainComponent = () => {
       });
     }
   };
+
+ 
+const handlePrevPage = () => {
+
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
+const handleNextPage = () => {
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+  }
+};
 
   useEffect(() => {
     let id: any;
@@ -158,7 +178,7 @@ const MainComponent = () => {
             name="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search the keyword..........."
+            placeholder="Search here..........."
           />
           <button className={`button--submit flex items-center text-white`}>
             <BsSearch color="white" fontSize="20px" />
@@ -166,13 +186,16 @@ const MainComponent = () => {
         </div>
       </div>
       {/* table hide */}
+     <div className="flex justify-end mt-3">
+     <SignUpModal title="Add New User"/>
+     </div>
       <div className="hidden md:contents">
         <div
           style={{
             background:
               "linear-gradient(127deg, rgba(6, 11, 40, 0.74) 28.26%, rgba(10, 14, 35, 0.71) 91.2%)",
           }}
-          className="h-[100%]   rounded-[6px] md:rounded-[16px] p-3 w-[100%] mt-8"
+          className="h-[100%]   rounded-[6px] md:rounded-[16px] p-3 w-[100%] mt-2"
         >
           {loading && (
             <Progress size="xs" isIndeterminate colorScheme="#e91e63" />
@@ -183,9 +206,11 @@ const MainComponent = () => {
               <tr className="text-center border-b p-2 h-[30px] border-gray-600 text-[10px] font-bold text-[#A0AEC0]">
                 <th className="text-left min-w-[100px]">Username/Fullname</th>
                 <th className="min-w-[100px]">Email-Phone</th>
-                <th className="min-w-[100px]">Country-State</th>
+                {/* <th className="min-w-[100px]">Country-State</th> */}
                 <th className="min-w-[100px]">Junied At</th>
                 <th className="min-w-[100px]">Balance</th>
+                <th className="min-w-[100px]">Exp Limit</th>
+
                 <th className="text-center min-w-[80px]">Status</th>
                 <th className="min-w-[60px]">Stake</th>
                 <th className="text-right min-w-[50px]">Action</th>
@@ -220,17 +245,17 @@ const MainComponent = () => {
                         <p className="text-xs  text-[#A0AEC0] ">{item.email}</p>
                       </div>
                     </td>
-                    <td>
+                    {/* <td>
                       <div className="flex flex-col text-center gap-[2px] ">
                         <p>{item?.country}</p>
                         <p className="text-xs  text-[#A0AEC0] ">{item.state}</p>
                       </div>
-                    </td>
+                    </td> */}
                     <td>
                       <div className="flex flex-col text-center gap-[2px] ">
-                        <p>{item.joined_at}</p>
+                        <p>{item.joined_at.split(" ")[0]}</p>
                         <p className="text-xs  text-[#A0AEC0] ">
-                          {getTimeAgo(item.joined_at)}
+                          {/* {getTimeAgo(item.joined_at)} */}
                         </p>
                       </div>
                     </td>
@@ -241,7 +266,20 @@ const MainComponent = () => {
                           alt=""
                           className="h-[15px] w-[15px]"
                         />
-                        <p>{item.amount.toFixed(2)}</p>
+                       <p>
+  {item && item.amount !== null && item.amount.toFixed(2)}
+</p>
+
+                      </div>
+                    </td>
+                    <td className="font-bold">
+                    <div className="flex justify-center items-center gap-2">
+                        <Image
+                          src={coin}
+                          alt=""
+                          className="h-[15px] w-[15px]"
+                        />
+                        <p>1L</p>
                       </div>
                     </td>
 
@@ -325,7 +363,7 @@ const MainComponent = () => {
                       </span>
                     </p>
                   </div>
-                  <div className="flex gap-4 w-[100%] p-3">
+                  {/* <div className="flex gap-4 w-[100%] p-3">
                     <p className="text-[#A0AEC0] font-medium text-xs">
                       Country-State :-
                     </p>
@@ -335,15 +373,16 @@ const MainComponent = () => {
                         {item.state}
                       </span>
                     </p>
-                  </div>
+                  </div> */}
                   <div className="flex gap-4 w-[100%] p-3 ">
                     <p className="text-[#A0AEC0] font-medium text-xs">
                       Jointed At:-
                     </p>
+                    
                     <p className="text-[#fff] font-medium text-xs">
-                      {item.juniedat}{" "}
+                      {item.joined_at.split(" ")[0]}{" "}
                       <span className="text-[#A0AEC0] text-[10px]">
-                        {item.date}
+                      {/* {getTimeAgo(item.joined_at)} */}
                       </span>
                     </p>
                   </div>
@@ -354,7 +393,8 @@ const MainComponent = () => {
                     </p>
                     <div className="flex justify-center items-center gap-2">
                       <Image src={coin} alt="" className="h-[15px] w-[15px]" />
-                      <p className="text-white text-xs">{item.value}</p>
+                      <p className="text-white text-xs">   {item && item.amount !== null && item.amount.toFixed(2)}
+</p>
                     </div>
                   </div>
 
@@ -363,7 +403,7 @@ const MainComponent = () => {
                       stake:-
                     </p>
                     <p className="text-[#fff] font-medium text-xs">
-                      {item.stake}
+                    <p>{item.exposure_limit.toFixed(2)}</p>
                     </p>
                   </div>
 
@@ -380,6 +420,33 @@ const MainComponent = () => {
           })}
         </div>
       </div>
+      {allData && allData.length > 0 && (
+        <div className="text-[16px] text-white text-sm font-semibold flex m-auto mb-4 mr-5 justify-end gap-3 align-middle items-center mt-2">
+      
+            <button
+              type="button"
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              // ref="btPrevious"
+              onClick={() => handlePrevPage()}
+              disabled={currentPage == 1}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+            >
+              {"<"}
+            </button>
+            Page <span>{currentPage}</span> of{" "}
+            <span>{pagination.totalPages}</span>
+            <button
+              onClick={() => handleNextPage()}
+              type="button"
+              disabled={currentPage == pagination.totalPages}
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
+            >
+              {">"}
+            </button>
+          
+        </div>
+      )}
     </div>
   );
 };

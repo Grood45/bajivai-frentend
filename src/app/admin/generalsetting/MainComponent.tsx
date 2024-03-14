@@ -88,7 +88,6 @@ const MainComponent = () => {
   const handleChange = (e: any) => {
     const { name, value } = e.target;
 
-    console.log("rules", name, value);
     setRules({ ...rules, [name]: value });
   };
   const handleCountry = (e: any) => {

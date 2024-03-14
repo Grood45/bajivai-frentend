@@ -64,11 +64,13 @@ const MainComponent = () => {
           <div className="flex flex-col gap-10 w-[100%] mb-[80px] lg:mx-2 lg:w-[100%] ">
             {!showReadMore ? (
               <div
-                className={` ${
+                className={` 
+                ${
                   theme
                     ? `bg-[${themeChange.light.bg2}]`
                     : `bg-[${themeChange.dark.bg1}]`
-                }  shadow-2xl w-[100%] p-3 rounded-[16px]`}
+                } 
+                 shadow-2xl w-[100%] p-3 rounded-[16px]`}
               >
                 <div className="flex w-[90%] sm:w-[50%]  justify-center m-auto gap-4">
                   <button

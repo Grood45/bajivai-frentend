@@ -27,7 +27,7 @@ const LayoutComponent = ({ children }: { children?: any }) => {
         <div className=" fixed top-0 w-[100%] z-[1000]">
           <TopNavbar value={1} />
         </div>
-        <div className="flex justify-between w-[100%] pt-[84px]  px-2 py-5 lg:px-6">
+        <div className="flex justify-between w-[100%] pt-[84px]  py-5 lg:px-6">
              <div className=" sticky top-[84px] z-50 max-h-[80vh] ">
                  <MainSidebar />
                  </div>
@@ -36,12 +36,14 @@ const LayoutComponent = ({ children }: { children?: any }) => {
             {pathname.includes("home") ||
             pathname.includes("sports") ||
             pathname.includes("casino") || pathname==="/" ? (
-              <div>
+              <div className="mt-[-20px] lg:mt-0">
                 <Carousel />
               </div>
             ) : null}
 
+            <div className="px-2 ">
             {children}
+              </div>
 
             <div className="hidden lg:contents">
               <Footer />

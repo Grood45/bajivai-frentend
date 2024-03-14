@@ -13,8 +13,7 @@ import RightSidebar from "./RightSidebar";
 import { AppDispatch, RootState, useAppSelector } from "@/app/redux-arch/store";
 import { useDispatch, useSelector } from "react-redux";
 import { manageSideBar_Fn } from "@/app/redux-arch/fetures/nav-slice";
-import SignUpModal from "./SignUpModal";
-import SignInModal from "./SignInModal";
+
 import Profile from "./Profile";
 import PamentModel from "./PamentModel";
 import Notification from "./Notification";
@@ -29,8 +28,10 @@ import { fetchGetRequest } from "@/api/api";
 import themeChange from "@/theme";
 import { FaRupeeSign } from "react-icons/fa";
 import ModalComponent from "./subcomponent/LoginModal";
-import LoginModal from "./LoginModal";
 import { TbCurrencyTaka } from "react-icons/tb";
+import MobileSidebar from "./MobileSidebar";
+import SignUpModal from "./SignUpModals";
+import LoginModal from "./LoginModals";
 const TopNavbar = ({ value }: { value?: number }) => {
   const [isLeftActive, setIsLeftActive] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
@@ -41,10 +42,10 @@ const TopNavbar = ({ value }: { value?: number }) => {
     setIsLeftActive(!isLeftActive);
   };
   const dispatch = useDispatch<AppDispatch>();
-  const { showSideBar1, showSideBar3, theme } = useAppSelector(
+  const { showSideBar1, showSideBar3, theme,type } = useAppSelector(
     (store) => store.combineR.NavStateReducer
   );
-const [login,setLogin]=useState(false)
+  const [login, setLogin] = useState(false);
   const {
     first_name = "",
     last_name = "",
@@ -79,14 +80,13 @@ const [login,setLogin]=useState(false)
     dispatch(fetchUserDataAsync());
   }, [theme]);
 
+ const handleNavigate=(value:any)=>{
+  router.push("/home")
+  dispatch(manageSideBar_Fn({ type: "changeType", value: value }));
 
-  console.log(token,"token")
-  console.log(otpless_token,"otpless_token")
-  console.log(showSideBar3,"showSideBar3")
+ }
 
-  
-
-const pathname=usePathname()
+  const pathname = usePathname();
   return (
     <div className="">
       <div
@@ -94,11 +94,11 @@ const pathname=usePathname()
           theme
             ? `bg-[${themeChange.light.bg1}]`
             : `bg-[${themeChange.dark.bg1}]`
-        }   lg:px-10 ${theme?"text-black":'text-white'}  items-center`}
+        }   lg:px-10 ${theme ? "text-black" : "text-white"}  items-center`}
       >
         <div className="   flex gap-2 w-[60%] justify-between">
           <div className="w-[100%] lg:w-[20%]  flex items-center gap-3  ">
-            <div className="">
+            <div className="lg:contents hidden">
               {showSideBar1 ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -181,10 +181,16 @@ const pathname=usePathname()
                 </svg>
               )}
             </div>
+            <div className="lg:hidden">
+      <MobileSidebar/>
+
+            </div>
 
             <img
               className=" w-[100px] lg:hidden  md:w-[150px]"
-              src={logoAndFav?.logo}
+              src={
+                "https://i.ibb.co/8zdgQ5R/Screenshot-2024-02-05-at-12-24-54-AM-removebg-preview.png"
+              }
             />
           </div>
           <div className="hidden lg:contents">
@@ -199,14 +205,16 @@ const pathname=usePathname()
                   }`}
                 >
                   <Button
-                    onClick={() => router.push("/casino")}
+                    onClick={()=>handleNavigate(2)}
                     colorScheme=""
                     style={{
-                      color: pathname.includes("casino")? "white" : "#DA9E2A",
-                      backgroundColor:pathname.includes("casino")?"#F3AF06":"",
+                      color: type==2 ? "white" : "#DA9E2A",
+                      backgroundColor: type==2
+                        ? "#F3AF06"
+                        : "",
                       borderRadius: "50px",
                       height: "34px",
-                  
+
                       transition: "background-color 0.5s ease-in-out",
                       width: "95%",
                     }}
@@ -214,15 +222,17 @@ const pathname=usePathname()
                     Casino
                   </Button>
                   <Button
-                    onClick={() => router.push("/sports")}
+                    onClick={() =>handleNavigate(3)}
                     colorScheme=""
                     style={{
-                      color: pathname.includes("sports")? "white" : "#DA9E2A",
-                     backgroundColor:pathname.includes("sports")?"#F3AF06":"",
+                      color: type==3 ? "white" : "#DA9E2A",
+                      backgroundColor: type==3
+                        ? "#F3AF06"
+                        : "",
                       borderRadius: "50px",
                       height: "34px",
                       width: "100%",
-                   
+
                       transition: "background-color 0.5s ease-in-out",
                     }}
                   >
@@ -234,9 +244,7 @@ const pathname=usePathname()
                 <div
                   style={{ boxShadow: "5px 7px 15px 0px rgba(0, 0, 0, 0.25)" }}
                   className={`h-[34px] border ${
-                    theme
-                       ? `bg-[white]`
-                      : `bg-[${themeChange.dark.bg2}]`
+                    theme ? `bg-[white]` : `bg-[${themeChange.dark.bg2}]`
                   } border-[#444] px-3 flex justify-between items-center p-1 rounded-[50px] w-[100%] }`}
                 >
                   <input
@@ -282,7 +290,10 @@ const pathname=usePathname()
           </div>
           <div className="hidden  lg:contents">
             <div className=" border-none">
-            <img className=" w-[170px] ml-5 xl:ml-16  " src={logoAndFav?.logo} />
+              <img
+                className=" w-[170px] ml-5 xl:ml-16  "
+                src={"https://i.ibb.co/8zdgQ5R/Screenshot-2024-02-05-at-12-24-54-AM-removebg-preview.png"}
+              />
             </div>
           </div>
         </div>
@@ -290,9 +301,9 @@ const pathname=usePathname()
         {/* after auth */}
         {token && otpless_token ? (
           <div className="flex items-center  gap-4  sm:gap-6 lg:gap-10 ">
-            <div className="">
+            {/* <div className="">
               <Notification />
-            </div>
+            </div> */}
             <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ... p-[1px] rounded-[50px] ">
               <div
                 // style={{ boxShadow: "6px 5px 4px 0px #373A40 inset" }}
@@ -304,13 +315,12 @@ const pathname=usePathname()
               >
                 {/* <Image className="w-[20px] h-[20px] " src={coin} alt="coin" /> */}
                 <span className="h-[20px] w-[20px] rounded-[50%] flex items-center justify-center bg-yellow-400">
-                <TbCurrencyTaka   color="white" fontSize="15px" /> 
+                  <TbCurrencyTaka color="white" fontSize="15px" />
                 </span>
                 <Tooltip
                   hasArrow
                   arrowSize={20}
                   label={
-                    
                     <div
                       className={` ${
                         theme ? "black" : "white"
@@ -326,21 +336,23 @@ const pathname=usePathname()
                   placement="bottom"
                   bg="#212632"
                   border="1px solid gray"
-                > 
+                >
                   <div className="flex flex-col justify-center pl-3 lg:pl-0 lg:flex-row items-center lg:gap-4">
-                  <p
-                    className={`flex items-center ${
-                      theme ? "black" : "white"
-                    } text-[10px] md:ml-0  lg:text-sm gap-2 md:gap-6`}
-                  >
-                    {amount}
-                    {/* <span className=" mr-1 md:mr-0">
+                    <p
+                      className={`flex items-center ${
+                        theme ? "black" : "white"
+                      } text-[10px] md:ml-0  lg:text-sm gap-2 md:gap-6`}
+                    >
+                      {amount}
+                      {/* <span className=" mr-1 md:mr-0">
                       <SlArrowDown color={theme ? "black" : "white"} />
                     </span> */}
-                  </p>
-                      <p className="text-[8px] lg:text-[10px]">Exp: <span className="text-red-400">{exposure_limit}</span></p>
+                    </p>
+                    <p className="text-[8px] hidden lg:contents lg:text-[10px]">
+                      Exp:{" "}
+                      <span className="text-red-400">{exposure_limit}</span>
+                    </p>
                   </div>
-              
                 </Tooltip>
 
                 <PamentModel heading="deposit" code="3" />
@@ -357,15 +369,18 @@ const pathname=usePathname()
             </div>
           </div>
         ) : (
-          <LoginModal ID={1} />
+          <div className="flex item-center gap-2">
+          <SignUpModal title="Register"/>
+              <LoginModal ID={1} />
+                    </div>
         )}
       </div>
-   
+
       {token && otpless_token && showSideBar3 && (
         <div className="">
           <Profile />
         </div>
-)}
+      )}
     </div>
   );
 };

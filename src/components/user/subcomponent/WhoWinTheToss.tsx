@@ -51,7 +51,6 @@ const WhoWinTheToss: React.FC<FancyProps> = ({ singleMatch }) => {
     betType: BetType
     // matchName: string
   ) => {
-    console.log(odd);
     if (odd < 1) {
       return;
     }

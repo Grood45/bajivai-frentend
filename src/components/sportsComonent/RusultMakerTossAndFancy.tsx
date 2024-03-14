@@ -92,7 +92,6 @@ const RusultMakerTossAndFancy = () => {
     try {
       const response = await fetchGetRequest(url);
       setBets(response.data);
-      console.log(response.data, "hffhg");
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -105,7 +104,6 @@ const RusultMakerTossAndFancy = () => {
         isClosable: true,
       });
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -139,7 +137,6 @@ const RusultMakerTossAndFancy = () => {
   };
 
   const handleConfirmResult = async () => {
-    console.log(selectedMatches);
     setResultLoading(true);
     let payload = { user_ids: selectedMatches, answer: result };
     try {
@@ -351,7 +348,7 @@ const RusultMakerTossAndFancy = () => {
               >
                 MATCH
               </Th>
-              {betType == "fancy" && (
+              {betCategory == "fancy" && (
                 <Th
                   scope="col"
                   color="white"
@@ -365,7 +362,7 @@ const RusultMakerTossAndFancy = () => {
                   Questions
                 </Th>
               )}
-              {betType == "toss" && (
+              {betCategory == "toss" && (
                 <Th
                   scope="col"
                   color="white"
@@ -486,7 +483,7 @@ const RusultMakerTossAndFancy = () => {
                   key={index}
                   className={` ${
                     row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
-                  } hover:bg-[#E99CAD] text-[12px] font-semibold`}
+                  } text-[12px] font-semibold`}
                 >
                   <Td
                     style={{
@@ -522,12 +519,12 @@ const RusultMakerTossAndFancy = () => {
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.match_name}
                   </Td>
-                  {betType == "fancy" && (
+                  {betCategory == "fancy" && (
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.question}
                     </Td>
                   )}
-                  {betType == "toss" && (
+                  {betCategory == "toss" && (
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.runner_name}
                     </Td>
@@ -544,13 +541,15 @@ const RusultMakerTossAndFancy = () => {
                     {row.stake}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.stake * 2}
+                  {row?.bet_category==="fancy"?row.stake:(row.rate*row.stake-row.stake).toFixed(2)} 
+
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.stake}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.bet_type}
+                    {/* {row.bet_type} */}
+                    {row?.bet_category=="fancy"?row.bet_type=="lay"?<Badge colorScheme="red">No</Badge>:<Badge colorScheme="green">Yes</Badge>:row.bet_type}
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                     {row.bet_category}
@@ -561,7 +560,7 @@ const RusultMakerTossAndFancy = () => {
                         color: row.status == "pending" ? "#ED8936" : "#48BB78",
                       }}
                     >
-                      {row.status}
+                      {row.status==="declaired"?<Badge colorScheme={row.result==="win"?"green":row.result==="lose"?"red":'orange'}>{row.result}</Badge>:<Badge>{row.status}</Badge>}
                     </Badge>
                   </Td>
                   <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>

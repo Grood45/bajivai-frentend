@@ -33,6 +33,7 @@ import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState, useAppSelector } from "@/app/redux-arch/store";
 import themeChange from "@/theme";
+import { TbCurrencyTaka } from "react-icons/tb";
 function StatementModel() {
   const [showStatement, setShowStateMent] = useState(0);
   const [showProfile, setShowProfile] = useState(0);
@@ -41,6 +42,7 @@ function StatementModel() {
   const { user_id = "", username = "" } =
     userAuth?.combineR?.userAuth?.data?.user || {};
   const [statemendatas, setStateMentData] = useState<Allbets[]>([]);
+  const [detailsBet, setDetailsBet] = useState<any>({});
   const toast = useToast();
   const getAllBets = async () => {
     setLoading1(true);
@@ -53,7 +55,6 @@ function StatementModel() {
         setStateMentData(receivedData);
       }
       setLoading1(false);
-      console.log(data, "getAllbets data");
     } catch (error: any) {
       toast({
         description: `${error?.data?.message}`,
@@ -62,7 +63,6 @@ function StatementModel() {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
 
@@ -76,7 +76,6 @@ function StatementModel() {
 
   const sportsdata = filterDataByCategory("sport");
   const casinoData = filterDataByCategory("casino");
-
   const {
     isOpen,
     onOpen,
@@ -93,8 +92,11 @@ function StatementModel() {
     setShowStateMent(0);
   };
 
-  const handleStatement = (id: number) => {
+  const handleStatement = (id: number, detail?: any) => {
     setShowStateMent(id);
+    if (id === 5) {
+      setDetailsBet(detail);
+    }
   };
   const ShowUser = (id: number) => {
     setShowProfile(id);
@@ -146,7 +148,7 @@ function StatementModel() {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent className="md:rounded-[16px] ">
+        <ModalContent className="md:rounded-[16px]  ">
           <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... md:rounded-[16px] p-[1px]">
             <ModalBody
               style={{
@@ -299,10 +301,11 @@ function StatementModel() {
                             </p>
                           </div>
 
-                          <div className="flex   pb-[50px] mt-2  flex-col gap-2">
-                            {statemendatas.slice(0, 3).map((item) => {
+                          <div className="flex  overflow-scroll h-[300px]  pb-[50px] mt-2  flex-col gap-2">
+                            {statemendatas.map((item) => {
                               return (
                                 <div
+                                  onClick={() => handleStatement(5, item)}
                                   key={item._id}
                                   className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
                                 >
@@ -314,7 +317,7 @@ function StatementModel() {
                                     className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
                                   >
                                     <div className="flex gap-4 items-center">
-                                                                           <Image
+                                      <Image
                                         src={
                                           item.event_type !== "casino"
                                             ? bollyball
@@ -334,29 +337,62 @@ function StatementModel() {
                                         </p>
                                       </div>
                                     </div>
-                                    <div className="flex text-center flex-col gap-1">
-                                      <p
+                                    {item.event_type==="sport"&&  <div className="flex text-center flex-col gap-1">
+                                    
+                                     <p
                                         className={`text-sm  ${
                                           item.result == "lose"
-                                            ? "text-[#FF0202]":item.result=="win"?
-                                            "text-[#0FBF00]":"text-[#EAAB0F]"
+                                            ? "text-red-400"
+                                            : item.result == "win"
+                                            ? "text-green-400"
+                                            : "text-orange-400"
                                         }  font-medium`}
                                       >
-                                        {item.stake}
+                                        {item?.result=="win"?"+":item?.result=="lose"?"-":""}
+                                        {item.stake.toFixed(2)}
                                         <span className="text-[10px] font-light">
                                           {/* BDT */}
                                         </span>
                                       </p>
-                                      <p className={`text-xs   ${
+                                      <p
+                                        className={`text-xs   ${
                                           item.result == "lose"
-                                            ? "text-[#FF0202]":item.result=="win"?
-                                            "text-[#0FBF00]":"text-[#EAAB0F]"
-                                        }`}>
-
-                                        {item.result==""?"pending":item.result}
-                                     
+                                            ? "text-[#FF0202]"
+                                            : item.result == "win"
+                                            ? "text-[#0FBF00]"
+                                            : "text-[#EAAB0F]"
+                                        }`}
+                                      >
+                                        {item.result == ""
+                                          ? "pending"
+                                          : item.result}
                                       </p>
-                                    </div>
+                                    </div>}
+
+                                    {item?.event_type==="casino"&&
+                                    <div className="flex flex-col text-xs justify-center items-center">
+                             <p
+                                className={`text-[16px] ${
+                                  item?.result_type === "win"
+                                    ? "text-green-400"
+                                    : item?.result_type === "lose"
+                                    ? "text-red-400"
+                                    : "text-orange-400"
+                                }`}
+                              >
+                                {item?.result_type == "win"
+                                  ? "+"
+                                  : item?.result_type == "lose"
+                                  ? "-"
+                                  : ""}{" "}
+                                {item?.result_type === "win"?item?.win_loss-item?.stake:item?.stake}.00
+                                  
+                              </p>
+                              <p className={` ${item?.result_type=="win"?"text-green-400":item?.result_type=="lose"?"text-red-400":"text-orange-400"} `}>
+                                {item?.result_type=="win"?"win":item?.result_type=="lose"?"lose":"refund"}
+                              </p>
+                              </div>
+                              }
                                   </div>
                                 </div>
                               );
@@ -444,58 +480,58 @@ function StatementModel() {
                                 View All
                               </p>
                             </div>
-                            
+
                             <div className="overflow-scroll  h-[100vh]">
-                            {sportsdata.map((item) => {
-                              return (
-                                <div
-                                  key={item._id}
-                                  className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
-                                >
+                              {sportsdata.map((item) => {
+                                return (
                                   <div
-                                    style={{
-                                      boxShadow:
-                                        "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
-                                    }}
-                                    className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    onClick={() => handleStatement(5, item)}
+                                    key={item._id}
+                                    className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
                                   >
-                                    <div className="flex gap-4 items-center">
-                                      <Image src={bollyball} alt="" />
-                                      <div className="flex flex-col gap-[2px]">
-                                        <p className="text-xs ">
-                                          {item.match_name}
+                                    <div
+                                      style={{
+                                        boxShadow:
+                                          "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
+                                      }}
+                                      className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    >
+                                      <div className="flex gap-4 items-center">
+                                        <Image src={bollyball} alt="" />
+                                        <div className="flex flex-col gap-[2px]">
+                                          <p className="text-xs ">
+                                            {item.match_name}
+                                          </p>
+                                          <p className="text-[10px] ">
+                                            {item.event_name}
+                                          </p>
+                                          <p className="text-[10px] text-[#A4A9AE]">
+                                            {item.placed_at}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="flex text-center flex-col gap-1">
+                                        <p
+                                          className={`text-sm  ${
+                                            item.status === "pending"
+                                              ? "text-[#FF0202]"
+                                              : "text-[#0FBF00]"
+                                          }  font-medium`}
+                                        >
+                                          {item.stake.toFixed(2)}
+                                          <span className="text-[10px] font-light">
+                                            {/* BDT */}
+                                          </span>
                                         </p>
-                                        <p className="text-[10px] ">
-                                          {item.event_name}
-                                        </p>
-                                        <p className="text-[10px] text-[#A4A9AE]">
-                                          {item.placed_at}
+                                        <p className="text-xs  text-[#EAAB0F]">
+                                          {item.status}
                                         </p>
                                       </div>
                                     </div>
-                                    <div className="flex text-center flex-col gap-1">
-                                      <p
-                                        className={`text-sm  ${
-                                          item.status === "pending"
-                                            ? "text-[#FF0202]"
-                                            : "text-[#0FBF00]"
-                                        }  font-medium`}
-                                      >
-                                        {item.stake}
-                                        <span className="text-[10px] font-light">
-                                          {/* BDT */}
-                                        </span>
-                                      </p>
-                                      <p className="text-xs  text-[#EAAB0F]">
-                                        {item.status}
-                                      </p>
-                                    </div>
                                   </div>
-                                </div>
-                              );
-                            })}
+                                );
+                              })}
                             </div>
-                           
                           </div>
                         </div>
                       </div>
@@ -581,6 +617,7 @@ function StatementModel() {
                             {casinoData.map((item) => {
                               return (
                                 <div
+                                  onClick={() => handleStatement(5, item)}
                                   key={item._id}
                                   className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
                                 >
@@ -605,12 +642,15 @@ function StatementModel() {
                                         </p>
                                       </div>
                                     </div>
+                                    
                                     <div className="flex text-center flex-col gap-1">
                                       <p
                                         className={`text-sm  ${
                                           item.result == "lose"
-                                            ? "text-[#FF0202]":item.result=="win"?
-                                            "text-[#0FBF00]":"text-[#EAAB0F]"
+                                            ? "text-[#FF0202]"
+                                            : item.result == "win"
+                                            ? "text-[#0FBF00]"
+                                            : "text-[#EAAB0F]"
                                         }  font-medium`}
                                       >
                                         {item.stake}
@@ -618,12 +658,18 @@ function StatementModel() {
                                           {/* BDT */}
                                         </span>
                                       </p>
-                                      <p className={`text-xs  ${
+                                      <p
+                                        className={`text-xs  ${
                                           item.result == "lose"
-                                            ? "text-[#FF0202]":item.result=="win"?
-                                            "text-[#0FBF00]":"text-[#EAAB0F]"
-                                        }`}>
-                                       {item.result==""?"pending":item.result}
+                                            ? "text-[#FF0202]"
+                                            : item.result == "win"
+                                            ? "text-[#0FBF00]"
+                                            : "text-[#EAAB0F]"
+                                        }`}
+                                      >
+                                        {item.result == ""
+                                          ? "pending"
+                                          : item.result}
                                       </p>
                                     </div>
                                   </div>
@@ -713,74 +759,84 @@ function StatementModel() {
                               </p>
                             </div>
                             <div className="overflow-scroll   h-[100vh]">
-                            {statemendatas.map((item) => {
-                              return (
-                                <div
-                                  key={item._id}
-                                  className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
-                                >
-                                  <div
-                                    style={{
-                                      boxShadow:
-                                        "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
-                                    }}
-                                    className="flex justify-between m  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
-                                  >
-                                    <div className="flex gap-4 items-center">
-                                                                           <Image
-                                        src={
-                                          item.event_type !== "casino"
-                                            ? bollyball
-                                            : card
-                                        }
-                                        alt=""
-                                      />
-                                      <div className="flex flex-col gap-[2px]">
-                                        <p className="text-xs ">
-                                          {item.match_name}
-                                        </p>
-                                        <p className="text-[10px] ">
-                                          {item.event_name}
-                                        </p>
-                                        <p className="text-[10px] text-[#A4A9AE]">
-                                          {item.placed_at}
-                                        </p>
+                              {statemendatas
+                                .filter((item) => item.result == "")
+                                .map((item) => {
+                                  return (
+                                    <div
+                                      onClick={() => handleStatement(5, item)}
+                                      key={item._id}
+                                      className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] mt-1 rounded-[10px] p-[1px]"
+                                    >
+                                      <div
+                                        style={{
+                                          boxShadow:
+                                            "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
+                                        }}
+                                        className="flex justify-between m  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                      >
+                                        <div className="flex gap-4 items-center">
+                                          <Image
+                                            src={
+                                              item.event_type !== "casino"
+                                                ? bollyball
+                                                : card
+                                            }
+                                            alt=""
+                                          />
+                                          <div className="flex flex-col gap-[2px]">
+                                            <p className="text-xs ">
+                                              {item.match_name}
+                                            </p>
+                                            <p className="text-[10px] ">
+                                              {item.event_name}
+                                            </p>
+                                            <p className="text-[10px] text-[#A4A9AE]">
+                                              {item.placed_at}
+                                            </p>
+                                          </div>
+                                        </div>
+                                        <div className="flex text-center flex-col gap-1">
+                                          <p
+                                            className={`text-sm  ${
+                                              item.result == "lose"
+                                                ? "text-[#FF0202]"
+                                                : item.result == "win"
+                                                ? "text-[#0FBF00]"
+                                                : "text-[#EAAB0F]"
+                                            }  font-medium`}
+                                          >
+                                            {item.stake.toFixed(2)}
+                                            <span className="text-[10px] font-light">
+                                              {/* BDT */}
+                                            </span>
+                                          </p>
+                                          <p
+                                            className={`text-xs  ${
+                                              item.result == "lose"
+                                                ? "text-[#FF0202]"
+                                                : item.result == "win"
+                                                ? "text-[#0FBF00]"
+                                                : "text-[#EAAB0F]"
+                                            }`}
+                                          >
+                                            {item.result == ""
+                                              ? "pending"
+                                              : item.result}
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
-                                    <div className="flex text-center flex-col gap-1">
-                                      <p
-                                        className={`text-sm  ${
-                                          item.result == "lose"
-                                            ? "text-[#FF0202]":item.result=="win"?
-                                            "text-[#0FBF00]":"text-[#EAAB0F]"
-                                        }  font-medium`}
-                                      >
-                                        {item.stake}
-                                        <span className="text-[10px] font-light">
-                                          {/* BDT */}
-                                        </span>
-                                      </p>
-                                      <p className={`text-xs  ${
-                                          item.result == "lose"
-                                            ? "text-[#FF0202]":item.result=="win"?
-                                            "text-[#0FBF00]":"text-[#EAAB0F]"
-                                        }`}>
-                                    {item.result==""?"pending":item.result}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            })}
+                                  );
+                                })}
                             </div>
-                         
                           </div>
                         </div>
                       </div>
                     </div>
                   )}
                   {showStatement === 4 && (
-                    <div className="min-h-[90vh]">
+                    <div className=" h-[90vh]">
                       <div>
                         <div className="flex justify-end">
                           <svg
@@ -856,65 +912,415 @@ function StatementModel() {
                                 View All
                               </p>
                             </div>
-                            {statemendatas.map((item) => {
-                              return (
-                                <div
-                                  key={item._id}
-                                  className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
-                                >
+                            <div className="overflow-scroll  flex flex-col gap-2 h-[80vh] lg:h-[70vh]">
+                              {statemendatas.map((item) => {
+                                return (
                                   <div
-                                    style={{
-                                      boxShadow:
-                                        "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
-                                    }}
-                                    className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    onClick={() => handleStatement(5, item)}
+                                    key={item._id}
+                                    className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ...  w-[100%] rounded-[10px] p-[1px]"
                                   >
-                                    <div className="flex gap-4 items-center">
-                                                                           <Image
-                                        src={
-                                          item.event_type !== "casino"
-                                            ? bollyball
-                                            : card
-                                        }
-                                        alt=""
-                                      />
-                                      <div className="flex flex-col gap-[2px]">
-                                        <p className="text-xs ">
-                                          {item.match_name}
+                                    <div
+                                      style={{
+                                        boxShadow:
+                                          "1px 5px 40px 8px rgba(110, 117, 136, 0.07)",
+                                      }}
+                                      className="flex justify-between  bg-gray-700  cursor-pointer items-center rounded-[10px] w-[100%] p-2"
+                                    >
+                                      <div className="flex gap-4 items-center">
+                                        <Image
+                                          src={
+                                            item.event_type !== "casino"
+                                              ? bollyball
+                                              : card
+                                          }
+                                          alt=""
+                                        />
+                                        <div className="flex flex-col gap-[2px]">
+                                          <p className="text-xs ">
+                                            {item.match_name}
+                                          </p>
+                                          <p className="text-[10px] ">
+                                            {item.event_name}
+                                          </p>
+                                          <p className="text-[10px] text-[#A4A9AE]">
+                                            {item.placed_at}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="flex text-center flex-col gap-1">
+                                        <p
+                                          className={`text-sm  ${
+                                            item.result == "lose"
+                                              ? "text-[#FF0202]"
+                                              : item.result == "win"
+                                              ? "text-[#0FBF00]"
+                                              : "text-[#EAAB0F]"
+                                          }  font-medium`}
+                                        >
+                                          {item.stake.toFixed(2)}
+                                          <span className="text-[10px] font-light">
+                                            {/* BDT */}
+                                          </span>
                                         </p>
-                                        <p className="text-[10px] ">
-                                          {item.event_name}
-                                        </p>
-                                        <p className="text-[10px] text-[#A4A9AE]">
-                                          {item.placed_at}
+                                        <p
+                                          className={`text-xs  ${
+                                            item.result == "lose"
+                                              ? "text-[#FF0202]"
+                                              : item.result == "win"
+                                              ? "text-[#0FBF00]"
+                                              : "text-[#EAAB0F]"
+                                          }`}
+                                        >
+                                          {item.result == ""
+                                            ? "pending"
+                                            : item.result}
                                         </p>
                                       </div>
                                     </div>
-                                    <div className="flex text-center flex-col gap-1">
-                                      <p
-                                        className={`text-sm  ${
-                                          item.result == "lose"
-                                            ? "text-[#FF0202]":item.result=="win"?
-                                            "text-[#0FBF00]":"text-[#EAAB0F]"
-                                        }  font-medium`}
-                                      >
-                                        {item.stake}
-                                        <span className="text-[10px] font-light">
-                                          {/* BDT */}
-                                        </span>
-                                      </p>
-                                      <p className={`text-xs  ${
-                                          item.result == "lose"
-                                            ? "text-[#FF0202]":item.result=="win"?
-                                            "text-[#0FBF00]":"text-[#EAAB0F]"
-                                        }`}>
-                                       {item.result==""?"pending":item.result}
-                                      </p>
-                                    </div>
                                   </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {showStatement === 5 && (
+                    <div className="h-[90vh]  w-[100%] p-0 overflow-scroll">
+                      <div>
+                        <div className="flex justify-end">
+                          <svg
+                            onClick={handleCancel}
+                            cursor={"pointer"}
+                            width="40"
+                            height="25"
+                            viewBox="0 0 40 25"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0H20C31.0457 0 40 8.95431 40 20V25H20C8.95431 25 0 16.0457 0 5V0Z"
+                              fill="#EAAB0F"
+                            />
+                            <line
+                              y1="-1"
+                              x2="17.8443"
+                              y2="-1"
+                              transform="matrix(0.728288 0.685271 -0.75454 0.656254 12.1129 8.19092)"
+                              stroke="black"
+                              stroke-width="2"
+                            />
+                            <line
+                              y1="-1"
+                              x2="17.6965"
+                              y2="-1"
+                              transform="matrix(0.67785 -0.7352 0.80052 0.599306 14.2448 20.0854)"
+                              stroke="black"
+                              stroke-width="2"
+                            />
+                          </svg>
+                        </div>
+                        <div className="w-[100%] relative m-auto">
+                          <div
+                            onClick={handleArrow}
+                            className="absolute   cursor-pointer left-2 "
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="43"
+                              height="42"
+                              viewBox="0 0 48 47"
+                              fill="none"
+                            >
+                              <rect
+                                x="0.386719"
+                                width="47"
+                                height="47"
+                                rx="23.5"
+                                fill="#A4A9AE"
+                                fill-opacity="0.25"
+                              />
+                              <path
+                                d="M27.3867 16L19.3867 24L27.3867 31.5"
+                                stroke="#A4A9AE"
+                                stroke-width="1.9"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+                        <div className="flex flex-col gap-5 w-[98%]  m-auto ">
+                          <p className="text-lg  text-center font-semibold">
+                            Bet Details
+                          </p>
+                          <div className="flex   pb-[50px] mt-4  flex-col gap-2">
+                            <div className="flex flex-col justify-center items-center gap-2">
+                              <span className="h-[20px] w-[20px] rounded-[50%] flex items-center justify-center bg-yellow-400">
+                                <TbCurrencyTaka color="white" fontSize="15px" />
+                              </span>
+                            {detailsBet?.event_type==="casino"&&
+                             <p
+                                className={`text-[16px] ${
+                                  detailsBet?.result_type === "win"
+                                    ? "text-green-400"
+                                    : detailsBet?.result_type === "lose"
+                                    ? "text-red-400"
+                                    : "text-orange-400"
+                                }`}
+                              >
+                                {detailsBet?.result_type == "win"
+                                  ? "+"
+                                  : detailsBet?.result_type == "lose"
+                                  ? "-"
+                                  : ""}{" "}
+                                {detailsBet?.result_type === "win"?detailsBet?.win_loss-detailsBet?.stake:detailsBet?.stake}
+                                  
+                                <span className="text-white text-sm">BDT</span>
+                              </p>}
+                              {detailsBet?.event_type==="sport"&& 
+                                 <p
+                                 className={`text-[16px] ${
+                                   detailsBet?.result === "win"
+                                     ? "text-green-400"
+                                     : detailsBet?.result === "lose"
+                                     ? "text-red-400"
+                                     : "text-orange-400"
+                                 }`}
+                               >
+                                 {detailsBet?.result == "win"
+                                   ? "+"
+                                   : detailsBet?.result == "lose"
+                                   ? "-"
+                                   : ""}{" "}
+                                 {detailsBet?.result === "win"
+                                   ? detailsBet?.bet_category == "fancy"
+                                     ? (detailsBet?.stake * 2).toFixed(2)
+                                     : detailsBet?.bet_category == "odds" &&
+                                       detailsBet?.bet_type == "back"
+                                     ? (
+                                         detailsBet?.stake *
+                                           detailsBet?.rate -
+                                         detailsBet?.stake
+                                       ).toFixed(2)
+                                     : (detailsBet?.stake).toFixed(2)
+                                   : (detailsBet?.stake).toFixed(2)}{" "}
+                                 <span className="text-white text-sm">
+                                   BDT
+                                 </span>
+                               </p>}
+                            </div>
+                            <div className="flex flex-col mt-5 gap-3">
+                              <div className="rounded-[2px] p-2 bg-[#15191E] flex item-center justify-center">
+                              {detailsBet?.event_type=="sport"?<p className="font-semibold text-lg text-center text-[#fff]">
+                                  {detailsBet?.bet_category}
+                                </p>:<p className="font-semibold text-lg text-center text-[#fff]">Casino</p>}
+                              </div>
+                              <div className="flex flex-col p-4 rounded-[2px] bg-[#15191E]  gap-3">
+                              {detailsBet?.event_type=="sport"&&  <div className="flex justify-between w-[100%] items-center">
+                                  <p className="text-sm font-semibold">
+                                    Status
+                                  </p>
+                                  <p
+                                    className={` font-semibold text-sm ${
+                                      detailsBet?.result == ""
+                                        ? "text-orange-400"
+                                        : detailsBet?.result == "win"
+                                        ? "text-green-400"
+                                        : "text-red-400"
+                                    } `}
+                                  >
+                                    {detailsBet?.result === ""
+                                      ? "pending"
+                                      : detailsBet?.result}
+                                  </p>
+                                </div>}
+                                {detailsBet?.event_type=="sport"&& <div className="flex justify-between w-[100%] items-center">
+                                  <p className="text-sm font-medium">
+                                    BetCategory
+                                  </p>
+                                  <p
+                                    className={` font-semibold text-sm  text-purple-400`}
+                                  >
+                                    {detailsBet?.bet_category}
+                                  </p>
+                                </div>}
+                                {detailsBet?.event_type=="sport"&&<div className="flex justify-between w-[100%] items-center">
+                                  <p className="text-sm font-medium">
+                                    Match Bet
+                                  </p>
+                                  <p
+                                    className={` font-semibold text-sm  text-blue-400`}
+                                  >
+                                    {detailsBet?.event_name}
+                                  </p>
+                                </div>}
+                                {detailsBet?.event_type=="sport"&& <div className="flex justify-between w-[100%] items-center">
+                                  <p className="text-sm font-medium">ODD</p>
+                                  <p
+                                    className={` font-semibold text-sm  text-green-400`}
+                                  >
+                                    {detailsBet?.rate}
+                                  </p>
+                                </div>}
+                               <div className="flex justify-between w-[100%] items-center">
+                                  <p className="text-sm font-medium">Stake</p>
+                                  <p
+                                    className={` font-semibold text-sm  text-purple-400`}
+                                  >
+                                    {detailsBet?.stake} BDT
+                                  </p>
                                 </div>
-                              );
-                            })}
+                                {detailsBet?.event_type=="sport"?
+                                  <div className="flex justify-between w-[100%] items-center">
+                                <p className="text-sm font-medium">
+                                    {detailsBet?.result == "win"
+                                      ? "Win Amount"
+                                      : detailsBet?.result == "lose"
+                                      ? "Lose Amount"
+                                      : detailsBet?.result == "refund"
+                                      ? "Refund Amount"
+                                      : "Pending Amount"}
+                                  </p>
+                                  <p
+                                    className={`text-[16px] ${
+                                      detailsBet?.result === "win"
+                                        ? "text-green-400"
+                                        : detailsBet?.result === "lose"
+                                        ? "text-red-400"
+                                        : "text-orange-400"
+                                    }`}
+                                  >
+                                    {detailsBet?.result == "win"
+                                      ? "+"
+                                      : detailsBet?.result == "lose"
+                                      ? "-"
+                                      : ""}{" "}
+                                    {detailsBet?.result === "win"
+                                      ? detailsBet?.bet_category == "fancy"
+                                        ? (detailsBet?.stake * 2).toFixed(2)
+                                        : detailsBet?.bet_category == "odds" &&
+                                          detailsBet?.bet_type == "back"
+                                        ? (
+                                            detailsBet?.stake *
+                                              detailsBet?.rate -
+                                            detailsBet?.stake
+                                          ).toFixed(2)
+                                        : (detailsBet?.stake).toFixed(2)
+                                      : (detailsBet?.stake).toFixed(2)}{" "}
+                                    <span className="text-white text-sm">
+                                      BDT
+                                    </span>
+                                  </p>
+                                </div>:
+                                <div className="flex justify-between w-[100%] items-center">
+                                <p className="text-sm font-medium">
+                                    {detailsBet?.result_type == "win"
+                                    ? "Win Amount":detailsBet?.result_type=="lose" ?"Lose Amount":"Refund Amount"}
+                                  </p>
+                                  <p
+                                    className={`text-[16px] ${
+                                      detailsBet?.result_type === "win"
+                                        ? "text-green-400":detailsBet?.result_type=="lose"?"text-red-400":"text-orange-400"
+                                       
+                                    }`}
+                                  >
+                                    {detailsBet?.result_type == "win"
+                                      ? "+":detailsBet?.result_type=="lose"?"-":""}
+                                    
+                                    {detailsBet?.result_type=="win"?detailsBet?.win_loss-detailsBet?.stake:detailsBet?.stake}
+                                    <span className="text-white text-sm">
+                                      BDT
+                                    </span>
+                                  </p>
+                                </div>
+                                }
+                                {detailsBet?.event_type=="sport"&&    <div className="flex justify-between w-[100%] items-center">
+                                  <p className="text-sm font-medium">BetType</p>
+                                  {detailsBet?.bet_category == "fancy" ? (
+                                    detailsBet?.bet_category == "fancy" &&
+                                    detailsBet?.bet_type == "lay" ? (
+                                      <button
+                                        className={`py-[2px] text-xs px-2 ${
+                                          detailsBet?.bet_type === "back"
+                                            ? "bg-[#FF6A8A]"
+                                            : "bg-[#0096FE]"
+                                        }  rounded-[5px]`}
+                                      >
+                                        No
+                                      </button>
+                                    ) : (
+                                      <button
+                                        className={`py-[2px] text-xs px-2 ${
+                                          detailsBet?.bet_type === "back"
+                                            ? "bg-[#FF6A8A]"
+                                            : "bg-[#0096FE]"
+                                        }  rounded-[5px]`}
+                                      >
+                                        Yes
+                                      </button>
+                                    )
+                                  ) : (
+                                    <button
+                                      className={`py-[2px] text-xs px-2 ${
+                                        detailsBet?.bet_type === "back"
+                                          ? "bg-[#FF6A8A]"
+                                          : "bg-[#0096FE]"
+                                      }  rounded-[5px]`}
+                                    >
+                                      {detailsBet?.bet_type}
+                                    </button>
+                                  )}
+                                </div>}
+                                {detailsBet?.event_type=="sport"&&<div className="flex justify-between w-[100%] items-center">
+                                  <p className="text-sm font-medium">
+                                    Team/Question
+                                  </p>
+                                  <p className="text-[#fef08a]">
+                                    {detailsBet?.runner_name.slice(0, 30)}{" "}
+                                    {detailsBet?.runner_name.length > 30 &&
+                                      "..."}
+                                    {detailsBet?.Question}
+                                  </p>
+                                </div>}
+                              </div>
+                            </div>
+                            <div className="rounded-[2px] p-2 bg-[#15191E] py-2  ">
+                              <p className="font-medium text-center text-[14px]">
+                                Other Details
+                              </p>
+                             {detailsBet?.event_type=="sport"&&<div className="flex px-3  justify-between mt-2 w-[100%] items-center">
+                                <p className="text-sm font-medium">
+                                  League Name
+                                </p>
+                                <p className="font-medium text-xs ">
+                                  {detailsBet?.league_name}
+                                </p>
+                              </div>}
+                              <div className="flex px-3 mt-2 justify-between w-[100%] items-center">
+                                <p className="text-sm font-medium">
+                                  Match Name
+                                </p>
+                                <p className="font-medium text-purple-400 text-xs">
+                                  {detailsBet?.match_name}
+                                </p>
+                              </div>
+                              <div className="flex px-3 mt-2 justify-between w-[100%] items-center">
+                                <p className="text-sm font-medium">Date</p>
+                                <p className="font-medium text-xs">
+                                  {detailsBet?.placed_at.split(" ")[0]}
+                                </p>
+                              </div>
+                              <div className="flex px-3 mt-2 justify-between w-[100%] items-center">
+                                <p className="text-sm font-medium">Time</p>
+                                <p className="font-medium text-xs">
+                                  {detailsBet?.placed_at.split(" ")[1]}
+                                  {detailsBet?.placed_at.split(" ")[2]}
+                                </p>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

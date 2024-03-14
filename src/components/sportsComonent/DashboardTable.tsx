@@ -42,6 +42,7 @@ import {
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import axios from "axios";
 import { fetchGetRequest, sendPatchRequest } from "@/api/api";
+import DateRangePicker from "./CalenderDateSelect";
 
 // import { useSearchParams } from "react-router-dom";
 declare module "csstype" {
@@ -59,7 +60,8 @@ function DashboardTable() {
   const [search, setquery] = useState<any>("");
   const [result, setResult] = useState<any>("");
   const [betType, setBetType] = useState<any>("toss");
-const [status,setStatus]=useState("pending")
+  const [status, setStatus] = useState("pending");
+  const [matchDataLoading, setMatchDataLoading] = useState<boolean>(false);
   const [pagination, setPagination] = useState<any>({});
   const totalPages = allData?.pagination?.totalPages || 0; // Replace with your total number of pages
   const toast = useToast();
@@ -97,27 +99,26 @@ const [status,setStatus]=useState("pending")
     }, 700);
 
     return () => clearTimeout(id);
-  }, [currentPage, search, betCategory,betType,status]);
-
+  }, [currentPage, search, betCategory, betType, status]);
 
   const data = [
     {
       title: "Odds Bets",
-      value: allData?.totalOdds || 0,
+      value: allData?.totalOddsPending || 0,
       icon: BiFootball,
       bg1: "#FEA21F",
       name: "odds",
     },
     {
       title: "Bookmaker Bets",
-      value: allData?.totalBookmaker || 0,
+      value: allData?.totalBookmakerPending || 0,
       icon: BiSolidFlagCheckered,
       bg1: "#29292C",
       name: "bookmaker",
     },
     {
       title: "Fancy Bets",
-      value: allData?.totalFancy || 0,
+      value: allData?.totalFancyPending || 0,
       icon: TbCricket,
       bg1: "#E12C6C",
       name: "fancy",
@@ -125,7 +126,7 @@ const [status,setStatus]=useState("pending")
 
     {
       title: "Toss Bets",
-      value: allData?.totaToss || 0,
+      value: allData?.totaTossPending || 0,
       icon: FaPersonSnowboarding,
       bg1: "#EC4C49",
       name: "toss",
@@ -206,6 +207,36 @@ const [status,setStatus]=useState("pending")
       });
     }
   };
+
+  const handleSaveMatchAndLeaque = async () => {
+    setMatchDataLoading(true);
+    // payload not required in this api route dummy payload.
+    let payload = { user_ids: "333" };
+    try {
+      let response = await sendPatchRequest(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/update-match-data`,
+        payload
+      );
+      toast({
+        description: response.message,
+        status: "success",
+        duration: 4000,
+        position: "top",
+        isClosable: true,
+      });
+      setMatchDataLoading(false);
+    } catch (error: any) {
+      toast({
+        description: `${error?.data?.message || error?.message}`,
+        status: "error",
+        duration: 4000,
+        position: "top",
+        isClosable: true,
+      });
+      setMatchDataLoading(false);
+    }
+  };
+
   return (
     <Box>
       <Box>
@@ -334,17 +365,14 @@ const [status,setStatus]=useState("pending")
               REFUND
             </button>
           </Box> */}
-            <Box className="flex gap-2 mr-[100px]">
-            <Select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            >
+          <Box className="flex gap-2 mr-[100px]">
+            <Select value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value={""}>Select Filter</option>
               <option value={"pending"}>Pending</option>
 
               <option value={"declaired"}>Declaired</option>
             </Select>
-           <Select
+            <Select
               value={betType}
               onChange={(e) => setBetType(e.target.value)}
             >
@@ -354,8 +382,15 @@ const [status,setStatus]=useState("pending")
               <option value={"toss"}>Toss</option>
               <option value={"fancy"}>Fancy</option>
             </Select>
-            </Box>
+          </Box>
+
+          <Box>
+            {" "}
+            <Button onClick={handleSaveMatchAndLeaque} isLoading={matchDataLoading} className=" bg-[#E91E63] text-black"  >Update Match</Button>{" "}
+          </Box>
+
         </Box>
+
         <div className="container overflow-scroll w-[100%]">
           {loading && (
             <Progress size="xs" isIndeterminate colorScheme="#e91e63" />
@@ -546,7 +581,7 @@ const [status,setStatus]=useState("pending")
                 >
                   RESULT
                 </Th>
-               
+
                 <Th
                   scope="col"
                   color="white"
@@ -569,7 +604,7 @@ const [status,setStatus]=useState("pending")
                     key={index}
                     className={` ${
                       row.bet_type === "lay" ? "bg-[#E99CAD]" : "bg-[#6AADDC]"
-                    } hover:bg-[#E99CAD] font-semibold`}
+                    } font-semibold`}
                   >
                     {/* <Td
                       style={{
@@ -599,11 +634,9 @@ const [status,setStatus]=useState("pending")
                       {row.username}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {row.sport_id == 1
-                            ? "Tennis"
-                            : row.sport_id === 2
-                            ? "Scoccer"
-                            : "Cricket"}
+                      
+
+                        {row?.event_name}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.league_name}
@@ -611,42 +644,66 @@ const [status,setStatus]=useState("pending")
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.match_name}
                     </Td>
-                  
-                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                     {betType=="fancy"?"N/A":row.runner_name}
-                  </Td>
-                   {/* } */}
+
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {!row.question?"N/A":row.question}
+                      {betType == "fancy" ? "N/A" : row.runner_name}
+                    </Td>
+                    {/* } */}
+                    <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
+                      {!row.question ? "N/A" : row.question}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    Rate:{" "}
-                    <button className="text-[md] text-center cursor-pointer bg-orange-500 rounded-md p-1 w-[70px] text-white ">
-                      {" "}
-                      {row.rate}
-                    </button>
+                      Rate:{" "}
+                      <button className="text-[md] text-center cursor-pointer bg-orange-500 rounded-md p-1 w-[70px] text-white ">
+                        {" "}
+                        {row.rate}
+                      </button>
                     </Td>
 
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.stake.toFixed(2)}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {(row.rate * row.stake).toFixed(2)}
+                      {row?.bet_category === "fancy"
+                        ? row.stake
+                        : (row.rate * row.stake - row.stake).toFixed(2)}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.stake.toFixed(2)}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                    {/* {row.bet_type} */}
-                    {betType=="fancy"?row.bet_type=="lay"?<Badge colorScheme="red">No</Badge>:<Badge colorScheme="green">Yes</Badge>:row.bet_type}
-                  </Td>
+                      {/* {row.bet_type} */}
+                      {betType == "fancy" ? (
+                        row.bet_type == "lay" ? (
+                          <Badge colorScheme="red">No</Badge>
+                        ) : (
+                          <Badge colorScheme="green">Yes</Badge>
+                        )
+                      ) : (
+                        row.bet_type
+                      )}
+                    </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.bet_category}
                     </Td>
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
-                      {row.status}
+                      {row.status === "declaired" ? (
+                        <Badge
+                          colorScheme={
+                            row.result === "win"
+                              ? "green"
+                              : row.result === "lose"
+                              ? "red"
+                              : "orange"
+                          }
+                        >
+                          {row.result}
+                        </Badge>
+                      ) : (
+                        <Badge>{row.status}</Badge>
+                      )}
                     </Td>
-                   
+
                     <Td style={{ whiteSpace: "nowrap", textTransform: "none" }}>
                       {row.status === "pending" &&
                       (row.bet_category === "toss" ||
@@ -709,7 +766,6 @@ const [status,setStatus]=useState("pending")
           </Table>
         </div>
 
-
         {data && data.length > 0 && (
           <div className="text-[16px] flex m-auto justify-end gap-3 align-middle items-center p-6">
             <span className="ag-paging-row-summary-panel">
@@ -723,7 +779,11 @@ const [status,setStatus]=useState("pending")
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == 1}
                 onClick={() => setCurrentPage(1)}
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"First"}
               </Button>
@@ -733,7 +793,11 @@ const [status,setStatus]=useState("pending")
                 // ref="btPrevious"
                 onClick={() => handlePrevPage()}
                 disabled={currentPage == 1}
-                style={{ backgroundColor: "#e91e63", color: "white" ,fontSize:'12px'}}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"<"}
               </Button>
@@ -744,7 +808,11 @@ const [status,setStatus]=useState("pending")
                 type="button"
                 disabled={currentPage == pagination.totalPages}
                 className="ml-1 disabled:text-gray-400 text-[20px]"
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {">"}
               </Button>
@@ -753,7 +821,11 @@ const [status,setStatus]=useState("pending")
                 type="button"
                 className="ml-1 disabled:text-gray-400 text-[20px]"
                 disabled={currentPage == pagination.totalPages}
-                style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+                style={{
+                  backgroundColor: "#e91e63",
+                  color: "white",
+                  fontSize: "12px",
+                }}
               >
                 {"Last"}
               </Button>

@@ -47,11 +47,9 @@ const Transaction = ({
       if (receivedData) {
         setTransactionData(receivedData);
       }
-      console.log(receivedData, "receive data");
 
       setLoading1(false);
     } catch (error: any) {
-      console.log(error?.data?.message)
       // toast({
       //   description: `${error?.data?.message}`,
       //   status: "error",
@@ -64,7 +62,6 @@ const Transaction = ({
 
   useEffect(() => {
     getAllTransaction();
-    console.log(transactionDetails, "klklk");
   }, []);
 
   const handleTransaction = (cardIndex?: any, data?: AllTransaction) => {
@@ -254,7 +251,7 @@ const Transaction = ({
             <p className="text-lg  text-center font-semibold">
               Transaction Details
             </p>
-            <div>
+            <div className="flex flex-col justify-center items-center">
               <p
                 className={`mt-6  ${
                   transactionDetails?.status === "pending"
@@ -264,17 +261,23 @@ const Transaction = ({
               >
                 {transactionDetails?.type}
               </p>
+              <div className="flex justify-center items-center gap-3">
+
               <p
-                className={`text-sm mt-1 text-center ${
+                className={`text-sm  text-center ${
                   transactionDetails?.status === "pending"
                   ? "text-orange-600": transactionDetails?.status==="reject"?"text-red-600"
                   : "text-green-600"
                 }  `}
               >
-                {transactionDetails?.deposit_amount ||
+                  {transactionDetails?.type==="deposit"?"+":"-"}{transactionDetails?.deposit_amount ||
                   transactionDetails?.withdraw_amount}{" "}
                 <span className="">BDT</span>
+               
               </p>
+              <p className="text-xs text-green-300 font-semibold">+{transactionDetails?.bonus}%</p>
+              </div>
+
             </div>
             <div
               className={` ${

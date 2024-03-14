@@ -75,11 +75,11 @@ const MainComponent = () => {
       title: "Refferrals",
       icon: <AiOutlineShareAlt />,
     },
-    // {
-    //   id: 6,
-    //   title: "Profit & Loss",
-    //   icon: <MdOutlineAccountBalanceWallet />,
-    // },
+    {
+      id: 6,
+      title: "Profit & Loss",
+      icon: <MdOutlineAccountBalanceWallet />,
+    },
     {
       id: 7,
       title: "Bet History",
@@ -94,7 +94,6 @@ const MainComponent = () => {
     try {
       let response = await fetchGetRequest(url);
       const data = response.data;
-console.log(data,"asdff")
       setLoading(false);
       const receivedData: UserInterface = response.data;
       if (receivedData) {
@@ -124,7 +123,6 @@ console.log(data,"asdff")
       if (response) {
         setPlData(response);
       }
-      console.log(response, "p/ldata");
     } catch (error: any) {
       setLoading1(false);
       toast({
@@ -134,7 +132,6 @@ console.log(data,"asdff")
         position: "top",
         isClosable: true,
       });
-      console.log(error);
     }
   };
   
@@ -182,7 +179,7 @@ console.log(data,"asdff")
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between mt-4 gap-4 w-[98%] m-auto  ">
+    <div className="flex flex-col md:flex-row pb-[100px] mt-4 min-h-[100vh] gap-4 w-[98%] m-auto  ">
       {/* sidebar */}
       <div className=" w-[100%] md:w-[24%]">
         <div className="flex flex-col-reverse  md:flex-col gap-6">
@@ -267,14 +264,13 @@ console.log(data,"asdff")
                 />
               </div>
 
-              <div
+              {/* <div
                 className={`flex justify-between cursor-pointer items-center gap-3 p-[6px] text-xs rounded-2xl`}
               >
                 <p>Email Verification</p>
                 <Switch
                   name="email_verified"
                   colorScheme="green"
-                  // defaultChecked={userData?.email_verified==true?true:false}
                   onChange={() => handleStatusChange("email_verified")}
                 />
               </div>
@@ -301,7 +297,7 @@ console.log(data,"asdff")
                   isChecked={userData?.kyc_verified == true ? true : false}
                   onChange={() => handleStatusChange("kyc_verified")}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -327,10 +323,10 @@ console.log(data,"asdff")
                 }}
                 className="w-[100%] text-xs rounded-[5px] p-[7px]"
               >
-                Login User
+              Change Password
               </button>
 
-              <button
+              {/* <button
                 style={{
                   background:
                     "linear-gradient(90deg, #F3CF4C 0%, #8E54E9 100%)",
@@ -338,7 +334,7 @@ console.log(data,"asdff")
                 className="w-[100%] text-xs rounded-[5px] p-[7px]"
               >
                 Login as User
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -356,7 +352,7 @@ console.log(data,"asdff")
                 {userData?.username}
               </p>
               <p className="text-[#A0AEC0] text-[10px] pr-3 md:text-xs font-normal">
-                {userData?.user_id}
+                {userData?.user_id.slice(0,8)}...
               </p>
             </div>
           </div>
@@ -368,7 +364,7 @@ console.log(data,"asdff")
               Profit / Loss :{" "}
               <span className={`text-xs ${plData?.totalAmount>0?"text-green-400":"text-red-400"} text-green-400 text-[10px] md:text-xs`}>
                 {" "}
-                &#8377; {plData&&plData?.totalAmount.toFixed(2)}
+                 {plData&&plData?.totalAmount.toFixed(2)} BDT
               </span>
             </p>
           </div>
@@ -380,8 +376,8 @@ console.log(data,"asdff")
             </button>
 
             <div className="text-[#FFF] flex flex-col items-center justify-center font-medium text-[10px]">
-              <p>{userData?.joined_at}</p>
-              <p>{getTimeAgo(userData?.joined_at)}</p>
+              <p>{userData?.joined_at.split(" ")[0]}</p>
+              {/* <p>{getTimeAgo(userData?.joined_at)}</p> */}
             </div>
           </div>
         </div>
@@ -390,6 +386,8 @@ console.log(data,"asdff")
         {active === 3 && <WithDrawl />}
         {active === 4 && <Transaction />}
         {active === 5 && <Referral />}
+        {active === 6 && <ProfiltAndLoss username ={userData?.username} user_id={userData?.user_id}  />}
+
         {active === 7 && <BetHistory />}
       </div>
     </div>

@@ -67,7 +67,6 @@ const CricketData = ({
       );
       const data = response.data;
       setData(data);
-      console.log(data, "cricket");
       setPagination(response.pagination);
       setLoading(false);
     } catch (error: any) {
@@ -88,7 +87,6 @@ const CricketData = ({
     socket.on("connect", () => {});
 
     socket.on("Data", (data: any) => {
-      // console.log(data, "datatyatatatattf")
       if (data) {
         setMatchData(data?.t1 || []);
       }
@@ -142,7 +140,6 @@ const CricketData = ({
       };
     });
   }, [matchData]);
-  console.log(matchData, "matchdata cricket");
   let newData =
     matchFilter === "Inplay"
       ? matchData.length > 0 && matchData.filter((item) => item.iplay === true)
@@ -190,20 +187,20 @@ const CricketData = ({
                   style={{ border: "1px solid rgba(68, 68, 68, 0.86)" }}
                   className="bg-[#212632] text-white p-1 md:p-[6px] text-[10px] md:text-xs font-medium rounded-[5px]"
                 >
-                  {limit ? "See all" : "Hide"}
+                  {limit ? "Hide" : "See All"}
                 </button>
               </div>
             </div>
             <div className="flex justify-center items-center">
               {loading && (
-              <Spinner
-              thickness='4px'
-              speed='0.65s'
-              emptyColor='gray.200'
-              marginTop={"40px"}
-              color='blue.500'
-              size='xl'
-            />
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  emptyColor="gray.200"
+                  marginTop={"40px"}
+                  color="blue.500"
+                  size="xl"
+                />
               )}
             </div>
             <div
@@ -211,7 +208,6 @@ const CricketData = ({
             >
               {matchData.length > 0 &&
                 matchData
-                  .slice(0, limit ? 10 : 100)
                   .map((item: CricketData) => {
                     let matchItem: any = data.find(
                       (ele: any) => ele.match_id == item.gid
@@ -341,7 +337,7 @@ const CricketData = ({
                                             item?.ename
                                               .split(" / ")[1]
                                               .split("  ")[1]
-                                              .split(" ")[0]
+                                              // .split(" ")[0]
                                           }
                                         </p>
                                       </div>
@@ -460,14 +456,14 @@ const CricketData = ({
             </div>
             <div className="flex justify-center items-center">
               {loading && (
-              <Spinner
-              thickness='4px'
-              speed='0.65s'
-              marginTop={"40px"}
-              emptyColor='gray.200'
-              color='blue.500'
-              size='xl'
-            />
+                <Spinner
+                  thickness="4px"
+                  speed="0.65s"
+                  marginTop={"40px"}
+                  emptyColor="gray.200"
+                  color="blue.500"
+                  size="xl"
+                />
               )}
             </div>
 
@@ -612,7 +608,7 @@ const CricketData = ({
                                           item?.ename
                                             .split(" / ")[1]
                                             .split("  ")[1]
-                                            .split(" ")[0]
+                                           
                                         }
                                       </p>
                                     </div>

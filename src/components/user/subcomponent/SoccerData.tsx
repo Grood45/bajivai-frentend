@@ -90,7 +90,6 @@ const [loading,setLoading]=useState(false)
       );
       const data = response.data;
       setData(data);
-      console.log(data, "soccer");
 
       setPagination(response.pagination);
       setLoading(false)
@@ -148,8 +147,6 @@ const [loading,setLoading]=useState(false)
         }
       });
 
-    console.log(finalData, "finalData");
-    console.log(matchData, "match data soccer");
     const countMatches = matchData.reduce((count, item: any) => {
       const matchItem = data.find(
         (ele: any) => ele.match_id == item.gmid && item.iplay === true
@@ -170,7 +167,6 @@ const [loading,setLoading]=useState(false)
       };
     });
 
-    console.log(matchData, "matchdata");
   }, [matchData]);
 
   let newData =
@@ -222,7 +218,7 @@ const [loading,setLoading]=useState(false)
                   style={{ border: "1px solid rgba(68, 68, 68, 0.86)" }}
                   className="bg-[#212632] text-white p-1 md:p-[6px] text-[10px] md:text-xs font-medium rounded-[5px]"
                 >
-                  {limit ? "See all" : "Hide"}
+                  {!limit ? "See all" : "Hide"}
                 </button>
               </div>
             </div>
@@ -244,7 +240,7 @@ const [loading,setLoading]=useState(false)
             sm:w-[100wh] mt-[16px]  `}
             >
               {matchData.length > 0 &&
-                matchData.slice(0, limit ? 9 : 100).map((item: any) => {
+                matchData.map((item: any) => {
                   let matchItem = data.find(
                     (ele: any) => ele.match_id == item.gmid
                   );

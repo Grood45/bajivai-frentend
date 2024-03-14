@@ -5,6 +5,11 @@ import React, { useEffect, useState } from "react";
 import { AiFillBell, AiFillSetting } from "react-icons/ai";
 import { BiUser } from "react-icons/bi";
 import NotificationModal from "./NotificationModal";
+import { logoutAsync } from "@/app/redux-arch/adminauth/auth.slice";
+import { useDispatch } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { FaUserLock } from "react-icons/fa";
+import ChangePassword from "./ChangePassword";
 const TopNavbar = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const path = usePathname();
@@ -19,10 +24,12 @@ const TopNavbar = () => {
     withdrawgetway: "Withdrawal Getway",
     promotion:'Promotion',
     generalsetting:'General Setting',
-    logoAndFavicon:'Logo And Favicon'
+    logoAndFavicon:'Logo And Favicon',
+    sporthistory:"Sports Bet History"
   };
   const last_part = path.split("/")[2];
   const formattedLastPart = pathMap[last_part] || last_part;
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +51,10 @@ const TopNavbar = () => {
     };
   }, []);
 
+
+  const handleLogout=()=>{
+    dispatch(logoutAsync({ name: "token" }));
+  }
   return (
     <div
       className={`  p-3 z-[1000] sticky w-[100%] top-2 py-4 rounded-xl  ${
@@ -62,25 +73,21 @@ const TopNavbar = () => {
         </div>
 
         <div className="flex gap-5 text-[#A0AEC0] items-center">
-          <input
-            style={{ border: "0.5px solid rgba(226, 232, 240, 0.30)" }}
-            className="h-[40px] items-center bg-[#0F1535] pl-3  outline-none rounded-[15px] w-[200px]  text-xs"
-            placeholder="Type here..."
-          />
-          <p className="flex cursor-pointer gap-1 text-[#A0AEC0]">
+          <ChangePassword/>
+          <p onClick={handleLogout} className="flex  p-[6px] rounded-[6px] px-4 bg-[#3B81F6] cursor-pointer gap-1 text-black font-bold text-sm">
             <span>
-              <BiUser  fontSize="20px" color="#A0AEC0" />
+              <BiUser  fontSize="16px" color="black" />
             </span>{" "}
             Logout
           </p>
-          <div>
+          {/* <div>
             <span>
               <AiFillSetting cursor="pointer" fontSize="20px" color="#A0AEC0" />
             </span>
           </div>
           <div>
            <NotificationModal/>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

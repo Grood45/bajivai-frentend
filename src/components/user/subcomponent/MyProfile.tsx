@@ -25,6 +25,8 @@ const MyProfile = ({
   const [loading1, setLoading1] = useState(false);
   const [transactiondata, setTransactionData] = useState<AllTransaction[]>([]);
   const [copiedItem, setCopiedItem] = useState(null);
+  const [plData, setPlData] = useState<any>({});
+
   const [transactionDetails, setTransactionDetails] =
     useState<AllTransaction>();
   const userAuth = useSelector((state: RootState) => state);
@@ -42,7 +44,6 @@ const MyProfile = ({
     referal_code = "",
   } = userAuth?.combineR?.userAuth?.data?.user || {};
   const toast = useToast();
-console.log(username,"username",joined_at,"joined_at")
   const getAllTransaction = async () => {
     setLoading1(true);
     let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-transaction/${user_id}`;
@@ -55,7 +56,27 @@ console.log(username,"username",joined_at,"joined_at")
       }
       setLoading1(false);
     } catch (error: any) {
-      console.log(error?.data?.message)
+
+      // toast({
+      //   description: `${error?.data?.message}`,
+      //   status: "error",
+      //   duration: 4000,
+      //   position: "top",
+      //   isClosable: true,
+      // });
+    }
+  };
+
+  const getPlReport = async () => {
+    setLoading1(true);
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-total-pl/${user_id}?type=user&username=${username}`;
+    try {
+      let response = await fetchGetRequest(url);
+      const data = response;
+      if (data) {
+        setPlData(data);
+      }
+    } catch (error: any) {
 
       // toast({
       //   description: `${error?.data?.message}`,
@@ -69,6 +90,7 @@ console.log(username,"username",joined_at,"joined_at")
 
   useEffect(() => {
     getAllTransaction();
+    getPlReport()
   }, []);
 
   const handleProfileTransaction = (id: number, data?: AllTransaction) => {
@@ -267,8 +289,8 @@ console.log(username,"username",joined_at,"joined_at")
                 </defs>
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2">Profit & Loss</p>
-              <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-sm  ${plData?.allPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.allPL>0&&"+"}{plData?.allPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -381,9 +403,9 @@ console.log(username,"username",joined_at,"joined_at")
                   </filter>
                 </defs>
               </svg>
-              <p className="text-[10px] sm:text-xs  -mt-2 ">Sport Profit</p>
-              <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-[10px]  sm:text-xs  -mt-2 `}>Sport Profit</p>
+              <p className={`text-sm  ${plData?.sportsPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.sportsPL>0&&"+"}{plData?.sportsPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -497,8 +519,8 @@ console.log(username,"username",joined_at,"joined_at")
                 </defs>
               </svg>
               <p className="text-[10px] sm:text-xs  -mt-2 ">Casino Profit</p>
-              <p className="text-sm  font-medium">
-                50.00<span className="text-[10px] font-light">BDT</span>
+              <p className={`text-sm  ${plData?.casinoPL<0?"text-red-500":"text-green-400"} font-medium`}>
+              {plData?.casinoPL>0&&"+"}{plData?.casinoPL}<span className="text-[10px] font-light">BDT</span>
               </p>
             </div>
             </div>
@@ -600,7 +622,7 @@ console.log(username,"username",joined_at,"joined_at")
             <p className="text-lg  text-center font-semibold">
               Transaction Details
             </p>
-            <div>
+            <div className="flex flex-col items-center">
               <p
                 className={`mt-6  
                 ${
@@ -613,16 +635,19 @@ console.log(username,"username",joined_at,"joined_at")
               >
                 {transactionDetails?.type}
               </p>
+              <div className="flex items-center gap-3">
               <p
-                className={`text-sm mt-1 text-center ${
+                className={`text-sm  text-center ${
                   transactionDetails?.status === "pending"
                   ? "text-orange-500":transactionDetails?.status==="reject"?"text-red-600": "text-[#0FBF00]"
                 }  `}
               >
-                {transactionDetails?.deposit_amount ||
+                {transactionDetails?.type==="deposit"?"+":"-"}{transactionDetails?.deposit_amount ||
                   transactionDetails?.withdraw_amount}{" "}
                 <span className="">BDT</span>
               </p>
+              <p className="text-xs text-green-300 font-semibold">+{transactionDetails?.bonus}%</p>
+              </div>
             </div>
             <div className={`${theme ?`bg-[${themeChange.light.bg2}]` : `bg-[${themeChange.dark.bg2}]`} shadow-2xl  pl-5 flex items-center gap-3 w-[100%] p-2 rounded-[4px]`}>
               <PiInfo  />
@@ -630,6 +655,7 @@ console.log(username,"username",joined_at,"joined_at")
                 deposit amount admin information
               </p>
             </div>
+            
 
             <div className="flex flex-col gap-2">
               <p className=" text-sm font-medium">

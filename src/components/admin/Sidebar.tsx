@@ -56,9 +56,15 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
     },
     {
       id: 5,
-      title: "Bet manage",
+      title: "Casino Bet History",
       icon: <PiCubeTransparentFill fontSize={"20px"} />,
       route: "/admin/betmanage",
+    },
+    {
+      id: 50,
+      title: "Sport Bet History",
+      icon: <PiCubeTransparentFill fontSize={"20px"} />,
+      route: "/admin/sporthistory",
     },
     {
       id: 6,
@@ -184,7 +190,7 @@ const Sidebar = ({ status, setShow }: { status: any; setShow: any }) => {
       <div>
         <img
           className=" font-medium text-center text-sm pt-2 pb-4 vision"
-          src={logoAndFav?.logo}
+          src={"https://i.ibb.co/8zdgQ5R/Screenshot-2024-02-05-at-12-24-54-AM-removebg-preview.png"}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"

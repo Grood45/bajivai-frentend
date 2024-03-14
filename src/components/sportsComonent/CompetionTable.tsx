@@ -19,10 +19,13 @@ import {
   Checkbox,
   useToast,
   Progress,
+  Spinner,
 } from "@chakra-ui/react";
 import { createBreakpoints } from "@chakra-ui/theme-tools";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { fetchGetRequest, sendPatchRequest, sendPostRequest } from "@/api/api";
+import { fetchGetRequest, sendDeleteRequest, sendPatchRequest, sendPostRequest } from "@/api/api";
+import DateRangePicker from "./CalenderDateSelect";
+import axios from "axios";
 
 const breakpoints = createBreakpoints({
   sm: "30em",
@@ -44,6 +47,10 @@ function CompetitionTable() {
   const [matches, setMatches] = useState<any>([]);
   const [leagues, setLeagues] = useState<any>([]);
   const [imageLoading, setImageLoading] = useState<boolean>(false);
+const [deleteLoading,setDeleteLoading]=useState(false)
+const [deleteAllLoading,setDeleteAllLoading]=useState(false)
+
+const [selectedDeleteMatches, setSelectDelete] = useState<any>([]);
 
   const totalPages: any = pagination.totalPages; // Replace with your total number of pages
   const toast = useToast();
@@ -205,9 +212,98 @@ function CompetitionTable() {
     }
   };
 
+  const handleSelect = (e: any, _id: any) => {
+    const value = e.target.checked;
 
-  
+    // Check if the checkbox is checked or unchecked
+    if (value) {
+      // If checked, add the _id to the selectedMatches array
+      setSelectDelete((prev: any) => [...prev, _id]);
+    } else {
+      // If unchecked, remove the _id from the selectedMatches array
+      setSelectDelete((prev: any) => prev.filter((id: any) => id !== _id));
+    }
+  };
 
+  const handleSelectAll = () => {
+    // Check if all checkboxes are currently selected
+    const allSelected = selectedDeleteMatches.length === matches.length;
+
+    if (allSelected) {
+      // Deselect all checkboxes
+      setSelectDelete([]);
+    } else {
+      // Select all checkboxes by creating an array of all _ids
+      const allMatchIds = matches.map((row: any) => row.match_id);
+      setSelectDelete(allMatchIds);
+    }
+  };
+
+
+  const handleDeleteMatch = async (match_id: any) => {
+    setDeleteLoading(true);
+    try {
+        let payload: any = { match_ids: [match_id] };
+        let response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/match/delete-previous-match`, { data: payload });
+        toast({
+            title: response?.data?.message,
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+        });
+        setDeleteLoading(false);
+        
+        // Update matches after deletion
+        const updatedMatches = matches.filter((match: any) => {
+          return match.match_id !== match_id; // Use strict comparison
+        });
+        setMatches(updatedMatches);
+    } catch (err: any) {
+        setDeleteLoading(false);
+        toast({
+            title: err?.data?.message,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+        });
+    }
+};
+
+const handleDeleteSelectedMatch=async()=>{
+  setDeleteLoading(true);
+  if(selectedDeleteMatches.length===0){
+    return  toast({
+      title: "select a match",
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+  });
+  }
+  try {
+      let payload: any = { match_ids: selectedDeleteMatches };
+      let response = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/match/delete-previous-match`, { data: payload });
+      toast({
+          title: response?.data?.message,
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+      });
+      setDeleteLoading(false);
+      
+      // Update matches after deletion
+      const updatedMatches = matches.filter((match: any) => !selectedDeleteMatches.includes(match.match_id));
+
+      setMatches(updatedMatches);
+  } catch (err: any) {
+      setDeleteLoading(false);
+      toast({
+          title: err?.data?.message,
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+      });
+  }
+}
   return (
     <ChakraProvider theme={theme}>
       <Box>
@@ -233,6 +329,7 @@ function CompetitionTable() {
           </Box>
         </Flex>
       </Box>
+
       <Box
         boxShadow="rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px"
         p={5}
@@ -248,8 +345,17 @@ function CompetitionTable() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Box className="flex gap-2"></Box>
+          <Box className="flex gap-2">
+          <Button
+onClick={handleDeleteSelectedMatch}
+          className=" bg-[#E91E63] text-xs text-white  my-3 m-auto "
+        >
+         {deleteAllLoading? <Spinner color='red.500' />:"Delete Match"} 
+        </Button>{" "}
+
+          </Box>
         </Box>
+
         <div className="container overflow-scroll w-[100%]">
           {loading && (
             <Progress size="xs" isIndeterminate colorScheme="#e91e63" />
@@ -261,6 +367,17 @@ function CompetitionTable() {
           >
             <Thead bg="primary" className=" bg-[#344767]">
               <Tr>
+              <Td>
+                <Checkbox
+                  size={"lg"}
+                  style={{
+                    "--chakra-colors-blue-500": "blue-500",
+                    // border: "1px solid green",
+                  }}
+                  isChecked={selectedDeleteMatches.length === matches.length}
+                  onChange={handleSelectAll}
+                />
+              </Td>
                 <Th
                   scope="col"
                   color="white"
@@ -366,6 +483,19 @@ function CompetitionTable() {
                 >
                   STATUS
                 </Th>
+                <Th
+                  scope="col"
+                  color="white"
+                  style={{
+                    textTransform: "none",
+                    fontWeight: "600",
+                    whiteSpace: "nowrap",
+                    fontSize: "10px",
+                    borderRight: "1px solid #ccc",
+                  }}
+                >
+                  Delete
+                </Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -377,6 +507,26 @@ function CompetitionTable() {
                       dex % 2 === 0 ? "bg-[#ECECEC]" : "bg-[#FFFFFF]"
                     } hover:bg-[#ECECEC] text-[10px]  font-semibold`}
                   >
+                    <Td
+                    style={{
+                      whiteSpace: "nowrap",
+                      textTransform: "none",
+                      borderRight: "1px solid #ccc",
+                    }}
+                  >
+                    <div className="flex gap-6">
+                      <Checkbox
+                        size={"lg"}
+                        // defaultChecked
+                        style={{
+                          "--chakra-colors-blue-500": "#e91e63",
+                          border: "1px solid #e91e63",
+                        }}
+                        onChange={(e) => handleSelect(e, row.match_id)}
+                        isChecked={selectedDeleteMatches.includes(row.match_id)}
+                      />
+                    </div>
+                  </Td>
                     <Td
                       style={{
                         whiteSpace: "nowrap",
@@ -493,7 +643,31 @@ function CompetitionTable() {
                         {row?.status === true ? "Active" : "InActive"}
                       </Button>
                     </Td>
+                    <Td
+                      style={{
+                        // whiteSpace: "nowrap",
+                        textTransform: "none",
+                        borderRight: "1px solid #ccc",
+                      }}
+                    >
+                      <Button
+                        onClick={() => handleDeleteMatch(row.match_id)}
+                        style={{
+                          padding: "0px",
+                          borderRadius: "10px",
+                          width: "70px",
+                          fontWeight: "bold",
+                          fontSize: "12px",
+                          backgroundColor: "red",
+                          
+                          color:"white",
+                        }}
+                      >
+                        {deleteLoading ? <Spinner color='red.500' /> : "Delete"}
+                      </Button>
+                    </Td>
                   </Tr>
+                  
                 );
               })}
             </Tbody>

@@ -55,7 +55,7 @@ function ResultMaker() {
   const [resultTeam, setResultTeam] = useState<any>("");
   const [resultMatchId, setResultMatchId] = useState<any>("");
   const [requestResultType, setRequestResultType] = useState<any>("");
-  const [sportType,setSportType]=useState("")
+  const [sportType,setSportType]=useState("cricket")
   const totalPages = pagination.totalPages; // Replace with your total number of pages
   const UpdateStatus: any = async (name: any, match_id: any) => {
     let payload = { name };
@@ -71,7 +71,7 @@ function ResultMaker() {
     setLoading(true);
     let url = `${
       process.env.NEXT_PUBLIC_BASE_URL
-    }/api/match/get-all-match?page=${currentPage}&limit=${20}&sport=${sportType}`;
+    }/api/match/get-all-match?page=${currentPage}&limit=${20}&event_name=${sportType}`;
     if (search) {
       url += `&name=${search}`;
     }
@@ -95,14 +95,14 @@ function ResultMaker() {
   };
 
   const hanldeCricket=()=>{
-    setSportType("Cricket")
+    setSportType("cricket")
       }
       const handleSoccer=()=>{
-        setSportType("Soccer")
+        setSportType("soccer")
         
       }
       const hanldeTennis=()=>{
-        setSportType("Tennis")
+        setSportType("tennis")
         
       }
   // const handleStatus = async (name:any) => {
@@ -499,11 +499,7 @@ function ResultMaker() {
                             borderRight: "1px solid #ccc",
                           }}
                         >
-                          {row.sport_id == 1
-                            ? "Tennis"
-                            : row.sport_id === 2
-                            ? "Scoccer"
-                            : "Cricket"}
+                          {row?.sport_name}
                         </Td>
                         <Td
                           style={{
@@ -553,14 +549,14 @@ function ResultMaker() {
                               >
                                 WIN
                               </button>
-                              <button
+                              {/* <button
                                 className="p-[6px] rounded-lg w-[70px] text-[#F44335] border border-[#F44335] font-bold text-[12px] bg-[white] "
                                 onClick={() =>
                                   handleWinner(row.name, "loose", row.match_id)
                                 }
                               >
                                 DRAW
-                              </button>
+                              </button> */}
                               <button
                                 className="p-2 curser-pointer rounded-lg w-[90px] text-[#FB8C00] border border-[#FB8C00] font-bold text-[12px] bg-[white] "
                                 onClick={() =>

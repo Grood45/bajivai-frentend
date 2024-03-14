@@ -1,5 +1,5 @@
 "use client";
-import { Tooltip, useToast } from "@chakra-ui/react";
+import { Spinner, Tooltip, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
@@ -50,6 +50,8 @@ interface FancyProps {
 const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
   const [betShow, setBetShow] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loading1, setLoading1] = useState<boolean>(false);
+
   const [data, setData] = useState<any>([]);
   const [rate, setRate] = useState<number>(0);
   const [stake, setStake] = useState<number>(0);
@@ -184,8 +186,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     if (newExposure < 0) {
       originalExposure += Math.abs(newExposure);
     }
-    // console.log(newExposure);
-    console.log(originalExposure, "og");
     if (originalExposure > amount) {
       toast({
         description: "Insufficient Balance.",
@@ -220,18 +220,15 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
         isClosable: true,
       });
       setBetLoading(false);
-      console.log(error, "1");
     }
   };
   // fetch data of odds, bbokmaker, fancy, toss
   useEffect(() => {
     const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      //console.log("Connected to the server");
       setLoading(true);
     });
     socket.on("bookmakerData", (data) => {
-      // console.log("Received bookmaker data:", data);
       if (data.t2) {
         setData((prev: any) => {
           setPrevCricketDataofOdds(prev);
@@ -239,15 +236,14 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
 
           
 
-          console.log(filteredData, "filteredDaata")
 
           return filteredData[0]?.bm1 || [];
         });
       }
     });
     socket.on("disconnect", () => {
-      //console.log("Disconnected from the server");
       setLoading(false);
+
     });
 
     // Emit the "startFetching" event with the eventID
@@ -256,26 +252,34 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
     // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
-      //console.log("socket disconnected");
       setLoading(false);
+
     };
   }, [param.id]);
 
   const fetchBetData = async () => {
     const category = "bookmaker";
     const match_id = param.id;
+    setLoading1(true)
     if (!user_id) {
+      setLoading1(false)
       return;
     }
+
     try {
       // user id then match_id we have to pass here
       const response = await fetchGetRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/get-all-bet/${user_id}?category=${category}&match_id=${match_id}&status=pending`
       );
+
       const data = response.data;
+    setLoading1(false)
+
       setBet(data);
-      // console.log(data, "bet data");
+
     } catch (error: any) {
+    setLoading1(false)
+
       toast({
         description: error.message || "d",
         status: "error",
@@ -290,7 +294,6 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
   useEffect(() => {
     fetchBetData();
   }, []);
-  // console.log(singleMatch, "dataatat");
 
   useEffect(() => {
     let team = singleMatch?.match_name.split(" v " || "vs");
@@ -365,8 +368,20 @@ const Bookmaker: React.FC<FancyProps> = ({ singleMatch }) => {
         <div className="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ... p-[1px] rounded-[16px]">
           <div
             style={{ border: "0.5px solid #444" }}
-            className="rounded-[16px] bg-[#212632]  flex flex-col w-[100%] "
+            className="rounded-[16px] bg-[#212632] min-h-[140px]  flex flex-col w-[100%] "
           >
+                       {loading1?
+            <div className="w-full mt-12 flex item-center justify-center">
+               <div className="spinner">
+  <span>L</span>
+  <span>O</span>
+  <span>A</span>
+  <span>D</span>
+  <span>I</span>
+  <span>N</span>
+  <span>G</span>
+</div></div>
+:data.length===0?<div className="text-center flex items-center min-h-[140px]  justify-center font-semibold "><p>Not Data Found</p></div>:""}
             {data &&
               data.length > 0 &&
               data.map((item: any, index: any) => (

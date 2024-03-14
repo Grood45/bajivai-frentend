@@ -20,6 +20,7 @@ import {
 import { Button, CircularProgress, Progress, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { getTimeAgo } from "../../../../utils/getTimeInDetail";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const MainComponent = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -30,12 +31,14 @@ const MainComponent = () => {
   const [transactionCount, aetTransactionCount] = useState<TransactionsCount>();
   const toast = useToast();
   const params = useParams();
+  const [pagination, setPagination] = useState<any>({});
+  const totalPages = pagination.totalPages; // Replace with your total number of pages
 
 
   const getAllDepositDetails = async () => {
     setLoading(true);
     // let url = `http://localhost:8090/api/transaction/get-all-deposit?page=1&limit=10`;
-    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-deposit?page=1&limit=100`;
+    let url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/transaction/get-all-deposit?page=${currentPage}&limit=20`;
 
     if (search) {
       url += `&search=${search}`;
@@ -51,6 +54,7 @@ const MainComponent = () => {
       setAllDeposit(response.data);
       aetTransactionCount(response.transactionsCount);
       setLoading(false);
+      setPagination(response.pagination);
     } catch (error: any) {
       toast({
         description: `${error.message}`,
@@ -59,7 +63,6 @@ const MainComponent = () => {
         position: "top",
         isClosable: true,
       });
-      console.log(error);
       setLoading(false)
     }
   };
@@ -70,11 +73,25 @@ const MainComponent = () => {
       getAllDepositDetails();
     }, 700);
     return () => clearTimeout(id);
-  }, [currentPage, transactionType]);
+  }, [currentPage, transactionType,search]);
 
   const handleFilter = (name: string) => {
     setTransactionType(name);
   };
+
+   
+const handlePrevPage = () => {
+
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
+const handleNextPage = () => {
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+  }
+};
 
   const data1 = [
     {
@@ -195,7 +212,7 @@ const MainComponent = () => {
               id="Email"
               name="Email"
               value={search}
-              placeholder="Search the keyword..........."
+              placeholder="Search the here..........."
               onChange={(e) => setSearch(e.target.value)}
             />
             <button className={`button--submit flex items-center text-white`}>
@@ -249,24 +266,25 @@ const MainComponent = () => {
                     </td>
                     <td>
                       <div className="flex flex-col text-center gap-[2px] ">
-                        <p>{item.initiated_at}</p>
-                        <p className="text-xs  text-[#A0AEC0] ">
+                        <p>{item.initiated_at.split(" ")[0]}</p>
+                        {/* <p className="text-xs  text-[#A0AEC0] ">
                           {getTimeAgo(item.initiated_at)}
-                        </p>
+                        </p> */}
                       </div>
                     </td>
                     <td>
                       <div className="flex flex-col text-center gap-[2px] ">
                         <p>{item.username}</p>
                         <p className="text-xs  text-[#A0AEC0] ">
-                          {item.user_id}
+                          {/* {item.user_id} */}
                         </p>
                       </div>
                     </td>
                     <td>
                       <div className="flex flex-col text-center gap-[2px]">
                         <p className="text-[16px] ">
-                          <span>&#8377;</span> {item.deposit_amount} +{" "}
+                          {/* <span>&#8377;</span>  */}
+                          {item.deposit_amount} +{" "}
                           <span className="text-xs text-red-500 ">
                             {item.bonus}
                           </span>
@@ -278,11 +296,8 @@ const MainComponent = () => {
                     </td>
                     <td className="">
                       <div className="flex   justify-center text-center items-center gap-2">
-                        <Image
-                          src={coin}
-                          alt=""
-                          className="h-[15px] w-[15px]"
-                        />
+                      <span className="bg-yellow-500 text-white flex items-center justify-center h-[20px] w-[20px] rounded-[50%]" ><FaBangladeshiTakaSign fontSize="10px" /></span> 
+
                         <span>{item.wallet_amount.toFixed(2)}</span>
                       </div>
                     </td>
@@ -298,9 +313,9 @@ const MainComponent = () => {
                         >
                           {item.status}
                         </button>
-                        <p className="text-[10px] text-center  text-[#A0AEC0] ">
+                        {/* <p className="text-[10px] text-center  text-[#A0AEC0] ">
                           {getTimeAgo(item.initiated_at)}
-                        </p>
+                        </p> */}
                       </div>
                     </td>
                     <td>
@@ -367,7 +382,7 @@ const MainComponent = () => {
                     />
                     <div className="flex gap-[2px] flex-col ">
                       <p className="text-white">{item.username}</p>
-                      <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p>
+                      {/* <p className="text-xs  text-[#A0AEC0] ">{item.user_id}</p> */}
                     </div>
                   </div>
 
@@ -389,9 +404,9 @@ const MainComponent = () => {
                       </p>
                       <p className="text-[#fff] font-medium text-xs">
                         {item.initiated_at.split(" ")[0]}{" "}
-                        <span className="text-[#A0AEC0] text-[10px]">
+                        {/* <span className="text-[#A0AEC0] text-[10px]">
                           {item.initiated_at.split(" ")[1]}
-                        </span>
+                        </span> */}
                       </p>
                     </div>
                     <div className="flex gap-4 w-[100%] p-3 ">
@@ -399,7 +414,7 @@ const MainComponent = () => {
                         Deposit Amount :-
                       </p>
                       <p className="text-[#fff] font-medium text-xs">
-                        ${item.deposit_amount.toFixed(2)}
+                        {item.deposit_amount.toFixed(2)} BDT
                       </p>
                     </div>
 
@@ -408,11 +423,8 @@ const MainComponent = () => {
                         Balance:-
                       </p>
                       <div className="flex justify-center items-center gap-2">
-                        <Image
-                          src={coin}
-                          alt=""
-                          className="h-[15px] w-[15px]"
-                        />
+                      <span className="bg-yellow-500 text-white flex items-center justify-center h-[20px] w-[20px] rounded-[50%]" ><FaBangladeshiTakaSign fontSize="10px" /></span> 
+
                         <p className="text-white text-xs">
                           {item.wallet_amount.toFixed(2)}
                         </p>
@@ -436,6 +448,35 @@ const MainComponent = () => {
         </div>
         </div>
       </div>
+
+
+      {allDeposit && allDeposit.length > 0 && (
+        <div className="text-[16px] text-white text-sm font-semibold flex m-auto mb-4 mr-5 justify-end gap-3 align-middle items-center mt-2">
+      
+            <button
+              type="button"
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              // ref="btPrevious"
+              onClick={() => handlePrevPage()}
+              disabled={currentPage == 1}
+              style={{ backgroundColor: "#e91e63", color: "white",fontSize:'12px' }}
+            >
+              {"<"}
+            </button>
+            Page <span>{currentPage}</span> of{" "}
+            <span>{pagination.totalPages}</span>
+            <button
+              onClick={() => handleNextPage()}
+              type="button"
+              disabled={currentPage == pagination.totalPages}
+              className="ml-1 px-2 py-[4px] cursor-pointer rounded-[5px] text-[20px]"
+              style={{ backgroundColor: "#e91e63", color: "white", fontSize:'12px' }}
+            >
+              {">"}
+            </button>
+          
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 "use client";
-import { Text, Tooltip, useToast } from "@chakra-ui/react";
+import { Spinner, Text, Tooltip, useToast } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
@@ -81,11 +81,9 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
   useEffect(() => {
     const socket = socketIOClient(`${process.env.NEXT_PUBLIC_BASE_URL}`);
     socket.on("connect", () => {
-      //console.log("Connected to the server");
       setLoading(true);
     });
     socket.on("fancyData", (data) => {
-      console.log("Received fancy data:", data);
       if (data) {
         let sortedData = (data?.t3 || data?.t4 || []).sort(
           (a: any, b: any) => a.sid - b.sid
@@ -95,7 +93,6 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       setLoading(false);
     });
     socket.on("disconnect", () => {
-      //console.log("Disconnected from the server");
       setLoading(false);
     });
 
@@ -105,7 +102,6 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     // Clean up the socket connection when the component unmounts
     return () => {
       socket.disconnect();
-      //console.log("socket disconnected");
       setLoading(false);
     };
   }, [param.id]);
@@ -135,6 +131,22 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
     setMarketId(mid);
     // alert(mid+sid)
   };
+
+  const [rules, setRules] = useState<any>({});
+  const fetchGeneralSetting = async () => {
+    try {
+      const response = await fetchGetRequest(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/rules/get-rules/652a38fb2a2e359a326f3cd3`
+      );
+
+      setRules(response.data);
+    } catch (error) {
+    }
+  };
+  useEffect(() => {
+    fetchGeneralSetting();
+  }, []);
+
   const handlePlaceBet = async () => {
     if (!token || !otpless_token) {
       toast({
@@ -225,6 +237,8 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       return;
     }
     setBetLoading(true);
+    setTimeout(async() => {
+
     try {
       const response = await sendPostRequest(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/bet/place-sport-bet`,
@@ -251,6 +265,7 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
       });
       setBetLoading(false);
     }
+  }, rules.bet_timing || 4000);
   };
 
   const fetchBetData = async () => {
@@ -285,8 +300,9 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
   }, []);
 
   return (
-    <>
-      {data?.length > 0 && (
+    <div className="min-h-[140px]">
+      
+    
         <div>
           <div className="flex flex-col gap-4">
             <div className="flex w-[100%] justify-between">
@@ -345,6 +361,19 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
                 </Tooltip>
               </div>
             </div>
+            {loading?
+            <div className="w-full mt-12 flex item-center justify-center">
+               <div className="spinner">
+  <span>L</span>
+  <span>O</span>
+  <span>A</span>
+  <span>D</span>
+  <span>I</span>
+  <span>N</span>
+  <span>G</span>
+</div></div>
+:data.length===0?<div className="text-center flex items-center min-h-[140px]  justify-center font-semibold "><p>Not Data Found</p></div>:""}
+           
             <div className="  flex flex-col  gap-3 w-[100%] ">
               {data &&
                 data.map((item) => (
@@ -438,8 +467,8 @@ const Fancy: React.FC<FancyProps> = ({ singleMatch }) => {
             </div>
           </div>
         </div>
-      )}
-    </>
+      
+    </div>
   );
 };
 
